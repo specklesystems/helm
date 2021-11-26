@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  test-speckle-server:
+  - apiVersion: v2
+    appVersion: 2.3.3
+    created: "2021-11-26T12:52:46.755159124Z"
+    description: Speckle Server
+    digest: 9a703ccbd4fbb2cd596c85aed6ce85a64119e6ad287de2df20dfaffc5ae7b3b7
+    name: test-speckle-server
+    type: application
+    urls:
+    - https://github.com/specklesystems/helm/releases/download/test-speckle-server-0.1.0/test-speckle-server-0.1.0.tgz
+    version: 0.1.0
+generated: "2021-11-26T12:52:46.755166624Z"
