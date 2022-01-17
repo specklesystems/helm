@@ -2,7 +2,7 @@ namespace: speckle-test
 
 domain: localhost
 
-docker_image_tag: 2.3.7-alpha.1744
+docker_image_tag: 2.3.7-alpha.1748
 
 db:
   # postgres_url: secret -> postgres_url
@@ -98,5 +98,3 @@ secretName: server-vars
 
 enable_prometheus_monitoring: false
 cert_manager_issuer: letsencrypt-staging
-
-helm_test_enabled: true
