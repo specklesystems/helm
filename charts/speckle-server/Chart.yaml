@@ -17,5 +17,5 @@ type: application
 
 # Set by the build process to the corect value
 # appVersion: "2.3.3"
-version: 2.3.13-alpha.1893
-appVersion: "2.3.13-alpha.1893"
+version: 2.3.13-alpha.1897
+appVersion: "2.3.13-alpha.1897"
