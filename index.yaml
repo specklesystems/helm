@@ -2,6 +2,16 @@ apiVersion: v1
 entries:
   speckle-server:
   - apiVersion: v2
+    appVersion: 2.3.14-alpha.1940
+    created: "2022-02-17T18:06:44.691240023Z"
+    description: Speckle Server
+    digest: 43a0d143466fa6cca0748cbf3406028e179b792333b7079fe5263a5233dea75c
+    name: speckle-server
+    type: application
+    urls:
+    - https://github.com/specklesystems/helm/releases/download/speckle-server-2.3.14-alpha.1940/speckle-server-2.3.14-alpha.1940.tgz
+    version: 2.3.14-alpha.1940
+  - apiVersion: v2
     appVersion: 2.3.14-alpha.1930
     created: "2022-02-10T11:04:56.887647088Z"
     description: Speckle Server
@@ -782,4 +792,4 @@ entries:
     urls:
     - https://github.com/specklesystems/helm/releases/download/test-speckle-server-0.1.0/test-speckle-server-0.1.0.tgz
     version: 0.1.0
-generated: "2022-02-10T11:04:56.889633639Z"
+generated: "2022-02-17T18:06:44.692624377Z"
