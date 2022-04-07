@@ -2,7 +2,7 @@ namespace: speckle-test
 
 domain: localhost
 
-docker_image_tag: 2.3.17-alpha.2830
+docker_image_tag: 2.3.17-alpha.2844
 
 db:
   # postgres_url: secret -> postgres_url
