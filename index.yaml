@@ -2,16 +2,6 @@ apiVersion: v1
 entries:
   speckle-server:
   - apiVersion: v2
-    appVersion: 2.5.1-alpha.3072
-    created: "2022-04-14T16:21:32.375990653Z"
-    description: Speckle Server
-    digest: 5ef3541f22023f051454a8a1ec6ddbd6cbedc55ac17c3e4582538ed5185deee8
-    name: speckle-server
-    type: application
-    urls:
-    - https://github.com/specklesystems/helm/releases/download/speckle-server-2.5.1-alpha.3072/speckle-server-2.5.1-alpha.3072.tgz
-    version: 2.5.1-alpha.3072
-  - apiVersion: v2
     appVersion: 2.5.1-alpha.3062
     created: "2022-04-14T07:43:15.258941895Z"
     description: Speckle Server
@@ -31,6 +21,16 @@ entries:
     urls:
     - https://github.com/specklesystems/helm/releases/download/speckle-server-2.5.1-alpha.3053/speckle-server-2.5.1-alpha.3053.tgz
     version: 2.5.1-alpha.3053
+  - apiVersion: v2
+    appVersion: 2.5.1-alpha.1
+    created: "2022-04-14T16:21:48.386259943Z"
+    description: Speckle Server
+    digest: fc5f76af7dfedb771fef3b24b54f9ab70c8792e45c36413cca218c9b454d00c4
+    name: speckle-server
+    type: application
+    urls:
+    - https://github.com/specklesystems/helm/releases/download/speckle-server-2.5.1-alpha.1/speckle-server-2.5.1-alpha.1.tgz
+    version: 2.5.1-alpha.1
   - apiVersion: v2
     appVersion: 2.5.0
     created: "2022-04-13T15:05:22.698334714Z"
@@ -1412,4 +1412,4 @@ entries:
     urls:
     - https://github.com/specklesystems/helm/releases/download/test-speckle-server-0.1.0/test-speckle-server-0.1.0.tgz
     version: 0.1.0
-generated: "2022-04-14T16:21:32.379477029Z"
+generated: "2022-04-14T16:21:48.389937317Z"
