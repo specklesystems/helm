@@ -5,6 +5,12 @@ on:
     branches:
       - main
 
+# forcing each workflow run to a separate concurrency group so they are not
+# cancelled by jobs triggered by new commits
+concurrency:
+  group: commit-${{github.sha}}
+  cancel-in-progress: true
+
 jobs:
   release:
     runs-on: ubuntu-latest
