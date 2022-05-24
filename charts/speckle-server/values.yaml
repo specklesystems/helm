@@ -3,7 +3,7 @@ namespace: speckle-test
 domain: localhost
 ssl_canonical_url: true
 
-docker_image_tag: 2.6.1-alpha.3998
+docker_image_tag: 2.6.1-alpha.4009
 
 db:
   # postgres_url: secret -> postgres_url
