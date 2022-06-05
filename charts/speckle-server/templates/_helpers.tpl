@@ -72,99 +72,99 @@ project: {{ include "speckle.chartName" $context | quote }}
 =========== backend ===========
 */}}
 {{- define "speckle.fullname.backend" -}}
-{{- include "speckle.fullname" (list . "speckle-server" ) -}}
+{{- include "speckle.fullname" (list $ "speckle-server" ) -}}
 {{- end -}}
 
 {{- define "speckle.labels.backend" -}}
-{{- include "speckle.labels" (list . "speckle-server") -}}
+{{- include "speckle.labels" (list $ "speckle-server") -}}
 {{- end -}}
 
 {{- define "speckle.selectorLabels.backend" -}}
-{{- include "speckle.selectorLabels" (list . "speckle-server") -}}
+{{- include "speckle.selectorLabels" (list $ "speckle-server") -}}
 {{- end -}}
 
 {{/*
 =========== fileimport-service ===========
 */}}
 {{- define "speckle.fullname.fileimport-service" -}}
-{{- include "speckle.fullname" (list . "fileimport-service" ) -}}
+{{- include "speckle.fullname" (list $ "fileimport-service" ) -}}
 {{- end -}}
 
 {{- define "speckle.labels.fileimport-service" -}}
-{{- include "speckle.labels" (list . "fileimport-service") -}}
+{{- include "speckle.labels" (list $ "fileimport-service") -}}
 {{- end -}}
 
 {{- define "speckle.selectorLabels.fileimport-service" -}}
-{{- include "speckle.selectorLabels" (list . "fileimport-service") -}}
+{{- include "speckle.selectorLabels" (list $ "fileimport-service") -}}
 {{- end -}}
 
 {{/*
 =========== frontend ===========
 */}}
 {{- define "speckle.fullname.frontend" -}}
-{{- include "speckle.fullname" (list . "frontend" ) -}}
+{{- include "speckle.fullname" (list $ "frontend" ) -}}
 {{- end -}}
 
 {{- define "speckle.labels.frontend" -}}
-{{- include "speckle.labels" (list . "frontend") -}}
+{{- include "speckle.labels" (list $ "frontend") -}}
 {{- end -}}
 
 {{- define "speckle.selectorLabels.frontend" -}}
-{{- include "speckle.selectorLabels" (list . "frontend") -}}
+{{- include "speckle.selectorLabels" (list $ "frontend") -}}
 {{- end -}}
 
 {{/*
 =========== monitoring ===========
 */}}
 {{- define "speckle.fullname.monitoring" -}}
-{{- include "speckle.fullname" (list . "monitoring" ) -}}
+{{- include "speckle.fullname" (list $ "monitoring" ) -}}
 {{- end -}}
 
 {{- define "speckle.labels.monitoring" -}}
-{{- include "speckle.labels" (list . "monitoring") -}}
+{{- include "speckle.labels" (list $ "monitoring") -}}
 {{- end -}}
 
 {{- define "speckle.selectorLabels.monitoring" -}}
-{{- include "speckle.selectorLabels" (list . "monitoring") -}}
+{{- include "speckle.selectorLabels" (list $ "monitoring") -}}
 {{- end -}}
 
 {{/*
 =========== preview-service ===========
 */}}
 {{- define "speckle.fullname.preview-service" -}}
-{{- include "speckle.fullname" (list . "preview-service" ) -}}
+{{- include "speckle.fullname" (list $ "preview-service" ) -}}
 {{- end -}}
 
 {{- define "speckle.labels.preview-service" -}}
-{{- include "speckle.labels" (list . "preview-service") -}}
+{{- include "speckle.labels" (list $ "preview-service") -}}
 {{- end -}}
 
 {{- define "speckle.selectorLabels.preview-service" -}}
-{{- include "speckle.selectorLabels" (list . "preview-service") -}}
+{{- include "speckle.selectorLabels" (list $ "preview-service") -}}
 {{- end -}}
 
 {{/*
 =========== webhook-service ===========
 */}}
 {{- define "speckle.fullname.webhook-service" -}}
-{{- include "speckle.fullname" (list . "webhook-service" ) -}}
+{{- include "speckle.fullname" (list $ "webhook-service" ) -}}
 {{- end -}}
 
 {{- define "speckle.labels.webhook-service" -}}
-{{- include "speckle.labels" (list . "webhook-service") -}}
+{{- include "speckle.labels" (list $ "webhook-service") -}}
 {{- end -}}
 
 {{- define "speckle.selectorLabels.webhook-service" -}}
-{{- include "speckle.selectorLabels" (list . "webhook-service") -}}
+{{- include "speckle.selectorLabels" (list $ "webhook-service") -}}
 {{- end -}}
 
 {{/*
 =========== test-deployment ===========
 */}}
 {{- define "speckle.fullname.test-deployment" -}}
-{{- include "speckle.fullname" (list . "test-deployment" ) -}}
+{{- include "speckle.fullname" (list $ "test-deployment" ) -}}
 {{- end -}}
 
 {{- define "speckle.labels.test-deployment" -}}
-{{- include "speckle.labels" (list . "test-deployment") -}}
+{{- include "speckle.labels" (list $ "test-deployment") -}}
 {{- end -}}
