@@ -1,10 +1,10 @@
-{{ if .Values.enable_prometheus_monitoring }}
+{{ if .Values.monitoring.enabled }}
 
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: speckle-server
-  namespace: {{ .Values.namespace }}
+  namespace: {{ default .Values.namespace .Values.monitoring.namespace }}
   labels:
     app: speckle-server
     release: kube-prometheus-stack
