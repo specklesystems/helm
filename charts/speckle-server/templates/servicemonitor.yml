@@ -7,8 +7,11 @@ metadata:
   namespace: {{ default .Values.namespace .Values.monitoring.namespace }}
   labels:
     app: speckle-server
-    release: kube-prometheus-stack
+    release: {{ .Values.monitoring.release }}
 spec:
+  namespaceSelector:
+    matchNames:
+      - {{ .Values.namespace }}
   selector:
     matchLabels:
       project: speckle-server
