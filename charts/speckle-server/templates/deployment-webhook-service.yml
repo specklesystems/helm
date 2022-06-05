@@ -1,22 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: speckle-webhook-service
+  name: {{ include "speckle.fullname.webhook-service" $ }}
   namespace: {{ .Values.namespace }}
   labels:
-    app: speckle-webhook-service
-    project: speckle-server
+{{ include "speckle.labels.webhook-service" $ | indent 4 }}
 spec:
   replicas: {{ .Values.webhook_service.replicas }}
   selector:
     matchLabels:
-      app: speckle-webhook-service
-      project: speckle-server
+{{ include "speckle.selectorLabels.webhook-service" $ | indent 6 }}
   template:
     metadata:
       labels:
-        app: speckle-webhook-service
-        project: speckle-server
+{{ include "speckle.labels.webhook-service" $ | indent 8 }}
     spec:
       priorityClassName: low-priority
 

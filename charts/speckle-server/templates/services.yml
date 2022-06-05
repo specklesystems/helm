@@ -1,15 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: speckle-server
+  name: {{ include "speckle.fullname.backend" $ }}
   namespace: {{ .Values.namespace }}
   labels:
-    app: speckle-server
-    project: speckle-server
+{{ include "speckle.labels.backend" $ | indent 4 }}
 spec:
   selector:
-    app: speckle-server
-    project: speckle-server
+{{ include "speckle.selectorLabels.backend" $ | indent 4 }}
   ports:
     - protocol: TCP
       name: web
@@ -19,15 +17,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: speckle-frontend
+  name: {{ include "speckle.fullname.frontend" $ }}
   namespace: {{ .Values.namespace }}
   labels:
-    app: speckle-frontend
-    project: speckle-server
+{{ include "speckle.labels.frontend" $ | indent 4 }}
 spec:
   selector:
-    app: speckle-frontend
-    project: speckle-server
+{{ include "speckle.selectorLabels.frontend" $ | indent 4 }}
   ports:
     - protocol: TCP
       name: www
@@ -37,51 +33,47 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: speckle-preview-service-metrics
+  name: {{- include "speckle.fullname" (list $ "preview-service-metrics") -}}
   namespace: {{ .Values.namespace }}
   labels:
-    app: speckle-preview-service-metrics
-    project: speckle-server
+{{ include "speckle.labels" (list $ "preview-service-metrics") | indent 4 }}
 spec:
   selector:
-    app: speckle-preview-service
-    project: speckle-server
+{{ include "speckle.selectorLabels.preview-service" $ | indent 4 }}
   ports:
     - protocol: TCP
       name: web
       port: 9094
       targetPort: 9094
+{{- if .Values.s3.endpoint -}}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: speckle-fileimport-service-metrics
+  name: {{- include "speckle.fullname" (list $ "fileimport-service-metrics") -}}
   namespace: {{ .Values.namespace }}
   labels:
-    app: speckle-fileimport-service-metrics
-    project: speckle-server
+{{ include "speckle.labels" (list $ "fileimport-service-metrics") | indent 4 }}
 spec:
   selector:
-    app: speckle-fileimport-service
-    project: speckle-server
+{{ include "speckle.selectorLabels.fileimport-service" $ | indent 4 }}
   ports:
     - protocol: TCP
       name: web
       port: 9093
       targetPort: 9093
+{{- end -}}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: speckle-webhook-service-metrics
+  name: {{- include "speckle.fullname" (list $ "webhook-service-metrics") -}}
   namespace: {{ .Values.namespace }}
   labels:
-    app: speckle-webhook-service
-    project: speckle-server
+{{ include "speckle.labels" (list $ "webhook-service-metrics") | indent 4 }}
 spec:
   selector:
-    app: speckle-webhook-service
-    project: speckle-server
+{{ include "speckle.selectorLabels.webhook-service" $ | indent 4 }}
   ports:
     - protocol: TCP
       name: web
@@ -91,15 +83,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: speckle-monitoring-metrics
+  name:  {{- include "speckle.fullname" (list $ "monitoring-service-metrics") -}}
   namespace: {{ .Values.namespace }}
   labels:
-    app: speckle-monitoring
-    project: speckle-server
+{{ include "speckle.labels" (list $ "monitoring-service-metrics") | indent 4 }}
 spec:
   selector:
-    app: speckle-monitoring
-    project: speckle-server
+{{ include "speckle.selectorLabels.monitoring" $ | indent 4 }}
   ports:
     - protocol: TCP
       name: web

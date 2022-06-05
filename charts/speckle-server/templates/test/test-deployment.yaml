@@ -1,22 +1,22 @@
-{{- if .Values.helm_test_enabled }}
+{{- if .Values.helm_test_enabled -}}
+{{- $deploymentName := "test-deployment" -}}
 apiVersion: v1
 kind: Pod
 metadata:
-  name: "speckle-test-deployment"
+  name: {{ include "speckle.fullname.test-deployment" $ }}
   namespace: {{ .Values.namespace }}
   annotations:
     "helm.sh/hook": test
   labels:
-    app: speckle-test-deployment
-    project: speckle-server
+{{ include "speckle.labels.test-deployment" $ | indent 4 }}
 spec:
   containers:
-    - name: test-deployment
+    - name: {{ $deploymentName }}
       image: speckle/speckle-test-deployment:{{ .Values.docker_image_tag }}
       env:
         - name: SPECKLE_SERVER
-          value: https://{{ .Values.domain }}
+          value: "https://{{ .Values.domain }}"
         - name: SERVER_VERSION
-          value: {{ .Values.docker_image_tag }}
+          value: {{ .Values.docker_image_tag | quote }}
   restartPolicy: Never
-{{- end }}
+{{- end -}}

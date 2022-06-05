@@ -1,22 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: speckle-monitoring
+  name: {{ include "speckle.fullname.monitoring" $ }}
   namespace: {{ .Values.namespace }}
   labels:
-    app: speckle-monitoring
-    project: speckle-server
+{{ include "speckle.labels.monitoring" $ | indent 4 }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: speckle-monitoring
-      project: speckle-server
+{{ include "speckle.selectorLabels.monitoring" $ | indent 6 }}
   template:
     metadata:
       labels:
-        app: speckle-monitoring
-        project: speckle-server
+{{ include "speckle.labels.monitoring" $ | indent 8 }}
     spec:
       priorityClassName: low-priority
 
