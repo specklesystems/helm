@@ -3,31 +3,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: speckle-fileimport-service
+  name: {{ include "speckle.fullname.fileimport-service" $ }}
   namespace: {{ .Values.namespace }}
   labels:
-    app: speckle-fileimport-service
-    project: speckle-server
+{{ include "speckle.labels.fileimport-service" $ | indent 4 }}
 spec:
   replicas: {{ .Values.fileimport_service.replicas }}
   selector:
     matchLabels:
-      app: speckle-fileimport-service
-      project: speckle-server
+{{ include "speckle.selectorLabels.fileimport-service" $ | indent 6 }}
   template:
     metadata:
       labels:
-        app: speckle-fileimport-service
-        project: speckle-server
+{{ include "speckle.labels.fileimport-service" $ | indent 8 }}
     spec:
       priorityClassName: low-priority
 
-      {{- if .Values.db.useCertificate }}
+      {{- if .Values.db.useCertificate -}}
       volumes:
         - name: postgres-certificate
           configMap:
             name: postgres-certificate
-      {{- end }}
+      {{- end -}}
 
       # Should be > File import timeout to allow finishing up imports
       terminationGracePeriodSeconds: 610

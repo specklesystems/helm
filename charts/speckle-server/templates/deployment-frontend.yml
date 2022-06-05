@@ -1,22 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: speckle-frontend
+  name: {{ include "speckle.fullname.frontend" $ }}
   namespace: {{ .Values.namespace }}
   labels:
-    app: speckle-frontend
-    project: speckle-server
+{{ include "speckle.labels.frontend" $ | indent 4 }}
 spec:
   replicas: {{ .Values.frontend.replicas }}
   selector:
     matchLabels:
-      app: speckle-frontend
-      project: speckle-server
+{{ include "speckle.selectorLabels.frontend" $ | indent 6 }}
   template:
     metadata:
       labels:
-        app: speckle-frontend
-        project: speckle-server
+{{ include "speckle.labels.frontend" $ | indent 8 }}
     spec:
       priorityClassName: high-priority
 

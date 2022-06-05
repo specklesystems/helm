@@ -1,22 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: speckle-preview-service
+  name: {{ include "speckle.fullname.preview-service" $ }}
   namespace: {{ .Values.namespace }}
   labels:
-    app: speckle-preview-service
-    project: speckle-server
+{{ include "speckle.labels.preview-service" $ | indent 4 }}
 spec:
   replicas: {{ .Values.preview_service.replicas }}
   selector:
     matchLabels:
-      app: speckle-preview-service
-      project: speckle-server
+{{ include "speckle.selectorLabels.preview-service" $ | indent 6 }}
   template:
     metadata:
       labels:
-        app: speckle-preview-service
-        project: speckle-server
+{{ include "speckle.labels.preview-service" $ | indent 8 }}
     spec:
       priorityClassName: low-priority
 
