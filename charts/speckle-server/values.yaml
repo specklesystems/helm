@@ -3,11 +3,12 @@ namespace: speckle-test
 domain: localhost
 ssl_canonical_url: true
 
-docker_image_tag: 2.6.3-alpha.4400
+docker_image_tag: 2.6.3-alpha.4415
 
 db:
   # postgres_url: secret -> postgres_url
   useCertificate: false
+  maxConnectionsServer: 4
   certificate: '' # Multi-line string with the contents of `ca-certificate.crt`
   PGSSLMODE: require
 
