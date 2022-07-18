@@ -3,7 +3,7 @@ namespace: speckle-test
 domain: localhost
 ssl_canonical_url: true
 
-docker_image_tag: 2.6.4-alpha.4651
+docker_image_tag: 2.6.4-alpha.4672
 
 db:
   # postgres_url: secret -> postgres_url
@@ -56,6 +56,13 @@ server:
     cpu: 1000m
     memory: 3Gi
 
+  monitoring:
+    apollo:
+      enabled: false
+      graph_ref: ''
+      # key: secret -> `apollo_key`
+
+  # Sentry specific:
   sentry_dns: ''
   disable_tracking: false
   disable_tracing: false
