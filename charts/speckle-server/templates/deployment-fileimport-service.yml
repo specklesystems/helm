@@ -89,6 +89,8 @@ spec:
               secretKeyRef:
                 name: {{ .Values.secretName }}
                 key: s3_secret_key
+          - name: FILE_SIZE_LIMIT_BYTES
+            value: {{ .Values.fileimport_service.file_size_limit_bytes }}
 
 
 {{- end }}
