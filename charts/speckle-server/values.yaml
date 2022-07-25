@@ -105,7 +105,11 @@ fileimport_service:
 
 secretName: server-vars
 
-enable_prometheus_monitoring: false
+monitoring:
+  enabled: false
+  namespace: "" # the namespace in which prometheus is deployed; defaults to .Values.namespace if not provided
+  release: "" # the release name of the prometheus deployment
+
 cert_manager_issuer: letsencrypt-staging
 
 helm_test_enabled: true
