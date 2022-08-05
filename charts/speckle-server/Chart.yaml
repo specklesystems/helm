@@ -9,7 +9,7 @@ type: application
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
 
 # Set by the build process to the correct value
-version: 2.7.2-alpha.5297
+version: 2.7.2-alpha.5326
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
@@ -17,4 +17,4 @@ version: 2.7.2-alpha.5297
 # It is recommended to use it with quotes.
 
 # Set by the build process to the correct value
-appVersion: "2.7.2-alpha.5297"
+appVersion: "2.7.2-alpha.5326"
