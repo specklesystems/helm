@@ -3,7 +3,7 @@ namespace: speckle-test
 domain: localhost
 ssl_canonical_url: true
 
-docker_image_tag: 2.7.2-alpha.6354
+docker_image_tag: 2.7.2-alpha.6366
 
 db:
   # postgres_url: secret -> postgres_url
@@ -27,6 +27,7 @@ s3:
   bucket: ''
   access_key: ''
   create_bucket: 'false'
+  region: '' # optional, defaults to 'us-east-1'
   # secret_key: secret -> s3_secret_key
   networkPolicy: # if network policy is enabled for any service, this provides the networkPolicy with the necessary details to allow egress connections to the s3 compatible storage
     externalToCluster: # use if the s3 compatible storage is external to the kubernetes cluster
