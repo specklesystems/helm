@@ -71,7 +71,7 @@ where `my-speckle-server` will be the name of the Helm release.
 
 More details about the values to configure for your release can be found in [Speckle's Documentation](http://speckle.guide/dev/server-setup-k8s.html#step-4-configure-your-deployment)
 
-By default the chart will install in the `speckle-test` namespace, that name can be set in the chart values. 
+By default the chart will install in the `speckle-test` namespace, that name can be set in the chart values.
 
 #### Uninstalling
 
@@ -82,6 +82,8 @@ $ helm uninstall my-speckle-server --namespace speckle-test
 ```
 
 Depending on the Infrastructure on which Speckle was released, a load balancer may have been created.  This may have to be manually deleted.
+
+## Parameters
 
 ## Resources
 
