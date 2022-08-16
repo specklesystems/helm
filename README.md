@@ -30,3 +30,5 @@ By default the chart will install in the `speckle-test` namespace, that name can
 To uninstall the chart:
 
 `$ helm delete my-speckle-server`
+
+## Parameters
