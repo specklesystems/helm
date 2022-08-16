@@ -84,6 +84,7 @@ $ helm uninstall my-speckle-server --namespace speckle-test
 Depending on the Infrastructure on which Speckle was released, a load balancer may have been created.  This may have to be manually deleted.
 
 ## Parameters
+
 ## Resources
 
 - [![Community forum users](https://img.shields.io/badge/community-forum-green?style=for-the-badge&logo=discourse&logoColor=white)](https://speckle.community) for help, feature requests or just to hang with other speckle enthusiasts, check out our community forum!
