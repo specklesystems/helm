@@ -102,6 +102,17 @@ Depending on the Infrastructure on which Speckle was released, a load balancer m
 | `cert_manager_issuer` | The name of the ClusterIssuer kubernetes resource that provides the SSL Certificate | `letsencrypt-staging` |
 
 
+### Network Plugin configuration
+
+This is used to define the type of network policy that is deployed.
+Different Kubernetes Network Plugins or Container Network Interfaces (CNIs) can make use of different types of
+Network Policy.  Some of these provide more features than the standard Kubernetes Network Policy.
+
+| Name                 | Description                                                                                                 | Value        |
+| -------------------- | ----------------------------------------------------------------------------------------------------------- | ------------ |
+| `networkPlugin.type` | (Optional) Used to configure which type of NetworkPolicy is deployed. Options are 'kubernetes' or 'cilium'. | `kubernetes` |
+
+
 ### Ingress metadata for NetworkPolicy
 
 This section is ignored unless networkPolicy is enabled for frontend or server.
@@ -206,8 +217,8 @@ ref: https://kubernetes.io/docs/concepts/configuration/secret/#opaque-secrets
 | `redis.networkPolicy.externalToCluster.ipv4`      | The IP address at which the Redis store is hosted                                                                                                         | `""`    |
 | `redis.networkPolicy.inCluster`                   | is only required if the Redis store is hosted within the Kubernetes cluster in which Speckle will be deployed.                                            |         |
 | `redis.networkPolicy.inCluster.enabled`           | If enabled, indicates that the Redis store is hosted withing the same Kubernetes cluster in which Speckle will be deployed                                | `false` |
-| `redis.networkPolicy.inCluster.podSelector`       | The pod Selector yaml object used to uniquely select the Redis store pods within the cluster and given namespace                                          | `{}`    |
-| `redis.networkPolicy.inCluster.namespaceSelector` | The namespace selector yaml object used to uniquely select the namespace in which the Redis store pods are deployed                                       | `{}`    |
+| `redis.networkPolicy.inCluster.podSelector`       | The pod Selector yaml object used to uniquely select the Redis pods within the cluster and given namespace                                                | `{}`    |
+| `redis.networkPolicy.inCluster.namespaceSelector` | The namespace selector yaml object used to uniquely select the namespace in which the Redis pods are deployed                                             | `{}`    |
 
 
 ### Server
