@@ -102,6 +102,17 @@ Depending on the Infrastructure on which Speckle was released, a load balancer m
 | `cert_manager_issuer` | The name of the ClusterIssuer kubernetes resource that provides the SSL Certificate | `letsencrypt-staging` |
 
 
+### Network Plugin configuration
+
+This is used to define the type of network policy that is deployed.
+Different Kubernetes Network Plugins or Container Network Interfaces (CNIs) can make use of different types of
+Network Policy.  Some of these provide more features than the standard Kubernetes Network Policy.
+
+| Name                 | Description                                                                                                 | Value        |
+| -------------------- | ----------------------------------------------------------------------------------------------------------- | ------------ |
+| `networkPlugin.type` | (Optional) Used to configure which type of NetworkPolicy is deployed. Options are 'kubernetes' or 'cilium'. | `kubernetes` |
+
+
 ### Ingress metadata for NetworkPolicy
 
 This section is ignored unless networkPolicy is enabled for frontend or server.
@@ -145,22 +156,22 @@ A secret containing the connection string to the Postgres database must stored w
 The name of the secret must match the `secretName` parameter, and the key within this secret must be `postgres_url`.
 ref: https://kubernetes.io/docs/concepts/configuration/secret/#opaque-secrets
 
-| Name                                           | Description                                                                                                                                                  | Value     |
-| ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------- |
-| `db.useCertificate`                            | If enabled, the certificate defined in db.certificate is used to verify TLS connections to the Postgres database                                             | `false`   |
-| `db.maxConnectionsServer`                      | The number of connections to the Postgres database to provide in the connection pool                                                                         | `4`       |
-| `db.certificate`                               | The x509 public certificate for SSL connections to the Postgres database                                                                                     | `""`      |
-| `db.PGSSLMODE`                                 | This defines the level of security used when connecting to the Postgres database                                                                             | `require` |
-| `db.networkPolicy`                             | If networkPolicy is enabled for any service, this provides the NetworkPolicy with the necessary details to allow egress connections to the Postgres database |           |
-| `db.networkPolicy.port`                        | the port on the server providing the Postgres database (default: "5432")                                                                                     | `""`      |
-| `db.networkPolicy.externalToCluster`           | Only required if the Postgres database is not hosted within the Kubernetes cluster in which Speckle will be deployed.                                        |           |
-| `db.networkPolicy.externalToCluster.enabled`   | If enabled, indicates that the Postgres database is hosted externally to the Kubernetes cluster                                                              | `true`    |
-| `db.networkPolicy.externalToCluster.host`      | The domain name at which the Postgres database is hosted.                                                                                                    | `""`      |
-| `db.networkPolicy.externalToCluster.ipv4`      | The IP address at which the Postgres database is hosted                                                                                                      | `""`      |
-| `db.networkPolicy.inCluster`                   | Only required if the Postgres database is hosted within the Kubernetes cluster in which Speckle will be deployed.                                            |           |
-| `db.networkPolicy.inCluster.enabled`           | If enabled, indicates that the Postgres database is hosted withing the same Kubernetes cluster in which Speckle will be deployed                             | `false`   |
-| `db.networkPolicy.inCluster.podSelector`       | The pod Selector yaml object used to uniquely select the Postgres database pods within the cluster and given namespace                                       | `{}`      |
-| `db.networkPolicy.inCluster.namespaceSelector` | The namespace selector yaml object used to uniquely select the namespace in which the Postgres database pods are deployed                                    | `{}`      |
+| Name                                                      | Description                                                                                                                                                                | Value     |
+| --------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
+| `db.useCertificate`                                       | If enabled, the certificate defined in db.certificate is used to verify TLS connections to the Postgres database                                                           | `false`   |
+| `db.maxConnectionsServer`                                 | The number of connections to the Postgres database to provide in the connection pool                                                                                       | `4`       |
+| `db.certificate`                                          | The x509 public certificate for SSL connections to the Postgres database                                                                                                   | `""`      |
+| `db.PGSSLMODE`                                            | This defines the level of security used when connecting to the Postgres database                                                                                           | `require` |
+| `db.networkPolicy`                                        | If networkPolicy is enabled for any service, this provides the NetworkPolicy with the necessary details to allow egress connections to the Postgres database               |           |
+| `db.networkPolicy.externalToCluster`                      | Only required if the Postgres database is not hosted within the Kubernetes cluster in which Speckle will be deployed.                                                      |           |
+| `db.networkPolicy.externalToCluster.enabled`              | If enabled, indicates that the Postgres database is hosted externally to the Kubernetes cluster                                                                            | `true`    |
+| `db.networkPolicy.inCluster`                              | Only required if the Postgres database is hosted within the Kubernetes cluster in which Speckle will be deployed.                                                          |           |
+| `db.networkPolicy.inCluster.enabled`                      | If enabled, indicates that the Postgres database is hosted withing the same Kubernetes cluster in which Speckle will be deployed                                           | `false`   |
+| `db.networkPolicy.inCluster.port`                         | the port on the server providing the Postgres database (default: "5432")                                                                                                   | `""`      |
+| `db.networkPolicy.inCluster.kubernetes.podSelector`       | (Kubernetes Network Policy only) The pod Selector yaml object used to uniquely select the postgres compatible database pods within the cluster and given namespace         | `{}`      |
+| `db.networkPolicy.inCluster.kubernetes.namespaceSelector` | (Kubernetes Network Policy only) The namespace selector yaml object used to uniquely select the namespace in which the postgres compatible database pods are deployed      | `{}`      |
+| `db.networkPolicy.inCluster.cilium.endpointSelector`      | (Cilium Network Policy only) The endpoint selector yaml object used to uniquely select the in-cluster endpoint in which the postgres compatible database pods are deployed | `{}`      |
+| `db.networkPolicy.inCluster.cilium.serviceSelector`       | (Cilium Network Policy only) The service selector yaml object used to uniquely select the in-cluster service providing the postgres compatible database service            | `{}`      |
 
 
 ### S3 Compatible Storage
@@ -170,23 +181,23 @@ A secret containing the secret key must stored within the Kubernetes cluster as 
 The name of the Kubernetes Secret resource must match the `secretName` parameter, and the key within this Kubernetes Secret must be `s3_secret_key`.
 ref: https://kubernetes.io/docs/concepts/configuration/secret/#opaque-secrets
 
-| Name                                           | Description                                                                                                                                                      | Value   |
-| ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `s3.endpoint`                                  | The URL at which the s3 compatible storage is hosted                                                                                                             | `""`    |
-| `s3.bucket`                                    | The s3 compatible bucket in which Speckle data will be stored                                                                                                    | `""`    |
-| `s3.access_key`                                | The key of the access key used to authenticate with the s3 compatible storage                                                                                    | `""`    |
-| `s3.create_bucket`                             | If enabled, will create a bucket with the given bucket name at this endpoint                                                                                     | `false` |
-| `s3.region`                                    | The region in which the bucket resides (or will be created in).                                                                                                  | `""`    |
-| `s3.networkPolicy`                             | If networkPolicy is enabled for any service, this provides the NetworkPolicy with the necessary details to allow egress connections to the s3 compatible storage |         |
-| `s3.networkPolicy.port`                        | the port on the server providing the s3 compatible storage (default: "443")                                                                                      | `""`    |
-| `s3.networkPolicy.externalToCluster`           | Only required if the s3 compatible storage is not hosted within the Kubernetes cluster in which Speckle will be deployed.                                        |         |
-| `s3.networkPolicy.externalToCluster.enabled`   | If enabled, indicates that the s3 compatible storage is hosted externally to the Kubernetes cluster                                                              | `true`  |
-| `s3.networkPolicy.externalToCluster.host`      | The domain name at which the s3 compatible storage is hosted.                                                                                                    | `""`    |
-| `s3.networkPolicy.externalToCluster.ipv4`      | The IP address at which the s3 compatible storage is hosted                                                                                                      | `""`    |
-| `s3.networkPolicy.inCluster`                   | Only required if the s3 compatible storage is hosted within the Kubernetes cluster in which Speckle will be deployed.                                            |         |
-| `s3.networkPolicy.inCluster.enabled`           | If enabled, indicates that the s3 compatible storage is hosted withing the same Kubernetes cluster in which Speckle will be deployed                             | `false` |
-| `s3.networkPolicy.inCluster.podSelector`       | The pod Selector yaml object used to uniquely select the s3 compatible storage pods within the cluster and given namespace                                       | `{}`    |
-| `s3.networkPolicy.inCluster.namespaceSelector` | The namespace selector yaml object used to uniquely select the namespace in which the s3 compatible storage pods are deployed                                    | `{}`    |
+| Name                                                      | Description                                                                                                                                                         | Value   |
+| --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `s3.endpoint`                                             | The URL at which the s3 compatible storage is hosted                                                                                                                | `""`    |
+| `s3.bucket`                                               | The s3 compatible bucket in which Speckle data will be stored                                                                                                       | `""`    |
+| `s3.access_key`                                           | The key of the access key used to authenticate with the s3 compatible storage                                                                                       | `""`    |
+| `s3.create_bucket`                                        | If enabled, will create a bucket with the given bucket name at this endpoint                                                                                        | `false` |
+| `s3.region`                                               | The region in which the bucket resides (or will be created in).                                                                                                     | `""`    |
+| `s3.networkPolicy`                                        | If networkPolicy is enabled for any service, this provides the NetworkPolicy with the necessary details to allow egress connections to the s3 compatible storage    |         |
+| `s3.networkPolicy.port`                                   | the port on the server providing the s3 compatible storage (default: "443")                                                                                         | `""`    |
+| `s3.networkPolicy.externalToCluster`                      | Only required if the s3 compatible storage is not hosted within the Kubernetes cluster in which Speckle will be deployed.                                           |         |
+| `s3.networkPolicy.externalToCluster.enabled`              | If enabled, indicates that the s3 compatible storage is hosted externally to the Kubernetes cluster                                                                 | `true`  |
+| `s3.networkPolicy.inCluster`                              | Only required if the s3 compatible storage is hosted within the Kubernetes cluster in which Speckle will be deployed.                                               |         |
+| `s3.networkPolicy.inCluster.enabled`                      | If enabled, indicates that the s3 compatible storage is hosted withing the same Kubernetes cluster in which Speckle will be deployed                                | `false` |
+| `s3.networkPolicy.inCluster.kubernetes.podSelector`       | (Kubernetes Network Policy only) The pod Selector yaml object used to uniquely select the s3 compatible storage pods within the cluster and given namespace         | `{}`    |
+| `s3.networkPolicy.inCluster.kubernetes.namespaceSelector` | (Kubernetes Network Policy only) The namespace selector yaml object used to uniquely select the namespace in which the s3 compatible storage pods are deployed      | `{}`    |
+| `s3.networkPolicy.inCluster.cilium.endpointSelector`      | (Cilium Network Policy only) The endpoint selector yaml object used to uniquely select the in-cluster endpoint in which the s3 compatible storage pods are deployed | `{}`    |
+| `s3.networkPolicy.inCluster.cilium.serviceSelector`       | (Cilium Network Policy only) The service selector yaml object used to uniquely select the in-cluster service providing the s3 compatible storage service            | `{}`    |
 
 
 ### Redis Store
@@ -196,18 +207,18 @@ A secret containing the redis url (containing domain, username, and password) mu
 The name of the Kubernetes Secret resource must match the `secretName` parameter, and the key within this Kubernetes Secret resource must be `redis_url`.
 ref: https://kubernetes.io/docs/concepts/configuration/secret/#opaque-secrets
 
-| Name                                              | Description                                                                                                                                               | Value   |
-| ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `redis.networkPolicy`                             | If networkPolicy is enabled for Speckle server, this provides the NetworkPolicy with the necessary details to allow egress connections to the Redis store |         |
-| `redis.networkPolicy.port`                        | the port on the server providing the Redis store (default: "6379")                                                                                        | `""`    |
-| `redis.networkPolicy.externalToCluster`           | Only required if the Redis store is not hosted within the Kubernetes cluster in which Speckle will be deployed.                                           |         |
-| `redis.networkPolicy.externalToCluster.enabled`   | If enabled, indicates that the Redis store is hosted externally to the Kubernetes cluster                                                                 | `true`  |
-| `redis.networkPolicy.externalToCluster.host`      | The domain name at which the Redis store is hosted.                                                                                                       | `""`    |
-| `redis.networkPolicy.externalToCluster.ipv4`      | The IP address at which the Redis store is hosted                                                                                                         | `""`    |
-| `redis.networkPolicy.inCluster`                   | is only required if the Redis store is hosted within the Kubernetes cluster in which Speckle will be deployed.                                            |         |
-| `redis.networkPolicy.inCluster.enabled`           | If enabled, indicates that the Redis store is hosted withing the same Kubernetes cluster in which Speckle will be deployed                                | `false` |
-| `redis.networkPolicy.inCluster.podSelector`       | The pod Selector yaml object used to uniquely select the Redis store pods within the cluster and given namespace                                          | `{}`    |
-| `redis.networkPolicy.inCluster.namespaceSelector` | The namespace selector yaml object used to uniquely select the namespace in which the Redis store pods are deployed                                       | `{}`    |
+| Name                                                         | Description                                                                                                                                               | Value   |
+| ------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `redis.networkPolicy`                                        | If networkPolicy is enabled for Speckle server, this provides the NetworkPolicy with the necessary details to allow egress connections to the Redis store |         |
+| `redis.networkPolicy.externalToCluster`                      | Only required if the Redis store is not hosted within the Kubernetes cluster in which Speckle will be deployed.                                           |         |
+| `redis.networkPolicy.externalToCluster.enabled`              | If enabled, indicates that the Redis store is hosted externally to the Kubernetes cluster                                                                 | `true`  |
+| `redis.networkPolicy.inCluster`                              | is only required if the Redis store is hosted within the Kubernetes cluster in which Speckle will be deployed.                                            |         |
+| `redis.networkPolicy.inCluster.enabled`                      | If enabled, indicates that the Redis store is hosted withing the same Kubernetes cluster in which Speckle will be deployed                                | `false` |
+| `redis.networkPolicy.inCluster.port`                         | the port on the server providing the Redis store (default: "6379")                                                                                        | `""`    |
+| `redis.networkPolicy.inCluster.kubernetes.podSelector`       | (Kubernetes Network Policy only) The pod Selector yaml object used to uniquely select the redis store pods within the cluster and given namespace         | `{}`    |
+| `redis.networkPolicy.inCluster.kubernetes.namespaceSelector` | (Kubernetes Network Policy only) The namespace selector yaml object used to uniquely select the namespace in which the redis store pods are deployed      | `{}`    |
+| `redis.networkPolicy.inCluster.cilium.endpointSelector`      | (Cilium Network Policy only) The endpoint selector yaml object used to uniquely select the in-cluster endpoint in which the redis pods are deployed       | `{}`    |
+| `redis.networkPolicy.inCluster.cilium.serviceSelector`       | (Cilium Network Policy only) The service selector yaml object used to uniquely select the in-cluster service providing the redis store service            | `{}`    |
 
 
 ### Server
@@ -217,40 +228,49 @@ A secret containing the an unique value (this can be generated randomly) must st
 The name of the Kubernetes Secret resource must match the `secretName` parameter, and the key within this Secret resource must be `session_secret`.
 ref: https://kubernetes.io/docs/concepts/configuration/secret/#opaque-secrets
 
-| Name                                     | Description                                                                                                                                | Value   |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ------- |
-| `server.replicas`                        | The number of instances of the Server pod to be deployed within the cluster.                                                               | `1`     |
-| `server.auth`                            | Speckle provides a number of different mechanisms for authenticating users.  Each available option must be configured here.                |         |
-| `server.auth.local.enabled`              | If enabled, users can register and authenticate with an email address and password.                                                        | `true`  |
-| `server.auth.google.enabled`             | If enabled, users can authenticate via Google with their Google account credentials.                                                       | `false` |
-| `server.auth.google.client_id`           | This is the ID for Speckle that you have registered with Google.                                                                           | `""`    |
-| `server.auth.github.enabled`             | If enabled, users can authenticate via Github with their Github account credentials.                                                       | `false` |
-| `server.auth.github.client_id`           | This is the ID for Speckle that you have registered with Github                                                                            | `""`    |
-| `server.auth.azure_ad.enabled`           | If enabled, users can authenticate via Azure Active Directory.                                                                             | `false` |
-| `server.auth.azure_ad.org_name`          | This is the Organisation Name that you have registered with Azure                                                                          | `""`    |
-| `server.auth.azure_ad.identity_metadata` | This is the identity metadata for Speckle that you have registered with Azure                                                              | `""`    |
-| `server.auth.azure_ad.issuer`            | This is the issuer name for Speckle that you have registered with Azure                                                                    | `""`    |
-| `server.auth.azure_ad.client_id`         | This is the ID for Speckle that you have registered with Azure                                                                             | `""`    |
-| `server.email`                           | Speckle can communicate with users via email, providing account verification and notification.                                             |         |
-| `server.email.enabled`                   | If enabled, Speckle can send email to users - for example, email verification for account registration.                                    | `false` |
-| `server.email.host`                      | The domain name or IP address of the server hosting the email service.                                                                     | `""`    |
-| `server.email.port`                      | The port on the server for the email service.                                                                                              | `""`    |
-| `server.email.username`                  | The username with which Speckle will authenticate with the email service.                                                                  | `""`    |
-| `server.requests.cpu`                    | The CPU that should be available on a node when scheduling this pod.                                                                       | `500m`  |
-| `server.requests.memory`                 | The Memory that should be available on a node when scheduling this pod.                                                                    | `1Gi`   |
-| `server.limits.cpu`                      | The maximum CPU that will be made available to the server Pod in a given period.                                                           | `1000m` |
-| `server.limits.memory`                   | The maximum Memory that will be made available to the server Pod.                                                                          | `3Gi`   |
-| `server.serviceAccount.create`           | If enabled, a Kubernetes Service Account will be created for this pod.                                                                     | `true`  |
-| `server.monitoring.apollo.enabled`       | (Optional) If enabled, exports metrics from the GraphQL API to Apollo Graphql Studio.                                                      | `false` |
-| `server.monitoring.apollo.graph_id`      | The ID for Speckle that you registered in Apollo Graphql Studio.                                                                           | `""`    |
-| `server.sentry_dns`                      | (Optional) The Data Source Name that was provided by Sentry.io                                                                             | `""`    |
-| `server.disable_tracking`                | If set to true, will prevent tracking metrics from being collected                                                                         | `false` |
-| `server.disable_tracing`                 | If set to true, will prevent tracing metrics from being collected                                                                          | `false` |
-| `server.networkPolicy.enabled`           | If enabled, will provide additional security be limiting network traffic into and out of the pod to only the required endpoints and ports. | `false` |
-| `server.affinity`                        | Affinity for Speckle server pods scheduling                                                                                                | `{}`    |
-| `server.nodeSelector`                    | Node labels for Speckle server pods scheduling                                                                                             | `{}`    |
-| `server.tolerations`                     | Tolerations for Speckle server pods scheduling                                                                                             | `[]`    |
-| `server.topologySpreadConstraints`       | Spread Constraints for Speckle server pod scheduling                                                                                       | `[]`    |
+| Name                                                                | Description                                                                                                                                                 | Value   |
+| ------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `server.replicas`                                                   | The number of instances of the Server pod to be deployed within the cluster.                                                                                | `1`     |
+| `server.auth`                                                       | Speckle provides a number of different mechanisms for authenticating users.  Each available option must be configured here.                                 |         |
+| `server.auth.local.enabled`                                         | If enabled, users can register and authenticate with an email address and password.                                                                         | `true`  |
+| `server.auth.google.enabled`                                        | If enabled, users can authenticate via Google with their Google account credentials.                                                                        | `false` |
+| `server.auth.google.client_id`                                      | This is the ID for Speckle that you have registered with Google.                                                                                            | `""`    |
+| `server.auth.github.enabled`                                        | If enabled, users can authenticate via Github with their Github account credentials.                                                                        | `false` |
+| `server.auth.github.client_id`                                      | This is the ID for Speckle that you have registered with Github                                                                                             | `""`    |
+| `server.auth.azure_ad.enabled`                                      | If enabled, users can authenticate via Azure Active Directory.                                                                                              | `false` |
+| `server.auth.azure_ad.org_name`                                     | This is the Organisation Name that you have registered with Azure                                                                                           | `""`    |
+| `server.auth.azure_ad.identity_metadata`                            | This is the identity metadata for Speckle that you have registered with Azure                                                                               | `""`    |
+| `server.auth.azure_ad.issuer`                                       | This is the issuer name for Speckle that you have registered with Azure                                                                                     | `""`    |
+| `server.auth.azure_ad.client_id`                                    | This is the ID for Speckle that you have registered with Azure                                                                                              | `""`    |
+| `server.email`                                                      | Speckle can communicate with users via email, providing account verification and notification.                                                              |         |
+| `server.email.enabled`                                              | If enabled, Speckle can send email to users - for example, email verification for account registration.                                                     | `false` |
+| `server.email.host`                                                 | The domain name or IP address of the server hosting the email service.                                                                                      | `""`    |
+| `server.email.port`                                                 | The port on the server for the email service.                                                                                                               | `""`    |
+| `server.email.username`                                             | The username with which Speckle will authenticate with the email service.                                                                                   | `""`    |
+| `server.email.networkPolicy`                                        | If networkPolicy is enabled for Speckle server, this provides the Network Policy with the necessary details to allow egress connections to the email server |         |
+| `server.email.networkPolicy.externalToCluster`                      | Only required if the Redis store is not hosted within the Kubernetes cluster in which Speckle will be deployed.                                             |         |
+| `server.email.networkPolicy.externalToCluster.enabled`              | If enabled, indicates that the email server is hosted externally to the Kubernetes cluster                                                                  | `true`  |
+| `server.email.networkPolicy.inCluster`                              | is only required if the email server is hosted within the Kubernetes cluster in which Speckle will be deployed.                                             |         |
+| `server.email.networkPolicy.inCluster.enabled`                      | If enabled, indicates that the email server is hosted withing the same Kubernetes cluster in which Speckle will be deployed                                 | `false` |
+| `server.email.networkPolicy.inCluster.kubernetes.podSelector`       | (Kubernetes Network Policy only) The pod Selector yaml object used to uniquely select the email server pods within the cluster and given namespace          | `{}`    |
+| `server.email.networkPolicy.inCluster.kubernetes.namespaceSelector` | (Kubernetes Network Policy only) The namespace selector yaml object used to uniquely select the namespace in which the email server pods are deployed       | `{}`    |
+| `server.email.networkPolicy.inCluster.cilium.endpointSelector`      | (Cilium Network Policy only) The endpoint selector yaml object used to uniquely select the in-cluster endpoint in which the email server pods are deployed  | `{}`    |
+| `server.email.networkPolicy.inCluster.cilium.serviceSelector`       | (Cilium Network Policy only) The service selector yaml object used to uniquely select the in-cluster service providing the email server                     | `{}`    |
+| `server.requests.cpu`                                               | The CPU that should be available on a node when scheduling this pod.                                                                                        | `500m`  |
+| `server.requests.memory`                                            | The Memory that should be available on a node when scheduling this pod.                                                                                     | `1Gi`   |
+| `server.limits.cpu`                                                 | The maximum CPU that will be made available to the server Pod in a given period.                                                                            | `1000m` |
+| `server.limits.memory`                                              | The maximum Memory that will be made available to the server Pod.                                                                                           | `3Gi`   |
+| `server.serviceAccount.create`                                      | If enabled, a Kubernetes Service Account will be created for this pod.                                                                                      | `true`  |
+| `server.monitoring.apollo.enabled`                                  | (Optional) If enabled, exports metrics from the GraphQL API to Apollo Graphql Studio.                                                                       | `false` |
+| `server.monitoring.apollo.graph_id`                                 | The ID for Speckle that you registered in Apollo Graphql Studio.                                                                                            | `""`    |
+| `server.sentry_dns`                                                 | (Optional) The Data Source Name that was provided by Sentry.io                                                                                              | `""`    |
+| `server.disable_tracking`                                           | If set to true, will prevent tracking metrics from being collected                                                                                          | `false` |
+| `server.disable_tracing`                                            | If set to true, will prevent tracing metrics from being collected                                                                                           | `false` |
+| `server.networkPolicy.enabled`                                      | If enabled, will provide additional security be limiting network traffic into and out of the pod to only the required endpoints and ports.                  | `false` |
+| `server.affinity`                                                   | Affinity for Speckle server pods scheduling                                                                                                                 | `{}`    |
+| `server.nodeSelector`                                               | Node labels for Speckle server pods scheduling                                                                                                              | `{}`    |
+| `server.tolerations`                                                | Tolerations for Speckle server pods scheduling                                                                                                              | `[]`    |
+| `server.topologySpreadConstraints`                                  | Spread Constraints for Speckle server pod scheduling                                                                                                        | `[]`    |
 
 
 ### Frontend
