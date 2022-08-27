@@ -3,8 +3,6 @@ kind: Ingress
 metadata:
   name: speckle-server
   namespace: {{ .Values.namespace }}
-  labels:
-{{ include "speckle.labels" . | indent 4 }}
   annotations:
     {{- if .Values.cert_manager_issuer }}
     cert-manager.io/cluster-issuer: {{ .Values.cert_manager_issuer }}

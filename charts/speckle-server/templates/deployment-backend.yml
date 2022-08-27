@@ -1,32 +1,37 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "server.name" $ }}
+  name: speckle-server
   namespace: {{ .Values.namespace }}
   labels:
-{{ include "server.labels" . | indent 4 }}
+    app: speckle-server
+    project: speckle-server
 spec:
   replicas: {{ .Values.server.replicas }}
   selector:
     matchLabels:
       app: speckle-server
       project: speckle-server
-  strategy:
-    type: RollingUpdate
   template:
     metadata:
       labels:
-{{ include "server.labels" . | indent 8 }}
+        app: speckle-server
+        project: speckle-server
     spec:
+      priorityClassName: high-priority
+
+      {{- if .Values.db.useCertificate }}
+      volumes:
+        - name: postgres-certificate
+          configMap:
+            name: postgres-certificate
+      {{- end }}
+
+      terminationGracePeriodSeconds: 310
+
       containers:
       - name: main
         image: speckle/speckle-server:{{ .Values.docker_image_tag }}
-        imagePullPolicy: {{ .Values.imagePullPolicy }}
-
-        ports:
-          - name: http
-            containerPort: {{ include "server.port" $ }}
-            protocol: TCP
 
         resources:
           requests:
@@ -36,22 +41,10 @@ spec:
             cpu: {{ .Values.server.limits.cpu }}
             memory: {{ .Values.server.limits.memory }}
 
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-              - ALL
-          privileged: false
-          readOnlyRootFilesystem: true
-          runAsNonRoot: true
-          runAsUser: 20000
-
-        volumeMounts:
-          - mountPath: /tmp
-            name: tmp
         {{- if .Values.db.useCertificate }}
-          - name: postgres-certificate
-            mountPath: /postgres-certificate
+        volumeMounts:
+        - name: postgres-certificate
+          mountPath: /postgres-certificate
         {{- end }}
 
         # Allow for k8s to remove the pod from the service endpoints to stop receive traffic
@@ -91,7 +84,7 @@ spec:
             {{- end }}
 
           - name: PORT
-            value: {{ include "server.port" $ | quote }}
+            value: "3000"
           - name: DEBUG
             value: "speckle:*"
 
@@ -143,8 +136,6 @@ spec:
                 key: s3_secret_key
           - name: S3_CREATE_BUCKET
             value: "{{ .Values.s3.create_bucket }}"
-          - name: S3_REGION
-            value: "{{ .Values.s3.region }}"
 
           {{- end }}
 
@@ -257,38 +248,3 @@ spec:
                 name: {{ .Values.secretName }}
                 key: apollo_key
           {{- end }}
-      {{- if .Values.server.affinity }}
-      affinity: {{- include "speckle.renderTpl" (dict "value" .Values.server.affinity "context" $) | nindent 8 }}
-      {{- end }}
-      {{- if .Values.server.nodeSelector }}
-      nodeSelector: {{- include "speckle.renderTpl" (dict "value" .Values.server.nodeSelector "context" $) | nindent 8 }}
-      {{- end }}
-      {{- if .Values.server.tolerations }}
-      tolerations: {{- include "speckle.renderTpl" (dict "value" .Values.server.tolerations "context" $) | nindent 8 }}
-      {{- end }}
-      {{- if .Values.server.topologySpreadConstraints }}
-      topologySpreadConstraints: {{- include "speckle.renderTpl" (dict "value" .Values.server.topologySpreadConstraints "context" $) | nindent 8 }}
-      {{- end }}
-      priorityClassName: high-priority
-
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 20000
-        fsGroup: 25000
-        fsGroupChangePolicy: OnRootMismatch
-        runAsGroup: 30000
-        seccompProfile:
-          type: RuntimeDefault
-
-      {{- if .Values.server.serviceAccount.create }}
-      serviceAccountName: {{ include "server.name" $ }}
-      {{- end }}
-      terminationGracePeriodSeconds: 310
-      volumes:
-        - name: tmp
-          emptyDir: {}
-      {{- if .Values.db.useCertificate }}
-        - name: postgres-certificate
-          configMap:
-            name: postgres-certificate
-      {{- end }}
