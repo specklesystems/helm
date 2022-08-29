@@ -53,7 +53,7 @@ ingress:
 ##
 ## @param docker_image_tag Speckle is published as a Docker Image.  The version of the image which will be deployed is specified by this tag.
 ##
-docker_image_tag: 2.7.3-alpha.9114
+docker_image_tag: 2.7.3-alpha.9217
 
 ## @param imagePullPolicy Determines the conditions when the Docker Images for Speckle should be pulled from the Image registry.
 ## ref: https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy
@@ -369,6 +369,12 @@ server:
       ## @param server.auth.azure_ad.client_id This is the ID for Speckle that you have registered with Azure
       ##
       client_id: ''
+      ## @param server.auth.azure_ad.additional_domains List of `matchName` or `matchPattern` maps for domains that should be allow-listed for egress in Network Policy. https://docs.microsoft.com/en-us/azure/azure-portal/azure-portal-safelist-urls?tabs=public-cloud are enabled by default.
+      ##
+      additional_domains: []
+      ## @param server.auth.azure_ad.port Port on server to connect to. Used to allow egress in Network Policy. Defaults to 443
+      ##
+      port: 443
   ## @extra server.email Speckle can communicate with users via email, providing account verification and notification.
   ##
   email:
