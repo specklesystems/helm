@@ -176,9 +176,6 @@ Defines parameters related to connections to the Postgres database.
 ### S3 Compatible Storage
 
 Defines parameters related to connecting to the S3 compatible storage.
-A secret containing the secret key must stored within the Kubernetes cluster as an opaque Kubernetes Secret.
-The name of the Kubernetes Secret resource must match the `secretName` parameter, and the key within this Kubernetes Secret must be `s3_secret_key`.
-ref: https://kubernetes.io/docs/concepts/configuration/secret/#opaque-secrets
 
 | Name                                                      | Description                                                                                                                                                                                                | Value           |
 | --------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
