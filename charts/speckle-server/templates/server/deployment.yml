@@ -98,8 +98,8 @@ spec:
           - name: SESSION_SECRET
             valueFrom:
               secretKeyRef:
-                name: "{{ default .Values.secretName .Values.server.sessionSecret.secretName }}"
-                key: {{ default "session_secret" .Values.server.sessionSecret.secretKey }}
+                name: "{{ .Values.secretName }}"
+                key: session_secret
 
           - name: FILE_SIZE_LIMIT_MB
             value: {{ .Values.file_size_limit_mb | quote }}
@@ -108,15 +108,15 @@ spec:
           - name: REDIS_URL
             valueFrom:
               secretKeyRef:
-                name: {{ default .Values.secretName .Values.redis.connectionString.secretName }}
-                key: {{ default "redis_url" .Values.redis.connectionString.secretKey }}
+                name: {{ .Values.secretName }}
+                key: redis_url
 
           # *** PostgreSQL Database ***
           - name: POSTGRES_URL
             valueFrom:
               secretKeyRef:
-                name: {{ default .Values.secretName .Values.db.connectionString.secretName }}
-                key: {{ default "postgres_url" .Values.db.connectionString.secretKey }}
+                name: {{ .Values.secretName }}
+                key: postgres_url
           - name: POSTGRES_MAX_CONNECTIONS_SERVER
             value: {{ .Values.db.maxConnectionsServer | quote }}
 
@@ -139,8 +139,8 @@ spec:
           - name: S3_SECRET_KEY
             valueFrom:
               secretKeyRef:
-                name: {{ default .Values.secretName .Values.s3.secret_key.secretName }}
-                key: {{ default "s3_secret_key" .Values.s3.secret_key.secretKey }}
+                name: {{ .Values.secretName }}
+                key: s3_secret_key
           - name: S3_CREATE_BUCKET
             value: "{{ .Values.s3.create_bucket }}"
           - name: S3_REGION
@@ -151,8 +151,13 @@ spec:
           # *** Authentication ***
 
           # Local Auth
+          {{- if .Values.server.auth.local.enabled }}
           - name: STRATEGY_LOCAL
-            value: "{{ .Values.server.auth.local.enabled }}"
+            value: "true"
+          {{- else }}
+          - name: STRATEGY_LOCAL
+            value: "false"
+          {{- end }}
 
           # Google Auth
           {{- if .Values.server.auth.google.enabled }}
@@ -163,8 +168,8 @@ spec:
           - name: GOOGLE_CLIENT_SECRET
             valueFrom:
               secretKeyRef:
-                name: {{ default .Values.secretName .Values.server.auth.google.clientSecret.secretName }}
-                key: {{ default "google_client_secret" .Values.server.auth.google.clientSecret.secretKey }}
+                name: {{ .Values.secretName }}
+                key: google_client_secret
           {{- end }}
 
           # Github Auth
@@ -176,8 +181,8 @@ spec:
           - name: GITHUB_CLIENT_SECRET
             valueFrom:
               secretKeyRef:
-                name: {{ default .Values.secretName .Values.server.auth.github.clientSecret.secretName }}
-                key: {{ default "github_client_secret" .Values.server.auth.github.clientSecret.secretKey }}
+                name: {{ .Values.secretName }}
+                key: github_client_secret
           {{- end }}
 
           # AzureAD Auth
@@ -195,8 +200,8 @@ spec:
           - name: AZURE_AD_CLIENT_SECRET
             valueFrom:
               secretKeyRef:
-                name: {{ default .Values.secretName .Values.server.auth.azure_ad.clientSecret.secretName }}
-                key: {{ default "azure_ad_client_secret" .Values.server.auth.azure_ad.clientSecret.secretKey }}
+                name: {{ .Values.secretName }}
+                key: azure_ad_client_secret
           {{- end }}
 
 
@@ -214,8 +219,8 @@ spec:
           - name: EMAIL_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: {{ default .Values.secretName .Values.server.email.password.secretName }}
-                key: {{ default "email_password" .Values.server.email.password.secretKey }}
+                name: {{ .Values.secretName }}
+                key: email_password
           {{- end }}
 
           # *** Tracking / Tracing ***
@@ -249,8 +254,8 @@ spec:
           - name: APOLLO_KEY
             valueFrom:
               secretKeyRef:
-                name: {{ default .Values.secretName .Values.server.monitoring.apollo.key.secretName }}
-                key: {{ default "apollo_key" .Values.server.monitoring.apollo.key.secretKey }}
+                name: {{ .Values.secretName }}
+                key: apollo_key
           {{- end }}
       {{- if .Values.server.affinity }}
       affinity: {{- include "speckle.renderTpl" (dict "value" .Values.server.affinity "context" $) | nindent 8 }}

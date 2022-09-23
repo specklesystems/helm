@@ -1,4 +1,4 @@
-{{ if ( and .Values.db.useCertificate .Values.db.certificate ) }}
+{{ if .Values.db.useCertificate }}
 
 apiVersion: v1
 kind: ConfigMap
