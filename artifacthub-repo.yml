@@ -1,0 +1,9 @@
+repositoryID: 8874533c-d5ce-454a-ab7e-88c8b5191cda
+owners:
+  - name: SpeckleDevops
+    email: devops@speckle.systems
+ignore: # (optional, packages that should not be indexed by Artifact Hub)
+  - name: speckle-server-branch-frontend-2
+  - name: speckle-server # Exact match
+    version: alpha
+  - name: test-speckle-server
