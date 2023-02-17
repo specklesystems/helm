@@ -2,6 +2,23 @@ apiVersion: v1
 entries:
   speckle-server:
   - apiVersion: v2
+    appVersion: 2.12.3-alpha.25911
+    created: "2023-02-17T12:18:15.515167692Z"
+    description: Speckle Server
+    digest: 6bafca56f66874241becf5036e97122dcf9543c94d1df1b93fa1b5689ff9496f
+    home: https://speckle.systems/
+    icon: https://speckle.xyz/logo.svg
+    maintainers:
+    - name: Speckle Systems
+      url: https://speckle.systems/
+    name: speckle-server
+    sources:
+    - https://github.com/specklesystems/speckle-server
+    type: application
+    urls:
+    - https://github.com/specklesystems/helm/releases/download/speckle-server-2.12.3-alpha.25911/speckle-server-2.12.3-alpha.25911.tgz
+    version: 2.12.3-alpha.25911
+  - apiVersion: v2
     appVersion: 2.12.3-alpha.25882
     created: "2023-02-17T12:00:44.347234737Z"
     description: Speckle Server
@@ -6644,4 +6661,4 @@ entries:
     urls:
     - https://github.com/specklesystems/helm/releases/download/test-speckle-server-0.1.0/test-speckle-server-0.1.0.tgz
     version: 0.1.0
-generated: "2023-02-17T12:00:44.349756541Z"
+generated: "2023-02-17T12:18:15.517629618Z"
