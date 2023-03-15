@@ -60,28 +60,6 @@ spec:
             exec:
               command: ["sleep", "5"]
 
-
-        livenessProbe:
-          # account for long-running migrations
-          initialDelaySeconds: 600
-          periodSeconds: 60
-          timeoutSeconds: 10
-          exec:
-            command:
-              - node
-              - -e
-              - "require('request')({headers: {'Content-Type': 'application/json'}, uri: 'http://localhost:3000/graphql?query={serverInfo{version}}', method: 'GET' }, (e,r,b) => process.exit(r.statusCode != 200 || b.toLowerCase().includes('error')))"
-
-        readinessProbe:
-          initialDelaySeconds: 5
-          periodSeconds: 10
-          timeoutSeconds: 10
-          exec:
-            command:
-              - node
-              - -e
-              - "require('request')({headers: {'Content-Type': 'application/json'}, uri: 'http://localhost:3000/graphql?query={serverInfo{version}}', method: 'GET' }, (e,r,b) => process.exit(r.statusCode != 200 || b.toLowerCase().includes('error')))"
-
         env:
           - name: CANONICAL_URL
             {{- if .Values.ssl_canonical_url }}
@@ -92,9 +70,9 @@ spec:
 
           - name: PORT
             value: {{ include "server.port" $ | quote }}
-          - name: DEBUG
-            value: "speckle:*"
-          
+          - name: LOG_LEVEL
+            value: {{ .Values.server.logLevel }}
+
           - name: USE_FRONTEND_2
             value: {{ .Values.frontend_2.enabled | quote }}
 
@@ -137,6 +115,18 @@ spec:
           - name: NODE_EXTRA_CA_CERTS
             value: "/postgres-certificate/ca-certificate.crt"
           {{- end }}
+
+          {{- if .Values.server.fileUploads.enabled }}
+          {{ else }}
+          - name: DISABLE_FILE_UPLOADS 
+            value: "true"
+          {{ end }}
+
+          {{- if .Values.server.adminOverrideEnabled }}
+          - name: ADMIN_OVERRIDE_ENABLED
+            value: "true"
+          {{- end }}
+            
 
           # *** S3 Object Storage ***
           {{- if (or .Values.s3.configMap.enabled .Values.s3.endpoint) }}
@@ -208,6 +198,24 @@ spec:
               secretKeyRef:
                 name: {{ default .Values.secretName .Values.server.auth.azure_ad.clientSecret.secretName }}
                 key: {{ default "azure_ad_client_secret" .Values.server.auth.azure_ad.clientSecret.secretKey }}
+          {{- end }}
+
+
+          # OpenID Connect Auth
+          {{- if .Values.server.auth.oidc.enabled }}
+          - name: STRATEGY_OIDC
+            value: "true"
+          - name: OIDC_NAME
+            value: {{ .Values.server.auth.oidc.name }}
+          - name: OIDC_DISCOVERY_URL
+            value: {{ .Values.server.auth.oidc.discovery_url }}
+          - name: OIDC_CLIENT_ID
+            value: {{ .Values.server.auth.oidc.client_id }}
+          - name: OIDC_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: {{ default .Values.secretName .Values.server.auth.oidc.clientSecret.secretName }}
+                key: {{ default "oidc_client_secret" .Values.server.auth.oidc.clientSecret.secretKey }}
           {{- end }}
 
 

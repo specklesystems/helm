@@ -39,7 +39,7 @@ spec:
           service:
             name: speckle-frontend
             port:
-              number: 80
+              number: 8080
       {{- end }}
       - pathType: Exact
         path: "/(graphql|explorer|(auth/.*)|(objects/.*)|(preview/.*)|(api/.*)|(static/.*))"

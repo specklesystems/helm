@@ -118,9 +118,7 @@
                       "type": "array",
                       "description": "(Cilium Network Policy only) The endpoint selector yaml object used to uniquely select the in-cluster endpoint in which the prometheus pods are deployed",
                       "default": [],
-                      "items": {
-                        "type": "object"
-                      }
+                      "items": {}
                     }
                   }
                 }
@@ -438,6 +436,16 @@
           "description": "The number of instances of the Server pod to be deployed within the cluster.",
           "default": 1
         },
+        "logLevel": {
+          "type": "string",
+          "description": "The minimum level of logs which will be output. Suitable values are trace, debug, info, warn, error, fatal, or silent",
+          "default": "info"
+        },
+        "adminOverrideEnabled": {
+          "type": "boolean",
+          "description": "Enables the server side admin authz override",
+          "default": false
+        },
         "sessionSecret": {
           "type": "object",
           "properties": {
@@ -573,14 +581,58 @@
                   "type": "array",
                   "description": "List of `matchName` or `matchPattern` maps for domains that should be allow-listed for egress in Network Policy. https://docs.microsoft.com/en-us/azure/azure-portal/azure-portal-safelist-urls?tabs=public-cloud are enabled by default.",
                   "default": [],
-                  "items": {
-                    "type": "object"
-                  }
+                  "items": {}
                 },
                 "port": {
                   "type": "number",
                   "description": "Port on server to connect to. Used to allow egress in Network Policy. Defaults to 443",
                   "default": 443
+                }
+              }
+            },
+            "oidc": {
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "type": "boolean",
+                  "description": "If enabled, users can authenticate via OpenID Connect identity provider",
+                  "default": false
+                },
+                "name": {
+                  "type": "string",
+                  "description": "This is the name that you want displayed on the login button",
+                  "default": ""
+                },
+                "discovery_url": {
+                  "type": "string",
+                  "description": "This is the OIDC discovery URL for the identity provider you want to use",
+                  "default": ""
+                },
+                "client_id": {
+                  "type": "string",
+                  "description": "This is the ID for Speckle that you have registered with the OIDC identity provider",
+                  "default": ""
+                },
+                "clientSecret": {
+                  "type": "object",
+                  "properties": {
+                    "secretName": {
+                      "type": "string",
+                      "description": "The name of the Kubernetes Secret containing the OIDC client secret. This is expected to be provided within the Kubernetes cluster as an opaque Kubernetes Secret. Ref: https://kubernetes.io/docs/concepts/configuration/secret/#opaque-secrets",
+                      "default": ""
+                    },
+                    "secretKey": {
+                      "type": "string",
+                      "description": "The key within the Kubernetes Secret holding the OIDC client secret as its value.",
+                      "default": ""
+                    }
+                  }
+                },
+                "domains": {
+                  "type": "array",
+                  "description": "List of `matchName` or `matchPattern` maps for domains that should be allow-listed for egress in Network Policy.",
+                  "default": [],
+                  "items": {}
                 }
               }
             }
@@ -721,6 +773,16 @@
             }
           }
         },
+        "fileUploads": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "If enabled, file uploads on the server will be flagged as enabled",
+              "default": true
+            }
+          }
+        },
         "monitoring": {
           "type": "object",
           "properties": {
@@ -795,17 +857,13 @@
           "type": "array",
           "description": "Tolerations for Speckle server pods scheduling",
           "default": [],
-          "items": {
-            "type": "object"
-          }
+          "items": {}
         },
         "topologySpreadConstraints": {
           "type": "array",
           "description": "Spread Constraints for Speckle server pod scheduling",
           "default": [],
-          "items": {
-            "type": "object"
-          }
+          "items": {}
         }
       }
     },
@@ -816,6 +874,11 @@
           "type": "number",
           "description": "The number of instances of the Frontend pod to be deployed within the cluster.",
           "default": 1
+        },
+        "logLevel": {
+          "type": "string",
+          "description": "The minimum level of logs which will be output. Suitable values are trace, debug, info, warn, error, fatal, or silent",
+          "default": "info"
         },
         "requests": {
           "type": "object",
@@ -871,17 +934,13 @@
           "type": "array",
           "description": "Tolerations for Speckle frontend pods scheduling",
           "default": [],
-          "items": {
-            "type": "object"
-          }
+          "items": {}
         },
         "topologySpreadConstraints": {
           "type": "array",
           "description": "Spread Constraints for Speckle frontend pod scheduling",
           "default": [],
-          "items": {
-            "type": "object"
-          }
+          "items": {}
         },
         "serviceAccount": {
           "type": "object",
@@ -902,6 +961,11 @@
           "type": "number",
           "description": "The number of instances of the Preview Service pod to be deployed within the cluster.",
           "default": 1
+        },
+        "logLevel": {
+          "type": "string",
+          "description": "The minimum level of logs which will be output. Suitable values are trace, debug, info, warn, error, fatal, or silent",
+          "default": "info"
         },
         "requests": {
           "type": "object",
@@ -957,17 +1021,13 @@
           "type": "array",
           "description": "Tolerations for Speckle Preview Service pods scheduling",
           "default": [],
-          "items": {
-            "type": "object"
-          }
+          "items": {}
         },
         "topologySpreadConstraints": {
           "type": "array",
           "description": "Spread Constraints for Speckle Preview Service pod scheduling",
           "default": [],
-          "items": {
-            "type": "object"
-          }
+          "items": {}
         },
         "serviceAccount": {
           "type": "object",
@@ -988,6 +1048,11 @@
           "type": "number",
           "description": "The number of instances of the Webhook Service pod to be deployed within the cluster.",
           "default": 1
+        },
+        "logLevel": {
+          "type": "string",
+          "description": "The minimum level of logs which will be output. Suitable values are trace, debug, info, warn, error, fatal, or silent",
+          "default": "info"
         },
         "requests": {
           "type": "object",
@@ -1043,17 +1108,13 @@
           "type": "array",
           "description": "Tolerations for Speckle Webhook Service pods scheduling",
           "default": [],
-          "items": {
-            "type": "object"
-          }
+          "items": {}
         },
         "topologySpreadConstraints": {
           "type": "array",
           "description": "Spread Constraints for Speckle Webhook Service pod scheduling",
           "default": [],
-          "items": {
-            "type": "object"
-          }
+          "items": {}
         },
         "serviceAccount": {
           "type": "object",
@@ -1074,6 +1135,11 @@
           "type": "number",
           "description": "The number of instances of the FileImport Service pod to be deployed within the cluster.",
           "default": 1
+        },
+        "logLevel": {
+          "type": "string",
+          "description": "The minimum level of logs which will be output. Suitable values are trace, debug, info, warn, error, fatal, or silent",
+          "default": "info"
         },
         "requests": {
           "type": "object",
@@ -1129,17 +1195,13 @@
           "type": "array",
           "description": "Tolerations for Speckle FileImport Service pods scheduling",
           "default": [],
-          "items": {
-            "type": "object"
-          }
+          "items": {}
         },
         "topologySpreadConstraints": {
           "type": "array",
           "description": "Spread Constraints for Speckle FileImport Service pod scheduling",
           "default": [],
-          "items": {
-            "type": "object"
-          }
+          "items": {}
         },
         "serviceAccount": {
           "type": "object",
@@ -1165,6 +1227,11 @@
           "type": "number",
           "description": "The number of instances of the Monitoring pod to be deployed within the cluster.",
           "default": 1
+        },
+        "logLevel": {
+          "type": "string",
+          "description": "The minimum level of logs which will be output. Suitable values are trace, debug, info, warn, error, fatal, or silent",
+          "default": "info"
         },
         "requests": {
           "type": "object",
@@ -1220,17 +1287,13 @@
           "type": "array",
           "description": "Tolerations for Speckle Monitoring pods scheduling",
           "default": [],
-          "items": {
-            "type": "object"
-          }
+          "items": {}
         },
         "topologySpreadConstraints": {
           "type": "array",
           "description": "Spread Constraints for Speckle Monitoring pod scheduling",
           "default": [],
-          "items": {
-            "type": "object"
-          }
+          "items": {}
         },
         "serviceAccount": {
           "type": "object",
@@ -1252,6 +1315,11 @@
     "test": {
       "type": "object",
       "properties": {
+        "logLevel": {
+          "type": "string",
+          "description": "The minimum level of logs which will be output. Suitable values are trace, debug, info, warn, error, fatal, or silent",
+          "default": "info"
+        },
         "requests": {
           "type": "object",
           "properties": {
