@@ -7620,6 +7620,23 @@ entries:
     version: 0.1.1
   speckle-server-branch-frontend-2:
   - apiVersion: v2
+    appVersion: 2.13.1-branch.frontend-2.31874.8ac3d9b
+    created: "2023-04-12T12:20:55.159977852Z"
+    description: Speckle Server
+    digest: 4977e04065a0110ff4fef59b3cf25cf090533e5e41bb146b693c0106c9664b91
+    home: https://speckle.systems/
+    icon: https://speckle.xyz/logo.svg
+    maintainers:
+    - name: Speckle Systems
+      url: https://speckle.systems/
+    name: speckle-server-branch-frontend-2
+    sources:
+    - https://github.com/specklesystems/speckle-server
+    type: application
+    urls:
+    - https://github.com/specklesystems/helm/releases/download/speckle-server-branch-frontend-2-2.13.1-branch.frontend-2.31874.8ac3d9b/speckle-server-branch-frontend-2-2.13.1-branch.frontend-2.31874.8ac3d9b.tgz
+    version: 2.13.1-branch.frontend-2.31874.8ac3d9b
+  - apiVersion: v2
     appVersion: 2.13.1-branch.frontend-2.31830.8d9a54c
     created: "2023-04-12T09:39:49.860015271Z"
     description: Speckle Server
@@ -8265,4 +8282,4 @@ entries:
     urls:
     - https://github.com/specklesystems/helm/releases/download/speckle-server-branch-frontend-2-2.12.6-branch.frontend-2.28896.62e2f58/speckle-server-branch-frontend-2-2.12.6-branch.frontend-2.28896.62e2f58.tgz
     version: 2.12.6-branch.frontend-2.28896.62e2f58
-generated: "2023-04-12T09:39:49.862193852Z"
+generated: "2023-04-12T12:20:55.163039467Z"
