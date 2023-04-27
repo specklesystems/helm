@@ -5,7 +5,7 @@ apiVersion: v2
 # It is recommended to use it with quotes.
 
 # Set by the build process to the correct value
-appVersion: '2.13.4-branch.frontend-2.33443.03a035c'
+appVersion: '2.13.4-branch.frontend-2.33586.b3b7c40'
 description: Speckle Server
 home: 'https://speckle.systems/'
 icon: 'https://speckle.xyz/logo.svg'
@@ -21,4 +21,4 @@ type: application
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
 
 # Set by the build process to the correct value
-version: 2.13.4-branch.frontend-2.33443.03a035c
+version: 2.13.4-branch.frontend-2.33586.b3b7c40
