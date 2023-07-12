@@ -341,6 +341,8 @@ Defines parameters related to the frontend server component of Speckle.
 ### frontend_2
 
 Defines parameters related to the new frontend_2 component of Speckle
+@param frontend_2.logLevel The minimum level of logs which will be output. Suitable values are trace, debug, info, warn, error, fatal, or silent
+
 @param frontend_2.enabled Feature flag to enable running the new experimental frontend.
 @param frontend_2.replicas The number of instances of the Frontend 2 server prod to be deployed withing the cluster.
 @param frontend_2.requests.cpu The CPU that should be available on a node when scheduling this pod.
@@ -382,6 +384,7 @@ access to most secrets on the cluster and access to the Kubernetes API.
 
 | Name                                   | Description                                                                                                                                | Value   |
 | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ------- |
+| `frontend_2.logLevel`                  | The minimum level of logs which will be output. Suitable values are trace, debug, info, warn, error, fatal, or silent                      | `info`  |
 | `frontend_2.enabled`                   | Feature flag to enable running the new experimental frontend.                                                                              | `false` |
 | `frontend_2.replicas`                  | The number of instances of the Frontend 2 server prod to be deployed withing the cluster.                                                  | `1`     |
 | `frontend_2.requests.cpu`              | The CPU that should be available on a node when scheduling this pod.                                                                       | `250m`  |
