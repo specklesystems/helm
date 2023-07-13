@@ -342,50 +342,6 @@ Defines parameters related to the frontend server component of Speckle.
 ### frontend_2
 
 Defines parameters related to the frontend_2 component of Speckle
-@param frontend_2.logClientApiToken SEQ API token
-
-@param frontend_2.logClientApiEndpoint SEQ endpoint URL
-
-@param frontend_2.logLevel The minimum level of logs which will be output. Suitable values are trace, debug, info, warn, error, fatal, or silent
-
-@param frontend_2.enabled Feature flag to enable running the new experimental frontend.
-@param frontend_2.replicas The number of instances of the Frontend 2 server prod to be deployed withing the cluster.
-@param frontend_2.requests.cpu The CPU that should be available on a node when scheduling this pod.
-ref: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
-
-@param frontend_2.requests.memory The Memory that should be available on a node when scheduling this pod.
-Depending on the Kubernetes cluster's configuration, exceeding this value may result in pod eviction from a node.
-ref: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
-
-@param frontend_2.limits.cpu The maximum CPU that will be made available to the frontend Pod in a given period.
-If this limit is exceeded, execution of the Pod will be paused until the next period.
-ref: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
-
-@param frontend_2.limits.memory The maximum Memory that will be made available to the frontend Pod.
-If this limit is exceeded, processes within the pod that request additional memory may be stopped.
-ref: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
-
-@param frontend_2.networkPolicy.enabled If enabled, will provide additional security be limiting network traffic into and out of the pod to only the required endpoints and ports.
-If enabled, the `ingress` parameters need be configured.
-ref: https://kubernetes.io/docs/concepts/services-networking/network-policies/
-
-@param frontend_2.affinity Affinity for Speckle frontend pod scheduling
-ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-
-@param frontend_2.nodeSelector Node labels for Speckle frontend pods scheduling
-ref: https://kubernetes.io/docs/user-guide/node-selection/
-
-@param frontend_2.tolerations Tolerations for Speckle frontend pods scheduling
-ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
-
-@param frontend_2.topologySpreadConstraints Spread Constraints for Speckle frontend pod scheduling
-ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
-
-@param frontend_2.serviceAccount.create If enabled, a Kubernetes Service Account will be created for this pod.
-This provides additional security by limiting this pod's access to the Kubernetes API and to Secrets on the Kubernetes cluster.
-If disabled, the default Service Account will be used which in most Kubernetes configurations will grant this pod
-access to most secrets on the cluster and access to the Kubernetes API.
-
 
 | Name                                   | Description                                                                                                                                | Value   |
 | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ------- |
@@ -407,8 +363,6 @@ access to most secrets on the cluster and access to the Kubernetes API.
 
 ### Preview Service
 
-@section Preview Service
-@descriptionStart
 Defines parameters related to the Preview Service component of Speckle.
 
 | Name                                        | Description                                                                                                                                | Value   |
