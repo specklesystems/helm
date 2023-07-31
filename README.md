@@ -343,23 +343,25 @@ Defines parameters related to the frontend server component of Speckle.
 
 Defines parameters related to the frontend_2 component of Speckle
 
-| Name                                   | Description                                                                                                                                | Value   |
-| -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ------- |
-| `frontend_2.logClientApiToken`         | SEQ API token                                                                                                                              | `""`    |
-| `frontend_2.logClientApiEndpoint`      | SEQ endpoint URL                                                                                                                           | `""`    |
-| `frontend_2.logLevel`                  | The minimum level of logs which will be output. Suitable values are trace, debug, info, warn, error, fatal, or silent                      | `info`  |
-| `frontend_2.enabled`                   | Feature flag to enable running the new experimental frontend.                                                                              | `false` |
-| `frontend_2.replicas`                  | The number of instances of the Frontend 2 server prod to be deployed withing the cluster.                                                  | `1`     |
-| `frontend_2.requests.cpu`              | The CPU that should be available on a node when scheduling this pod.                                                                       | `250m`  |
-| `frontend_2.requests.memory`           | The Memory that should be available on a node when scheduling this pod.                                                                    | `256Mi` |
-| `frontend_2.limits.cpu`                | The maximum CPU that will be made available to the frontend Pod in a given period.                                                         | `1000m` |
-| `frontend_2.limits.memory`             | The maximum Memory that will be made available to the frontend Pod.                                                                        | `512Mi` |
-| `frontend_2.networkPolicy.enabled`     | If enabled, will provide additional security be limiting network traffic into and out of the pod to only the required endpoints and ports. | `false` |
-| `frontend_2.affinity`                  | Affinity for Speckle frontend pod scheduling                                                                                               | `{}`    |
-| `frontend_2.nodeSelector`              | Node labels for Speckle frontend pods scheduling                                                                                           | `{}`    |
-| `frontend_2.tolerations`               | Tolerations for Speckle frontend pods scheduling                                                                                           | `[]`    |
-| `frontend_2.topologySpreadConstraints` | Spread Constraints for Speckle frontend pod scheduling                                                                                     | `[]`    |
-| `frontend_2.serviceAccount.create`     | If enabled, a Kubernetes Service Account will be created for this pod.                                                                     | `true`  |
+| Name                                             | Description                                                                                                                                | Value                                                |
+| ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------- |
+| `frontend_2.logClientApiToken`                   | SEQ API token                                                                                                                              | `""`                                                 |
+| `frontend_2.logClientApiEndpoint`                | SEQ endpoint URL                                                                                                                           | `""`                                                 |
+| `frontend_2.logLevel`                            | The minimum level of logs which will be output. Suitable values are trace, debug, info, warn, error, fatal, or silent                      | `info`                                               |
+| `frontend_2.enabled`                             | Feature flag to enable running the new experimental frontend.                                                                              | `false`                                              |
+| `frontend_2.replicas`                            | The number of instances of the Frontend 2 server prod to be deployed withing the cluster.                                                  | `1`                                                  |
+| `frontend_2.onboarding.stream_url`               | The (cross-server) URL to the project/stream that should be used as the onboarding project base.                                           | `https://latest.speckle.systems/projects/843d07eb10` |
+| `frontend_2.onboarding.stream_cache_bust_number` | Increase this number to trigger the re-pulling of the base stream                                                                          | `1`                                                  |
+| `frontend_2.requests.cpu`                        | The CPU that should be available on a node when scheduling this pod.                                                                       | `250m`                                               |
+| `frontend_2.requests.memory`                     | The Memory that should be available on a node when scheduling this pod.                                                                    | `256Mi`                                              |
+| `frontend_2.limits.cpu`                          | The maximum CPU that will be made available to the frontend Pod in a given period.                                                         | `1000m`                                              |
+| `frontend_2.limits.memory`                       | The maximum Memory that will be made available to the frontend Pod.                                                                        | `512Mi`                                              |
+| `frontend_2.networkPolicy.enabled`               | If enabled, will provide additional security be limiting network traffic into and out of the pod to only the required endpoints and ports. | `false`                                              |
+| `frontend_2.affinity`                            | Affinity for Speckle frontend pod scheduling                                                                                               | `{}`                                                 |
+| `frontend_2.nodeSelector`                        | Node labels for Speckle frontend pods scheduling                                                                                           | `{}`                                                 |
+| `frontend_2.tolerations`                         | Tolerations for Speckle frontend pods scheduling                                                                                           | `[]`                                                 |
+| `frontend_2.topologySpreadConstraints`           | Spread Constraints for Speckle frontend pod scheduling                                                                                     | `[]`                                                 |
+| `frontend_2.serviceAccount.create`               | If enabled, a Kubernetes Service Account will be created for this pod.                                                                     | `true`                                               |
 
 ### Preview Service
 
