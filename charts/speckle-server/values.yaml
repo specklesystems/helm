@@ -56,7 +56,7 @@ ingress:
 ##
 ## @param docker_image_tag Speckle is published as a Docker Image.  The version of the image which will be deployed is specified by this tag.
 ##
-docker_image_tag: '2.17.17-alpha.75698'
+docker_image_tag: '2.17.17-alpha.75874'
 ## @param imagePullPolicy Determines the conditions when the Docker Images for Speckle should be pulled from the Image registry.
 ## ref: https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy
 ##
@@ -358,6 +358,9 @@ server:
   ## @param server.logLevel The minimum level of logs which will be output. Suitable values are trace, debug, info, warn, error, fatal, or silent
   ##
   logLevel: 'info'
+  ## @param server.image The Docker image to be used for the Speckle Server component. If blank, defaults to speckle/speckle-server:{{ .Values.docker_image_tag }}. If provided, this value should be the full path including tag. The docker_image_tag value will be ignored.
+  ##
+  image: ''
   onboarding:
     ## @param server.onboarding.stream_url The (cross-server) URL to the project/stream that should be used as the onboarding project base.
     ##
@@ -766,6 +769,9 @@ frontend:
   ## @param frontend.logLevel The minimum level of logs which will be output. Suitable values are trace, debug, info, warn, error, fatal, or silent
   ##
   logLevel: 'info'
+  ## @param frontend.image The Docker image to be used for the Speckle Frontend component. If blank, defaults to speckle/speckle-frontend:{{ .Values.docker_image_tag }}. If provided, this value should be the full path including tag. The docker_image_tag value will be ignored.
+  ##
+  image: ''
   requests:
     ## @param frontend.requests.cpu The CPU that should be available on a node when scheduling this pod.
     ## ref: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
@@ -822,6 +828,9 @@ frontend:
 ## @descriptionEnd
 ##
 frontend_2:
+  ## @param frontend_2.image The Docker image to be used for the Speckle Frontend 2 component. If blank, defaults to speckle/speckle-frontend-2:{{ .Values.docker_image_tag }}. If provided, this value should be the full path including tag. The docker_image_tag value will be ignored.
+  ##
+  image: ''
   ## @param frontend_2.logClientApiToken SEQ API token
   ##
   logClientApiToken: ''
@@ -899,6 +908,9 @@ preview_service:
   ## @param preview_service.logLevel The minimum level of logs which will be output. Suitable values are trace, debug, info, warn, error, fatal, or silent
   ##
   logLevel: 'info'
+  ## @param preview_service.image The Docker image to be used for the Speckle Preview Service component. If blank, defaults to speckle/speckle-preview-service:{{ .Values.docker_image_tag }}. If provided, this value should be the full path including tag. The docker_image_tag value will be ignored.
+  ##
+  image: ''
   requests:
     ## @param preview_service.requests.cpu The CPU that should be available on a node when scheduling this pod.
     ## ref: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
@@ -961,6 +973,9 @@ webhook_service:
   ## @param webhook_service.logLevel The minimum level of logs which will be output. Suitable values are trace, debug, info, warn, error, fatal, or silent
   ##
   logLevel: 'info'
+  ## @param webhook_service.image The Docker image to be used for the Speckle Webhook Service component. If blank, defaults to speckle/speckle-webhook-service:{{ .Values.docker_image_tag }}. If provided, this value should be the full path including tag. The docker_image_tag value will be ignored.
+  ##
+  image: ''
   requests:
     ## @param webhook_service.requests.cpu The CPU that should be available on a node when scheduling this pod.
     ## ref: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
@@ -1023,6 +1038,9 @@ fileimport_service:
   ## @param fileimport_service.logLevel The minimum level of logs which will be output. Suitable values are trace, debug, info, warn, error, fatal, or silent
   ##
   logLevel: 'info'
+  ## @param fileimport_service.image The Docker image to be used for the Speckle FileImport Service component. If blank, defaults to speckle/speckle-fileimport-service:{{ .Values.docker_image_tag }}. If provided, this value should be the full path including tag. The docker_image_tag value will be ignored.
+  ##
+  image: ''
   requests:
     ## @param fileimport_service.requests.cpu The CPU that should be available on a node when scheduling this pod.
     ## ref: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
@@ -1091,6 +1109,9 @@ monitoring:
   ## @param monitoring.logLevel The minimum level of logs which will be output. Suitable values are trace, debug, info, warn, error, fatal, or silent
   ##
   logLevel: 'info'
+  ## @param monitoring.image The Docker image to be used for the Speckle Monitoring component. If blank, defaults to speckle/speckle-monitoring-deployment:{{ .Values.docker_image_tag }}. If provided, this value should be the full path including tag. The docker_image_tag value will be ignored.
+  ##
+  image: ''
   requests:
     ## @param monitoring.requests.cpu The CPU that should be available on a node when scheduling this pod.
     ## ref: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
@@ -1154,6 +1175,9 @@ test:
   ## @param test.logLevel The minimum level of logs which will be output. Suitable values are trace, debug, info, warn, error, fatal, or silent
   ##
   logLevel: 'info'
+  ## @param test.image The Docker image to be used for the Speckle Test component. If blank, defaults to speckle/speckle-test-deployment:{{ .Values.docker_image_tag }}. If provided, this value should be the full path including tag. The docker_image_tag value will be ignored.
+  ##
+  image: ''
   requests:
     ## @param test.requests.cpu The CPU that should be available on a node when scheduling this pod.
     ## ref: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
