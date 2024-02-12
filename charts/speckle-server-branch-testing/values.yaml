@@ -56,7 +56,7 @@ ingress:
 ##
 ## @param docker_image_tag Speckle is published as a Docker Image.  The version of the image which will be deployed is specified by this tag.
 ##
-docker_image_tag: '2.18.2-branch.testing.80224-ae4cdaf'
+docker_image_tag: '2.18.2-branch.testing.80588-c159c29'
 ## @param imagePullPolicy Determines the conditions when the Docker Images for Speckle should be pulled from the Image registry.
 ## ref: https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy
 ##
@@ -609,10 +609,10 @@ server:
     post_graphql: 50
     ## @param server.ratelimiting.burst_post_graphql If the regular limit is exceeded, the limit is increased to the burst limit. This is the maximum number of requests that can be made to the GraphQL API in a moving one minute window.
     burst_post_graphql: 200
-    ## @param server.ratelimiting.get_auth The maximum number of requests that can be made to the Speckle server to authenticate in a moving one second window.
-    get_auth: 2
-    ## @param server.ratelimiting.burst_get_auth If the regular limit is exceeded, the limit is increased to the burst limit. This is the maximum number of requests that can be made to the Speckle server to authenticate in a moving one minute window.
-    burst_get_auth: 20
+    ## @param server.ratelimiting.get_auth The maximum number of requests that can be made to the Speckle server to authenticate in a moving 10 minute window.
+    get_auth: 4
+    ## @param server.ratelimiting.burst_get_auth If the regular limit is exceeded, the limit is increased to the burst limit. This is the maximum number of requests that can be made to the Speckle server to authenticate in a moving thirty minute window.
+    burst_get_auth: 10
   serviceAccount:
     ## @param server.serviceAccount.create If enabled, a Kubernetes Service Account will be created for this pod.
     ## This provides additional security by limiting this pod's access to the Kubernetes API and to Secrets on the Kubernetes cluster.
