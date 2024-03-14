@@ -56,7 +56,7 @@ ingress:
 ##
 ## @param docker_image_tag Speckle is published as a Docker Image.  The version of the image which will be deployed is specified by this tag.
 ##
-docker_image_tag: '2.18.11-alpha.88334'
+docker_image_tag: '2.18.11-alpha.88471'
 ## @param imagePullPolicy Determines the conditions when the Docker Images for Speckle should be pulled from the Image registry.
 ## ref: https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy
 ##
@@ -361,6 +361,9 @@ server:
   ## @param server.image The Docker image to be used for the Speckle Server component. If blank, defaults to speckle/speckle-server:{{ .Values.docker_image_tag }}. If provided, this value should be the full path including tag. The docker_image_tag value will be ignored.
   ##
   image: ''
+  ## @param server.enableFe2Messaging If enabled, the related FE1 deployment will show banners/messages about the new frontend
+  ##
+  enableFe2Messaging: false
   onboarding:
     ## @param server.onboarding.stream_url The (cross-server) URL to the project/stream that should be used as the onboarding project base.
     ##
