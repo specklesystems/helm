@@ -33,7 +33,7 @@ What is Speckle? Check our [![YouTube Video Views](https://img.shields.io/youtub
 
 Give Speckle a try in no time by:
 
-- [![speckle XYZ](https://img.shields.io/badge/https://-speckle.xyz-0069ff?style=flat-square&logo=hackthebox&logoColor=white)](https://speckle.xyz) ⇒ creating an account at
+- [![speckle](https://img.shields.io/badge/https://-app.speckle.systems-0069ff?style=flat-square&logo=hackthebox&logoColor=white)](https://app.speckle.systems) ⇒ Creating an account
 - [![deploy to kubernetes](https://img.shields.io/badge/Deploy%20to%20Kubernetes-0069ff?style=flat-square&logo=Kubernetes&logoColor=white)](https://speckle.guide/dev/server-setup-k8s.html) ⇒ Guide to deploying this Helm chart to Kubernetes
 
 ## Resources
