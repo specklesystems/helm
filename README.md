@@ -94,15 +94,23 @@ Depending on the Infrastructure on which Speckle was released, a load balancer m
 
 ### SSL
 
-| Name                          | Description                                                                                                                                                                                                                                           | Value                               |
-| ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------- |
-| `domain`                      | The DNS host name at which this Speckle deployment will be reachable                                                                                                                                                                                  | `localhost`                         |
-| `ssl_canonical_url`           | HTTPS protocol will be the preferred protocol for serving this Speckle deployment                                                                                                                                                                     | `true`                              |
-| `tlsRejectUnauthorized`       | If '1' (true), Speckle will reject any SSL certificates that are not signed by a trusted Certificate Authority. Should only be disabled in a trusted local development environment. https://nodejs.org/api/cli.html#node_tls_reject_unauthorizedvalue | `1`                                 |
-| `cert_manager_issuer`         | The name of the ClusterIssuer kubernetes resource that provides the SSL Certificate                                                                                                                                                                   | `letsencrypt-staging`               |
-| `analytics.enabled`           | Enable or disable analytics                                                                                                                                                                                                                           | `true`                              |
-| `analytics.mixpanel_token_id` | The Mixpanel token ID used to identify this Speckle deployment in MixPanel                                                                                                                                                                            | `acd87c5a50b56df91a795e999812a3a4`  |
-| `analytics.mixpanel_api_host` | The Mixpanel API host to which analytics data will be sent                                                                                                                                                                                            | `https://analytics.speckle.systems` |
+| Name                    | Description                                                                                                                                                                                                                                           | Value                 |
+| ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
+| `domain`                | The DNS host name at which this Speckle deployment will be reachable                                                                                                                                                                                  | `localhost`           |
+| `ssl_canonical_url`     | HTTPS protocol will be the preferred protocol for serving this Speckle deployment                                                                                                                                                                     | `true`                |
+| `tlsRejectUnauthorized` | If '1' (true), Speckle will reject any SSL certificates that are not signed by a trusted Certificate Authority. Should only be disabled in a trusted local development environment. https://nodejs.org/api/cli.html#node_tls_reject_unauthorizedvalue | `1`                   |
+| `cert_manager_issuer`   | The name of the ClusterIssuer kubernetes resource that provides the SSL Certificate                                                                                                                                                                   | `letsencrypt-staging` |
+
+### Feature flags
+
+This object is a central location to define feature flags for the whole chart.
+
+| Name                                 | Description                                                                | Value                               |
+| ------------------------------------ | -------------------------------------------------------------------------- | ----------------------------------- |
+| `featureFlags.automateModuleEnabled` | High level flag fully toggles the integrated automate module               | `false`                             |
+| `analytics.enabled`                  | Enable or disable analytics                                                | `true`                              |
+| `analytics.mixpanel_token_id`        | The Mixpanel token ID used to identify this Speckle deployment in MixPanel | `acd87c5a50b56df91a795e999812a3a4`  |
+| `analytics.mixpanel_api_host`        | The Mixpanel API host to which analytics data will be sent                 | `https://analytics.speckle.systems` |
 
 ### Network Plugin configuration
 
