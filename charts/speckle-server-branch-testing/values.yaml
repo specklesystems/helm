@@ -24,6 +24,13 @@ tlsRejectUnauthorized: '1'
 ## @param cert_manager_issuer The name of the ClusterIssuer kubernetes resource that provides the SSL Certificate
 ##
 cert_manager_issuer: letsencrypt-staging
+## @section Feature flags
+## @descriptionStart
+## This object is a central location to define feature flags for the whole chart.
+## @descriptionEnd
+featureFlags:
+  ## @param featureFlags.automateModuleEnabled High level flag fully toggles the integrated automate module
+  automateModuleEnabled: false
 analytics:
   ## @param analytics.enabled Enable or disable analytics
   enabled: true
@@ -56,7 +63,7 @@ ingress:
 ##
 ## @param docker_image_tag Speckle is published as a Docker Image.  The version of the image which will be deployed is specified by this tag.
 ##
-docker_image_tag: '2.18.17-branch.testing.102843-07c45d1'
+docker_image_tag: '2.18.17-branch.testing.105886-4091f09'
 ## @param imagePullPolicy Determines the conditions when the Docker Images for Speckle should be pulled from the Image registry.
 ## ref: https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy
 ##
