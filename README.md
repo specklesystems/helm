@@ -405,7 +405,7 @@ Defines parameters related to the frontend server component of Speckle.
 
 ### frontend_2
 
-Defines parameters related to the frontend_2 component of Speckle
+Defines parameters related to the new web application component of Speckle
 
 | Name                                   | Description                                                                                                                                                                                                                                                   | Value   |
 | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
@@ -413,7 +413,7 @@ Defines parameters related to the frontend_2 component of Speckle
 | `frontend_2.logClientApiToken`         | SEQ API token                                                                                                                                                                                                                                                 | `""`    |
 | `frontend_2.logClientApiEndpoint`      | SEQ endpoint URL                                                                                                                                                                                                                                              | `""`    |
 | `frontend_2.logLevel`                  | The minimum level of logs which will be output. Suitable values are trace, debug, info, warn, error, fatal, or silent                                                                                                                                         | `info`  |
-| `frontend_2.enabled`                   | Feature flag to enable running the new experimental frontend.                                                                                                                                                                                                 | `false` |
+| `frontend_2.enabled`                   | Feature flag to enable running the new web application frontend.                                                                                                                                                                                              | `true`  |
 | `frontend_2.replicas`                  | The number of instances of the Frontend 2 server prod to be deployed withing the cluster.                                                                                                                                                                     | `1`     |
 | `frontend_2.requests.cpu`              | The CPU that should be available on a node when scheduling this pod.                                                                                                                                                                                          | `250m`  |
 | `frontend_2.requests.memory`           | The Memory that should be available on a node when scheduling this pod.                                                                                                                                                                                       | `256Mi` |
