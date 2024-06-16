@@ -256,6 +256,7 @@ Defines parameters related to the backend server component of Speckle.
 | `server.gendoAI.ratelimiting.renderRequestPeriodSeconds`            | The period in seconds for the render request limit                                                                                                                                                                                                                                                | `20`                                                 |
 | `server.gendoAI.ratelimiting.burstRenderRequest`                    | The number of render requests allowed in 'burst' mode when the other limit is reached.                                                                                                                                                                                                            | `3`                                                  |
 | `server.gendoAI.ratelimiting.burstRenderRequestPeriodSeconds`       | The period in seconds for the burst render request limit.                                                                                                                                                                                                                                         | `60`                                                 |
+| `server.experimentalObjectsUrl`                                     | Experimental objects backend url                                                                                                                                                                                                                                                                  | `""`                                                 |
 | `server.encryptionKeys.path`                                        | The path where the encryption keys should be loaded from                                                                                                                                                                                                                                          | `/encryption-keys/keys.json`                         |
 | `server.sessionSecret.secretName`                                   | The name of the Kubernetes Secret containing the Session secret.  This is a unique value (can be generated randomly). This is expected to be provided within the Kubernetes cluster as an opaque Kubernetes Secret. Ref: https://kubernetes.io/docs/concepts/configuration/secret/#opaque-secrets | `""`                                                 |
 | `server.sessionSecret.secretKey`                                    | The key within the Kubernetes Secret holding the Session secret as its value.                                                                                                                                                                                                                     | `""`                                                 |
@@ -382,6 +383,19 @@ Defines parameters related to the backend server component of Speckle.
 | `objects.nodeSelector`                                            | Node labels for Speckle server pods scheduling                                                                                                                                                                                                         | `{}`    |
 | `objects.tolerations`                                             | Tolerations for Speckle server pods scheduling                                                                                                                                                                                                         | `[]`    |
 | `objects.topologySpreadConstraints`                               | Spread Constraints for Speckle server pod scheduling                                                                                                                                                                                                   | `[]`    |
+
+### Rusty Objects
+
+Defines parameters related to the experimental objects backend.
+
+| Name                            | Description                                                                      | Value   |
+| ------------------------------- | -------------------------------------------------------------------------------- | ------- |
+| `rusty_objects.image_tag`       | Specify with image tag to deploy                                                 | `0.1.0` |
+| `rusty_objects.replicas`        | Number of replicas to start                                                      | `2`     |
+| `rusty_objects.requests.cpu`    | The CPU that should be available on a node when scheduling this pod.             | `1000m` |
+| `rusty_objects.requests.memory` | The Memory that should be available on a node when scheduling this pod.          | `1Gi`   |
+| `rusty_objects.limits.cpu`      | The maximum CPU that will be made available to the server Pod in a given period. | `1500m` |
+| `rusty_objects.limits.memory`   | The maximum Memory that will be made available to the server Pod.                | `2Gi`   |
 
 ### Frontend
 
