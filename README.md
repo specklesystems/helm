@@ -109,6 +109,7 @@ This object is a central location to define feature flags for the whole chart.
 | ------------------------------------ | -------------------------------------------------------------------------- | ----------------------------------- |
 | `featureFlags.automateModuleEnabled` | High level flag fully toggles the integrated automate module               | `false`                             |
 | `featureFlags.gendoAIModuleEnabled`  | High level flag that toggles the Gendo AI render module                    | `false`                             |
+| `featureFlags.noClosureWrites`       | Toggles whether to stop writing to the closure table                       | `false`                             |
 | `analytics.enabled`                  | Enable or disable analytics                                                | `true`                              |
 | `analytics.mixpanel_token_id`        | The Mixpanel token ID used to identify this Speckle deployment in MixPanel | `acd87c5a50b56df91a795e999812a3a4`  |
 | `analytics.mixpanel_api_host`        | The Mixpanel API host to which analytics data will be sent                 | `https://analytics.speckle.systems` |
