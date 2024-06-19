@@ -599,13 +599,13 @@ Generate the environment variables for Speckle server and Speckle objects deploy
   value: {{ .Values.server.migration.movedTo }}
   {{- end }}
 
+# *** No more closures flag - prevents writing to the closure table ***
+- name: FF_NO_CLOSURE_WRITES
+  value: {{ .Values.featureFlags.noClosureWrites | quote }}
+
 # *** Gendo render module ***
 - name: FF_GENDOAI_MODULE_ENABLED
   value: {{ .Values.featureFlags.gendoAIModuleEnabled | quote }}
-
-# *** Experimental objects api v2 ***
-- name: NEW_OBJECTS_URL
-  value: {{ .Values.server.experimentalObjectsUrl }}
 
 {{- if .Values.featureFlags.gendoAIModuleEnabled }}
 - name: GENDOAI_KEY
