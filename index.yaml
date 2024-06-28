@@ -22443,6 +22443,24 @@ entries:
     urls:
     - https://github.com/specklesystems/helm/releases/download/speckle-server-branch-frontend-2-2.12.6-branch.frontend-2.28896.62e2f58/speckle-server-branch-frontend-2-2.12.6-branch.frontend-2.28896.62e2f58.tgz
     version: 2.12.6-branch.frontend-2.28896.62e2f58
+  speckle-server-branch-hotfix-2.19.1:
+  - apiVersion: v2
+    appVersion: 2.19.2-branch.hotfix-2.19.1.124125-665e7e1
+    created: "2024-06-28T09:36:44.730743699Z"
+    description: Speckle Server
+    digest: c517312b569020240eb57a33e5bf53a285b1a6863994a4987e019af0fb6f3c0c
+    home: https://speckle.systems/
+    icon: https://speckle.xyz/logo.svg
+    maintainers:
+    - name: Speckle Systems
+      url: https://speckle.systems/
+    name: speckle-server-branch-hotfix-2.19.1
+    sources:
+    - https://github.com/specklesystems/speckle-server
+    type: application
+    urls:
+    - https://github.com/specklesystems/helm/releases/download/speckle-server-branch-hotfix-2.19.1-2.19.2-branch.hotfix-2.19.1.124125-665e7e1/speckle-server-branch-hotfix-2.19.1-2.19.2-branch.hotfix-2.19.1.124125-665e7e1.tgz
+    version: 2.19.2-branch.hotfix-2.19.1.124125-665e7e1
   speckle-server-branch-testing:
   - apiVersion: v2
     appVersion: 2.19.1-branch.testing.122136-26b7164
@@ -24333,4 +24351,4 @@ entries:
     urls:
     - https://github.com/specklesystems/helm/releases/download/speckle-server-branch-testing3-2.18.12-branch.testing3.88744-f55b341/speckle-server-branch-testing3-2.18.12-branch.testing3.88744-f55b341.tgz
     version: 2.18.12-branch.testing3.88744-f55b341
-generated: "2024-06-28T08:28:41.798094669Z"
+generated: "2024-06-28T09:36:44.735500008Z"
