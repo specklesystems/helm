@@ -31,6 +31,10 @@ cert_manager_issuer: letsencrypt-staging
 featureFlags:
   ## @param featureFlags.automateModuleEnabled High level flag fully toggles the integrated automate module
   automateModuleEnabled: false
+  ## @param featureFlags.gendoAIModuleEnabled High level flag that toggles the Gendo AI render module
+  gendoAIModuleEnabled: false
+  ## @param featureFlags.noClosureWrites Toggles whether to stop writing to the closure table
+  noClosureWrites: false
 analytics:
   ## @param analytics.enabled Enable or disable analytics
   enabled: true
@@ -63,7 +67,7 @@ ingress:
 ##
 ## @param docker_image_tag Speckle is published as a Docker Image.  The version of the image which will be deployed is specified by this tag.
 ##
-docker_image_tag: '2.18.16-branch.testing3.102146-b2d973f'
+docker_image_tag: '2.19.5-branch.testing3.129550-790d973'
 ## @param imagePullPolicy Determines the conditions when the Docker Images for Speckle should be pulled from the Image registry.
 ## ref: https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy
 ##
@@ -365,6 +369,9 @@ server:
   ## @param server.logLevel The minimum level of logs which will be output. Suitable values are trace, debug, info, warn, error, fatal, or silent
   ##
   logLevel: 'info'
+  ## @param server.logPretty If enabled, will output logs in a human-readable format. Otherwise, logs will be output in JSON format.
+  ##
+  logPretty: false
   ## @param server.image The Docker image to be used for the Speckle Server component. If blank, defaults to speckle/speckle-server:{{ .Values.docker_image_tag }}. If provided, this value should be the full path including tag. The docker_image_tag value will be ignored.
   ##
   image: ''
@@ -393,6 +400,31 @@ server:
   max_project_models_per_page: 500
   ## @param server.speckleAutomateUrl The url of the Speckle Automate instance
   speckleAutomateUrl: 'https://automate.speckle.systems'
+  gendoAI:
+    ## @param server.gendoAI.apiUrl The url of the Gendo AI application, including protocol.
+    apiUrl: 'https://api.gendo.ai/external/generate'
+    key:
+      ## @param server.gendoAI.key.secretName The name of the Kubernetes Secret containing the Gendo AI key. If left blank, will default to the `secretName` parameter.
+      secretName: ''
+      ## @param server.gendoAI.key.secretKey The key within the Kubernetes Secret holding the Gendo AI key as its value.
+      secretKey: 'gendoai_key'
+    keyResponse:
+      ## @param server.gendoAI.keyResponse.secretName The name of the Kubernetes Secret containing the Gendo AI key response. If left blank, will default to the `secretName` parameter.
+      secretName: ''
+      ## @param server.gendoAI.keyResponse.secretKey The key within the Kubernetes Secret holding the Gendo AI key response as its value.
+      secretKey: 'gendoai_key_response'
+    ratelimiting:
+      ## @param server.gendoAI.ratelimiting.renderRequest The number of render requests allowed per period
+      renderRequest: 1
+      ## @param server.gendoAI.ratelimiting.renderRequestPeriodSeconds The period in seconds for the render request limit
+      renderRequestPeriodSeconds: 20
+      ## @param server.gendoAI.ratelimiting.burstRenderRequest The number of render requests allowed in 'burst' mode when the other limit is reached.
+      burstRenderRequest: 3
+      ## @param server.gendoAI.ratelimiting.burstRenderRequestPeriodSeconds The period in seconds for the burst render request limit.
+      burstRenderRequestPeriodSeconds: 60
+  ## @param server.encryptionKeys.path The path where the encryption keys should be loaded from
+  encryptionKeys:
+    path: '/encryption-keys/keys.json'
   sessionSecret:
     ## @param server.sessionSecret.secretName The name of the Kubernetes Secret containing the Session secret.  This is a unique value (can be generated randomly). This is expected to be provided within the Kubernetes cluster as an opaque Kubernetes Secret. Ref: https://kubernetes.io/docs/concepts/configuration/secret/#opaque-secrets
     ##
@@ -726,6 +758,9 @@ objects:
   ## @param objects.logLevel The minimum level of logs which will be output. Suitable values are trace, debug, info, warn, error, fatal, or silent
   ##
   logLevel: 'info'
+  ## @param objects.logPretty If enabled, will output logs in a human-readable format. Otherwise, logs will be output in JSON format.
+  ##
+  logPretty: false
   inspect:
     ## @param objects.inspect.enabled If enabled, indicates that the Speckle server should be deployed with the nodejs inspect feature enabled
     enabled: false
@@ -808,6 +843,9 @@ frontend:
   ## @param frontend.logLevel The minimum level of logs which will be output. Suitable values are trace, debug, info, warn, error, fatal, or silent
   ##
   logLevel: 'info'
+  ## @param frontend.logPretty If enabled, will output logs in a human-readable format. Otherwise, logs will be output in JSON format.
+  ##
+  logPretty: false
   ## @param frontend.image The Docker image to be used for the Speckle Frontend component. If blank, defaults to speckle/speckle-frontend:{{ .Values.docker_image_tag }}. If provided, this value should be the full path including tag. The docker_image_tag value will be ignored.
   ##
   image: ''
@@ -863,7 +901,7 @@ frontend:
     create: true
 ## @section frontend_2
 ## @descriptionStart
-## Defines parameters related to the frontend_2 component of Speckle
+## Defines parameters related to the new web application component of Speckle
 ## @descriptionEnd
 ##
 frontend_2:
@@ -879,9 +917,12 @@ frontend_2:
   ## @param frontend_2.logLevel The minimum level of logs which will be output. Suitable values are trace, debug, info, warn, error, fatal, or silent
   ##
   logLevel: 'info'
-  ## @param frontend_2.enabled Feature flag to enable running the new experimental frontend.
+  ## @param frontend_2.logPretty If enabled, will output logs in a human-readable format. Otherwise, logs will be output in JSON format.
   ##
-  enabled: false
+  logPretty: false
+  ## @param frontend_2.enabled Feature flag to enable running the new web application frontend.
+  ##
+  enabled: true
   ## @param frontend_2.replicas The number of instances of the Frontend 2 server prod to be deployed withing the cluster.
   ##
   replicas: 1
@@ -947,9 +988,17 @@ preview_service:
   ## @param preview_service.logLevel The minimum level of logs which will be output. Suitable values are trace, debug, info, warn, error, fatal, or silent
   ##
   logLevel: 'info'
+  ## @param preview_service.logPretty If enabled, will output logs in a human-readable format. Otherwise, logs will be output in JSON format.
+  ##
+  logPretty: false
   ## @param preview_service.image The Docker image to be used for the Speckle Preview Service component. If blank, defaults to speckle/speckle-preview-service:{{ .Values.docker_image_tag }}. If provided, this value should be the full path including tag. The docker_image_tag value will be ignored.
   ##
   image: ''
+  ## @param preview_service.port The port on which the Preview Service will run. This is not exposed, but used within its own local network within the pod.
+  port: '3001'
+  monitoring:
+    ## @param preview_service.monitoring.metricsPort The port on which the metrics server will be exposed.
+    metricsPort: '9094'
   requests:
     ## @param preview_service.requests.cpu The CPU that should be available on a node when scheduling this pod.
     ## ref: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
@@ -1012,6 +1061,9 @@ webhook_service:
   ## @param webhook_service.logLevel The minimum level of logs which will be output. Suitable values are trace, debug, info, warn, error, fatal, or silent
   ##
   logLevel: 'info'
+  ## @param webhook_service.logPretty If enabled, will output logs in a human-readable format. Otherwise, logs will be output in JSON format.
+  ##
+  logPretty: false
   ## @param webhook_service.image The Docker image to be used for the Speckle Webhook Service component. If blank, defaults to speckle/speckle-webhook-service:{{ .Values.docker_image_tag }}. If provided, this value should be the full path including tag. The docker_image_tag value will be ignored.
   ##
   image: ''
@@ -1077,6 +1129,9 @@ fileimport_service:
   ## @param fileimport_service.logLevel The minimum level of logs which will be output. Suitable values are trace, debug, info, warn, error, fatal, or silent
   ##
   logLevel: 'info'
+  ## @param fileimport_service.logPretty If enabled, will output logs in a human-readable format. Otherwise, logs will be output in JSON format.
+  ##
+  logPretty: false
   ## @param fileimport_service.image The Docker image to be used for the Speckle FileImport Service component. If blank, defaults to speckle/speckle-fileimport-service:{{ .Values.docker_image_tag }}. If provided, this value should be the full path including tag. The docker_image_tag value will be ignored.
   ##
   image: ''
@@ -1148,6 +1203,9 @@ monitoring:
   ## @param monitoring.logLevel The minimum level of logs which will be output. Suitable values are trace, debug, info, warn, error, fatal, or silent
   ##
   logLevel: 'info'
+  ## @param monitoring.logPretty If enabled, will output logs in a human-readable format. Otherwise, logs will be output in JSON format.
+  ##
+  logPretty: false
   ## @param monitoring.image The Docker image to be used for the Speckle Monitoring component. If blank, defaults to speckle/speckle-monitoring-deployment:{{ .Values.docker_image_tag }}. If provided, this value should be the full path including tag. The docker_image_tag value will be ignored.
   ##
   image: ''
@@ -1214,6 +1272,9 @@ test:
   ## @param test.logLevel The minimum level of logs which will be output. Suitable values are trace, debug, info, warn, error, fatal, or silent
   ##
   logLevel: 'info'
+  ## @param test.logPretty If enabled, will output logs in a human-readable format. Otherwise, logs will be output in JSON format.
+  ##
+  logPretty: false
   ## @param test.image The Docker image to be used for the Speckle Test component. If blank, defaults to speckle/speckle-test-deployment:{{ .Values.docker_image_tag }}. If provided, this value should be the full path including tag. The docker_image_tag value will be ignored.
   ##
   image: ''
