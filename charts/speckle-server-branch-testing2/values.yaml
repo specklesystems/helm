@@ -37,6 +37,8 @@ featureFlags:
   noClosureWrites: false
   ## @param featureFlags.workspaceModuleEnabled High level flag fully toggles the workspaces module
   workspaceModuleEnabled: false
+  ## @param featureFlags.workspaceSsoEnabled High level flag fully toggles the workspaces dynamic sso
+  workspaceSsoEnabled: false
   ## @param featureFlags.multipleEmailsModuleEnabled High level flag fully toggles multiple emails
   multipleEmailsModuleEnabled: false
 analytics:
@@ -71,7 +73,7 @@ ingress:
 ##
 ## @param docker_image_tag Speckle is published as a Docker Image.  The version of the image which will be deployed is specified by this tag.
 ##
-docker_image_tag: '2.21.1-branch.testing2.178374-d72c9de'
+docker_image_tag: '2.21.3-branch.testing2.209850-7f9104f'
 ## @param imagePullPolicy Determines the conditions when the Docker Images for Speckle should be pulled from the Image registry.
 ## ref: https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy
 ##
