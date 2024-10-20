@@ -113,6 +113,7 @@ This object is a central location to define feature flags for the whole chart.
 | `featureFlags.workspaceModuleEnabled`      | High level flag fully toggles the workspaces module                        | `false`                             |
 | `featureFlags.workspaceSsoEnabled`         | High level flag fully toggles the workspaces dynamic sso                   | `false`                             |
 | `featureFlags.multipleEmailsModuleEnabled` | High level flag fully toggles multiple emails                              | `false`                             |
+| `featureFlags.gatekeeperModuleEnabled`     | High level flag that enables the gatekeeper module                         | `false`                             |
 | `featureFlags.billingIntegrationEnabled`   | High level flag that enables the billing integration                       | `false`                             |
 | `analytics.enabled`                        | Enable or disable analytics                                                | `true`                              |
 | `analytics.mixpanel_token_id`              | The Mixpanel token ID used to identify this Speckle deployment in MixPanel | `acd87c5a50b56df91a795e999812a3a4`  |
