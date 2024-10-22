@@ -234,6 +234,16 @@ Defines parameters related to connecting to the Redis Store.
 | `redis.networkPolicy.inCluster.cilium.endpointSelector`      | (Cilium Network Policy only) The endpoint selector yaml object used to uniquely select the in-cluster endpoint in which the redis pods are deployed                                                                                                                                                  | `{}`    |
 | `redis.networkPolicy.inCluster.cilium.serviceSelector`       | (Cilium Network Policy only) The service selector yaml object used to uniquely select the in-cluster service providing the redis store service                                                                                                                                                       | `{}`    |
 
+### openTelemetry
+
+Defines parameters related to opentelemetry exporting of metrics.
+
+| Name                          | Description                                                           | Value |
+| ----------------------------- | --------------------------------------------------------------------- | ----- |
+| `openTelemetry.tracing.url`   | Required. The URL to which the opentelemetry traces will be exported. | `""`  |
+| `openTelemetry.tracing.key`   | Required. The key to be used when exporting opentelemetry traces.     | `""`  |
+| `openTelemetry.tracing.value` | Required. The value to be used when exporting opentelemetry traces.   | `""`  |
+
 ### Server
 
 Defines parameters related to the backend server component of Speckle.
