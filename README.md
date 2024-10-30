@@ -105,19 +105,20 @@ Depending on the Infrastructure on which Speckle was released, a load balancer m
 
 This object is a central location to define feature flags for the whole chart.
 
-| Name                                       | Description                                                                | Value                               |
-| ------------------------------------------ | -------------------------------------------------------------------------- | ----------------------------------- |
-| `featureFlags.automateModuleEnabled`       | High level flag fully toggles the integrated automate module               | `false`                             |
-| `featureFlags.gendoAIModuleEnabled`        | High level flag that toggles the Gendo AI render module                    | `false`                             |
-| `featureFlags.noClosureWrites`             | Toggles whether to stop writing to the closure table                       | `false`                             |
-| `featureFlags.workspaceModuleEnabled`      | High level flag fully toggles the workspaces module                        | `false`                             |
-| `featureFlags.workspaceSsoEnabled`         | High level flag fully toggles the workspaces dynamic sso                   | `false`                             |
-| `featureFlags.multipleEmailsModuleEnabled` | High level flag fully toggles multiple emails                              | `false`                             |
-| `featureFlags.gatekeeperModuleEnabled`     | High level flag that enables the gatekeeper module                         | `false`                             |
-| `featureFlags.billingIntegrationEnabled`   | High level flag that enables the billing integration                       | `false`                             |
-| `analytics.enabled`                        | Enable or disable analytics                                                | `true`                              |
-| `analytics.mixpanel_token_id`              | The Mixpanel token ID used to identify this Speckle deployment in MixPanel | `acd87c5a50b56df91a795e999812a3a4`  |
-| `analytics.mixpanel_api_host`              | The Mixpanel API host to which analytics data will be sent                 | `https://analytics.speckle.systems` |
+| Name                                        | Description                                                                                               | Value                               |
+| ------------------------------------------- | --------------------------------------------------------------------------------------------------------- | ----------------------------------- |
+| `featureFlags.automateModuleEnabled`        | High level flag fully toggles the integrated automate module                                              | `false`                             |
+| `featureFlags.gendoAIModuleEnabled`         | High level flag that toggles the Gendo AI render module                                                   | `false`                             |
+| `featureFlags.noClosureWrites`              | Toggles whether to stop writing to the closure table                                                      | `false`                             |
+| `featureFlags.workspaceModuleEnabled`       | High level flag fully toggles the workspaces module                                                       | `false`                             |
+| `featureFlags.workspaceSsoEnabled`          | High level flag fully toggles the workspaces dynamic sso                                                  | `false`                             |
+| `featureFlags.multipleEmailsModuleEnabled`  | High level flag fully toggles multiple emails                                                             | `false`                             |
+| `featureFlags.gatekeeperModuleEnabled`      | High level flag that enables the gatekeeper module                                                        | `false`                             |
+| `featureFlags.billingIntegrationEnabled`    | High level flag that enables the billing integration                                                      | `false`                             |
+| `featureFlags.workspacesMultiRegionEnabled` | Toggles whether multi-region is available within workspaces. workspaceModuleEnabled must also be enabled. | `false`                             |
+| `analytics.enabled`                         | Enable or disable analytics                                                                               | `true`                              |
+| `analytics.mixpanel_token_id`               | The Mixpanel token ID used to identify this Speckle deployment in MixPanel                                | `acd87c5a50b56df91a795e999812a3a4`  |
+| `analytics.mixpanel_api_host`               | The Mixpanel API host to which analytics data will be sent                                                | `https://analytics.speckle.systems` |
 
 ### Network Plugin configuration
 
@@ -238,11 +239,13 @@ Defines parameters related to connecting to the Redis Store.
 
 Defines parameters related to opentelemetry exporting of metrics.
 
-| Name                          | Description                                                           | Value |
-| ----------------------------- | --------------------------------------------------------------------- | ----- |
-| `openTelemetry.tracing.url`   | Required. The URL to which the opentelemetry traces will be exported. | `""`  |
-| `openTelemetry.tracing.key`   | Required. The key to be used when exporting opentelemetry traces.     | `""`  |
-| `openTelemetry.tracing.value` | Required. The value to be used when exporting opentelemetry traces.   | `""`  |
+| Name                            | Description                                                                                                                                                                                                | Value                      |
+| ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- |
+| `openTelemetry.tracing.url`     | Required. The URL to which the opentelemetry traces will be exported.                                                                                                                                      | `""`                       |
+| `openTelemetry.tracing.key`     | Required. The key to be used when exporting opentelemetry traces.                                                                                                                                          | `""`                       |
+| `openTelemetry.tracing.value`   | Required. The value to be used when exporting opentelemetry traces.                                                                                                                                        | `""`                       |
+| `multiRegion.config.secretName` | If workspacesMultiRegionEnabled is enabled, the server will be deployed in a multi-region configuration based on the values in a secret. This allows the default secret name to be overridden.             | `multi-region-config`      |
+| `multiRegion.config.secretKey`  | If workspacesMultiRegionEnabled is enabled, the server will be deployed in a multi-region configuration based on the values in a secret. This allows the default secret key and filename to be overridden. | `multi-region-config.json` |
 
 ### Server
 
