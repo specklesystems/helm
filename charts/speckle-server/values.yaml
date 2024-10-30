@@ -45,6 +45,8 @@ featureFlags:
   gatekeeperModuleEnabled: false
   ## @param featureFlags.billingIntegrationEnabled High level flag that enables the billing integration
   billingIntegrationEnabled: false
+  ## @param featureFlags.workspacesMultiRegionEnabled Toggles whether multi-region is available within workspaces. workspaceModuleEnabled must also be enabled.
+  workspacesMultiRegionEnabled: false
 analytics:
   ## @param analytics.enabled Enable or disable analytics
   enabled: true
@@ -77,7 +79,7 @@ ingress:
 ##
 ## @param docker_image_tag Speckle is published as a Docker Image.  The version of the image which will be deployed is specified by this tag.
 ##
-docker_image_tag: '2.21.3-alpha.219965'
+docker_image_tag: '2.21.3-alpha.220035'
 ## @param imagePullPolicy Determines the conditions when the Docker Images for Speckle should be pulled from the Image registry.
 ## ref: https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy
 ##
@@ -383,6 +385,12 @@ openTelemetry:
     ## @param openTelemetry.tracing.value Required. The value to be used when exporting opentelemetry traces.
     ##
     value: ''
+multiRegion:
+  config:
+    ## @param multiRegion.config.secretName If workspacesMultiRegionEnabled is enabled, the server will be deployed in a multi-region configuration based on the values in a secret. This allows the default secret name to be overridden.
+    secretName: 'multi-region-config'
+    ## @param multiRegion.config.secretKey If workspacesMultiRegionEnabled is enabled, the server will be deployed in a multi-region configuration based on the values in a secret. This allows the default secret key and filename to be overridden.
+    secretKey: 'multi-region-config.json'
 ## @section Server
 ## @descriptionStart
 ## Defines parameters related to the backend server component of Speckle.
