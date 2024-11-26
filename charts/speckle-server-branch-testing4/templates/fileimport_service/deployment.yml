@@ -59,6 +59,8 @@ spec:
         volumeMounts:
           - mountPath: /tmp
             name: tmp
+          - mountPath: /.config
+            name: dotconfig
         {{- if .Values.db.useCertificate }}
           - name: postgres-certificate
             mountPath: /postgres-certificate
@@ -133,6 +135,8 @@ spec:
       terminationGracePeriodSeconds: 610
       volumes:
         - name: tmp
+          emptyDir: {}
+        - name: dotconfig
           emptyDir: {}
       {{- if .Values.db.useCertificate }}
         - name: postgres-certificate
