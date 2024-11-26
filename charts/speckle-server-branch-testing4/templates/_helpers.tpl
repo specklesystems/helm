@@ -586,6 +586,8 @@ Generate the environment variables for Speckle server and Speckle objects deploy
 - name: FF_BILLING_INTEGRATION_ENABLED
   value: {{ .Values.featureFlags.billingIntegrationEnabled | quote }}
 
+- name: FF_WORKSPACES_MULTI_REGION_ENABLED
+  value: {{ .Values.featureFlags.workspacesMultiRegionEnabled | quote }}
 
 {{- if .Values.featureFlags.billingIntegrationEnabled }}
 - name: STRIPE_API_KEY
@@ -670,7 +672,6 @@ Generate the environment variables for Speckle server and Speckle objects deploy
   valueFrom:
     secretKeyRef:
       name: "{{ default .Values.secretName .Values.server.billing.secretName }}"
-      
       key: {{ .Values.server.billing.workspaceYearlyBusinessSeatStripePriceId.secretKey }}
 {{- end }}
 
@@ -730,14 +731,11 @@ Generate the environment variables for Speckle server and Speckle objects deploy
       name: {{ default .Values.secretName .Values.server.gendoAI.key.secretName }}
       key: {{ .Values.server.gendoAI.key.secretKey }}
 
-- name: GENDOAI_KEY_RESPONSE
-  valueFrom:
-    secretKeyRef:
-      name: {{ default .Values.secretName .Values.server.gendoAI.keyResponse.secretName }}
-      key: {{ .Values.server.gendoAI.keyResponse.secretKey }}
-
 - name: GENDOAI_API_ENDPOINT
   value: {{ .Values.server.gendoAI.apiUrl | quote }}
+
+- name: GENDOAI_CREDIT_LIMIT
+  value: {{ .Values.server.gendoAI.creditLimit | quote }}
 
 - name: RATELIMIT_GENDO_AI_RENDER_REQUEST
   value: {{ .Values.server.gendoai.ratelimiting.renderRequest | quote }}
@@ -1059,5 +1057,9 @@ Generate the environment variables for Speckle server and Speckle objects deploy
 {{- if .Values.openTelemetry.tracing.value }}
 - name: OTEL_TRACE_VALUE
   value: {{ .Values.openTelemetry.tracing.value | quote }}
+{{- end }}
+{{- if .Values.featureFlags.workspacesMultiRegionEnabled }}
+- name: MULTI_REGION_CONFIG_PATH
+  value: "/multi-region-config/multi-region-config.json"
 {{- end }}
 {{- end }}

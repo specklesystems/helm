@@ -74,6 +74,16 @@
           "type": "boolean",
           "description": "High level flag that enables the billing integration",
           "default": false
+        },
+        "workspacesMultiRegionEnabled": {
+          "type": "boolean",
+          "description": "Toggles whether multi-region is available within workspaces. workspaceModuleEnabled must also be enabled.",
+          "default": false
+        },
+        "fileImportIFCDotNetEnabled": {
+          "type": "boolean",
+          "description": "Toggles whether the experimental .Net IFC importer is used for importing IFC files.",
+          "default": false
         }
       }
     },
@@ -523,6 +533,26 @@
         }
       }
     },
+    "multiRegion": {
+      "type": "object",
+      "properties": {
+        "config": {
+          "type": "object",
+          "properties": {
+            "secretName": {
+              "type": "string",
+              "description": "If workspacesMultiRegionEnabled is enabled, the server will be deployed in a multi-region configuration based on the values in a secret. This allows the default secret name to be overridden.",
+              "default": "multi-region-config"
+            },
+            "secretKey": {
+              "type": "string",
+              "description": "If workspacesMultiRegionEnabled is enabled, the server will be deployed in a multi-region configuration based on the values in a secret. This allows the default secret key and filename to be overridden.",
+              "default": "multi-region-config.json"
+            }
+          }
+        }
+      }
+    },
     "server": {
       "type": "object",
       "properties": {
@@ -619,6 +649,11 @@
               "description": "The url of the Gendo AI application, including protocol.",
               "default": "https://api.gendo.ai/external/generate"
             },
+            "creditLimit": {
+              "type": "number",
+              "description": "The number of Gendo AI credit a user gets every month.",
+              "default": 40
+            },
             "key": {
               "type": "object",
               "properties": {
@@ -631,21 +666,6 @@
                   "type": "string",
                   "description": "The key within the Kubernetes Secret holding the Gendo AI key as its value.",
                   "default": "gendoai_key"
-                }
-              }
-            },
-            "keyResponse": {
-              "type": "object",
-              "properties": {
-                "secretName": {
-                  "type": "string",
-                  "description": "The name of the Kubernetes Secret containing the Gendo AI key response. If left blank, will default to the `secretName` parameter.",
-                  "default": ""
-                },
-                "secretKey": {
-                  "type": "string",
-                  "description": "The key within the Kubernetes Secret holding the Gendo AI key response as its value.",
-                  "default": "gendoai_key_response"
                 }
               }
             },
