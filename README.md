@@ -116,6 +116,7 @@ This object is a central location to define feature flags for the whole chart.
 | `featureFlags.gatekeeperModuleEnabled`      | High level flag that enables the gatekeeper module                                                         | `false`                             |
 | `featureFlags.billingIntegrationEnabled`    | High level flag that enables the billing integration                                                       | `false`                             |
 | `featureFlags.workspacesMultiRegionEnabled` | Toggles whether multi-region is available within workspaces. workspacesModuleEnabled must also be enabled. | `false`                             |
+| `featureFlags.fileImportIFCDotNetEnabled`   | Toggles whether the experimental .Net IFC importer is used for importing IFC files.                        | `false`                             |
 | `analytics.enabled`                         | Enable or disable analytics                                                                                | `true`                              |
 | `analytics.mixpanel_token_id`               | The Mixpanel token ID used to identify this Speckle deployment in MixPanel                                 | `acd87c5a50b56df91a795e999812a3a4`  |
 | `analytics.mixpanel_api_host`               | The Mixpanel API host to which analytics data will be sent                                                 | `https://analytics.speckle.systems` |
