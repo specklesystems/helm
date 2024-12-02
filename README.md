@@ -111,7 +111,7 @@ This object is a central location to define feature flags for the whole chart.
 | `featureFlags.gendoAIModuleEnabled`         | High level flag that toggles the Gendo AI render module                                                    | `false`                             |
 | `featureFlags.noClosureWrites`              | Toggles whether to stop writing to the closure table                                                       | `false`                             |
 | `featureFlags.workspacesModuleEnabled`      | High level flag fully toggles the workspaces module                                                        | `false`                             |
-| `featureFlags.workspaceSsoEnabled`          | High level flag fully toggles the workspaces dynamic sso                                                   | `false`                             |
+| `featureFlags.workspacesSSOEnabled`         | High level flag fully toggles the workspaces dynamic sso                                                   | `false`                             |
 | `featureFlags.multipleEmailsModuleEnabled`  | High level flag fully toggles multiple emails                                                              | `false`                             |
 | `featureFlags.gatekeeperModuleEnabled`      | High level flag that enables the gatekeeper module                                                         | `false`                             |
 | `featureFlags.billingIntegrationEnabled`    | High level flag that enables the billing integration                                                       | `false`                             |
