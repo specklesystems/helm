@@ -83,7 +83,7 @@ ingress:
 ##
 ## @param docker_image_tag Speckle is published as a Docker Image.  The version of the image which will be deployed is specified by this tag.
 ##
-docker_image_tag: '2.23.4-branch.testing5.255571-694dd26'
+docker_image_tag: '2.23.4-branch.testing5.256144-a69175b'
 ## @param imagePullPolicy Determines the conditions when the Docker Images for Speckle should be pulled from the Image registry.
 ## ref: https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy
 ##
@@ -174,6 +174,12 @@ db:
   ## ref: https://www.postgresql.org/docs/current/libpq-ssl.html#LIBPQ-SSL-PROTECTION
   ##
   PGSSLMODE: require
+  ## @param db.connectionAcquisitionTimeoutMillis The maximum time in milliseconds to wait for a connection to be acquired from the connection pool.
+  ##
+  connectionAcquisitionTimeoutMillis: 15000
+  ## @param db.connectionCreationTimeoutMillis The maximum time in milliseconds to wait for a new connection to be created in the connection pool. Should be less than the acquisition timeout, as a new connection may need to be created then acquired.
+  ##
+  connectionCreationTimeoutMillis: 5000
   ## @param db.databaseName (Optional) The name of the Postgres database to which Speckle will connect. Only required for the Database Monitoring utility when the connection string is to a database connection pool and multi-region is disabled, otherwise this value is ignored.
   databaseName: ''
   connectionString:
@@ -1085,6 +1091,9 @@ preview_service:
   monitoring:
     ## @param preview_service.monitoring.metricsPort The port on which the metrics server will be exposed.
     metricsPort: '9094'
+  ## @param preview_service.postgresMaxConnections The maximum number of connections that the Preview Service postgres client will make to the Postgres database.
+  ##
+  postgresMaxConnections: 2
   puppeteer:
     ## @param preview_service.puppeteer.userDataDirectory The path to the user data directory. If not set, defaults to '/tmp/puppeteer'. This is mounted in the deployment as a volume with read-write access.
     userDataDirectory: ''
@@ -1158,6 +1167,9 @@ webhook_service:
   ## @param webhook_service.image The Docker image to be used for the Speckle Webhook Service component. If blank, defaults to speckle/speckle-webhook-service:{{ .Values.docker_image_tag }}. If provided, this value should be the full path including tag. The docker_image_tag value will be ignored.
   ##
   image: ''
+  ## @param webhook_service.postgresMaxConnections The maximum number of connections that the Webhook Service postgres client will make to the Postgres database.
+  ##
+  postgresMaxConnections: 1
   requests:
     ## @param webhook_service.requests.cpu The CPU that should be available on a node when scheduling this pod.
     ## ref: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
@@ -1226,6 +1238,9 @@ fileimport_service:
   ## @param fileimport_service.image The Docker image to be used for the Speckle FileImport Service component. If blank, defaults to speckle/speckle-fileimport-service:{{ .Values.docker_image_tag }}. If provided, this value should be the full path including tag. The docker_image_tag value will be ignored.
   ##
   image: ''
+  ## @param fileimport_service.postgresMaxConnections The maximum number of connections that the File Import Service postgres client will make to the Postgres database.
+  ##
+  postgresMaxConnections: 1
   requests:
     ## @param fileimport_service.requests.cpu The CPU that should be available on a node when scheduling this pod.
     ## ref: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
