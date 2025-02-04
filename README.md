@@ -119,7 +119,6 @@ This object is a central location to define feature flags for the whole chart.
 | `featureFlags.fileImportIFCDotNetEnabled`   | Toggles whether the experimental .Net IFC importer is used for importing IFC files.                        | `false`                             |
 | `featureFlags.forceEmailVerification`       | Forces email verification for all users                                                                    | `false`                             |
 | `featureFlags.forceOnboarding`              | Forces onboarding for all users                                                                            | `false`                             |
-| `featureFlags.objectsStreamingFix`          | Enables the fix for the objects streaming issue when client prematurely closes the connection              | `false`                             |
 | `analytics.enabled`                         | Enable or disable analytics                                                                                | `true`                              |
 | `analytics.mixpanel_token_id`               | The Mixpanel token ID used to identify this Speckle deployment in MixPanel                                 | `acd87c5a50b56df91a795e999812a3a4`  |
 | `analytics.mixpanel_api_host`               | The Mixpanel API host to which analytics data will be sent                                                 | `https://analytics.speckle.systems` |
