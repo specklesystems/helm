@@ -95,9 +95,9 @@
           "description": "Forces onboarding for all users",
           "default": false
         },
-        "objectsStreamingFix": {
+        "cacheAuthPipeline": {
           "type": "boolean",
-          "description": "Enables the fix for the objects streaming issue when client prematurely closes the connection",
+          "description": "Enables the caching of the authentication pipeline component of each client request",
           "default": false
         }
       }
@@ -685,6 +685,11 @@
           "type": "boolean",
           "description": "If enabled, the server will use the async request context for improved log msg correlation",
           "default": false
+        },
+        "cacheAuthPipelineTtlSeconds": {
+          "type": "number",
+          "description": "The time in seconds for which the authentication pipeline component of each client request should be cached",
+          "default": 2
         },
         "gendoAI": {
           "type": "object",
