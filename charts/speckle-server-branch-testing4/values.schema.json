@@ -45,11 +45,6 @@
           "description": "High level flag that toggles the Gendo AI render module",
           "default": false
         },
-        "noClosureWrites": {
-          "type": "boolean",
-          "description": "Toggles whether to stop writing to the closure table",
-          "default": false
-        },
         "workspacesModuleEnabled": {
           "type": "boolean",
           "description": "High level flag fully toggles the workspaces module",
@@ -93,11 +88,6 @@
         "forceOnboarding": {
           "type": "boolean",
           "description": "Forces onboarding for all users",
-          "default": false
-        },
-        "cacheAuthPipeline": {
-          "type": "boolean",
-          "description": "Enables the caching of the authentication pipeline component of each client request",
           "default": false
         }
       }
@@ -685,11 +675,6 @@
           "type": "boolean",
           "description": "If enabled, the server will use the async request context for improved log msg correlation",
           "default": false
-        },
-        "cacheAuthPipelineTtlSeconds": {
-          "type": "number",
-          "description": "The time in seconds for which the authentication pipeline component of each client request should be cached",
-          "default": 2
         },
         "gendoAI": {
           "type": "object",
