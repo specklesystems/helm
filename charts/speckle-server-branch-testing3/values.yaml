@@ -85,7 +85,7 @@ ingress:
 ##
 ## @param docker_image_tag Speckle is published as a Docker Image.  The version of the image which will be deployed is specified by this tag.
 ##
-docker_image_tag: '2.23.11-branch.testing3.304517-1e66507'
+docker_image_tag: '2.23.11-branch.testing3.306283-2d539dd'
 ## @param imagePullPolicy Determines the conditions when the Docker Images for Speckle should be pulled from the Image registry.
 ## ref: https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy
 ##
@@ -506,24 +506,24 @@ server:
     workspaceYearlyGuestSeatStripePriceId:
       ## @param server.billing.workspaceYearlyGuestSeatStripePriceId.secretKey The key within the Kubernetes Secret holding the workspaceYearlyGuestSeatStripePriceId secret as its value.
       secretKey: 'workspaceYearlyGuestSeatStripePriceId'
-    workspaceTeamSeatStripeProductId:
-      ## @param server.billing.workspaceTeamSeatStripeProductId.secretKey The key within the Kubernetes Secret holding the workspaceTeamSeatStripeProductId secret as its value.
-      secretKey: 'workspaceTeamSeatStripeProductId'
-    workspaceMonthlyTeamSeatStripePriceId:
-      ## @param server.billing.workspaceMonthlyTeamSeatStripePriceId.secretKey The key within the Kubernetes Secret holding the workspaceMonthlyTeamSeatStripePriceId secret as its value.
-      secretKey: 'workspaceMonthlyTeamSeatStripePriceId'
-    workspaceYearlyTeamSeatStripePriceId:
-      ## @param server.billing.workspaceYearlyTeamSeatStripePriceId.secretKey The key within the Kubernetes Secret holding the workspaceYearlyTeamSeatStripePriceId secret as its value.
-      secretKey: 'workspaceYearlyTeamSeatStripePriceId'
-    workspaceProSeatStripeProductId:
-      ## @param server.billing.workspaceProSeatStripeProductId.secretKey The key within the Kubernetes Secret holding the workspaceProSeatStripeProductId secret as its value.
-      secretKey: 'workspaceProSeatStripeProductId'
-    workspaceMonthlyProSeatStripePriceId:
-      ## @param server.billing.workspaceMonthlyProSeatStripePriceId.secretKey The key within the Kubernetes Secret holding the workspaceMonthlyProSeatStripePriceId secret as its value.
-      secretKey: 'workspaceMonthlyProSeatStripePriceId'
-    workspaceYearlyProSeatStripePriceId:
-      ## @param server.billing.workspaceYearlyProSeatStripePriceId.secretKey The key within the Kubernetes Secret holding the workspaceYearlyProSeatStripePriceId secret as its value.
-      secretKey: 'workspaceYearlyProSeatStripePriceId'
+    workspaceStarterSeatStripeProductId:
+      ## @param server.billing.workspaceStarterSeatStripeProductId.secretKey The key within the Kubernetes Secret holding the workspaceStarterSeatStripeProductId secret as its value.
+      secretKey: 'workspaceStarterSeatStripeProductId'
+    workspaceMonthlyStarterSeatStripePriceId:
+      ## @param server.billing.workspaceMonthlyStarterSeatStripePriceId.secretKey The key within the Kubernetes Secret holding the workspaceMonthlyStarterSeatStripePriceId secret as its value.
+      secretKey: 'workspaceMonthlyStarterSeatStripePriceId'
+    workspaceYearlyStarterSeatStripePriceId:
+      ## @param server.billing.workspaceYearlyStarterSeatStripePriceId.secretKey The key within the Kubernetes Secret holding the workspaceYearlyStarterSeatStripePriceId secret as its value.
+      secretKey: 'workspaceYearlyStarterSeatStripePriceId'
+    workspacePlusSeatStripeProductId:
+      ## @param server.billing.workspacePlusSeatStripeProductId.secretKey The key within the Kubernetes Secret holding the workspacePlusSeatStripeProductId secret as its value.
+      secretKey: 'workspacePlusSeatStripeProductId'
+    workspaceMonthlyPlusSeatStripePriceId:
+      ## @param server.billing.workspaceMonthlyPlusSeatStripePriceId.secretKey The key within the Kubernetes Secret holding the workspaceMonthlyPlusSeatStripePriceId secret as its value.
+      secretKey: 'workspaceMonthlyPlusSeatStripePriceId'
+    workspaceYearlyPlusSeatStripePriceId:
+      ## @param server.billing.workspaceYearlyPlusSeatStripePriceId.secretKey The key within the Kubernetes Secret holding the workspaceYearlyPlusSeatStripePriceId secret as its value.
+      secretKey: 'workspaceYearlyPlusSeatStripePriceId'
     workspaceBusinessSeatStripeProductId:
       ## @param server.billing.workspaceBusinessSeatStripeProductId.secretKey The key within the Kubernetes Secret holding the workspaceBusinessSeatStripeProductId secret as its value.
       secretKey: 'workspaceBusinessSeatStripeProductId'
