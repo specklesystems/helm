@@ -105,23 +105,24 @@ Depending on the Infrastructure on which Speckle was released, a load balancer m
 
 This object is a central location to define feature flags for the whole chart.
 
-| Name                                        | Description                                                                                                | Value                               |
-| ------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ----------------------------------- |
-| `featureFlags.automateModuleEnabled`        | High level flag fully toggles the integrated automate module                                               | `false`                             |
-| `featureFlags.gendoAIModuleEnabled`         | High level flag that toggles the Gendo AI render module                                                    | `false`                             |
-| `featureFlags.workspacesModuleEnabled`      | High level flag fully toggles the workspaces module                                                        | `false`                             |
-| `featureFlags.workspacesSSOEnabled`         | High level flag fully toggles the workspaces dynamic sso                                                   | `false`                             |
-| `featureFlags.multipleEmailsModuleEnabled`  | High level flag fully toggles multiple emails                                                              | `false`                             |
-| `featureFlags.gatekeeperModuleEnabled`      | High level flag that enables the gatekeeper module                                                         | `false`                             |
-| `featureFlags.billingIntegrationEnabled`    | High level flag that enables the billing integration                                                       | `false`                             |
-| `featureFlags.workspacesMultiRegionEnabled` | Toggles whether multi-region is available within workspaces. workspacesModuleEnabled must also be enabled. | `false`                             |
-| `featureFlags.fileImportIFCDotNetEnabled`   | Toggles whether the experimental .Net IFC importer is used for importing IFC files.                        | `false`                             |
-| `featureFlags.forceEmailVerification`       | Forces email verification for all users                                                                    | `false`                             |
-| `featureFlags.forceOnboarding`              | Forces onboarding for all users                                                                            | `false`                             |
-| `featureFlags.noPersonalEmailsEnabled`      | Disables the ability sign up with personal email addresses                                                 | `false`                             |
-| `analytics.enabled`                         | Enable or disable analytics                                                                                | `true`                              |
-| `analytics.mixpanel_token_id`               | The Mixpanel token ID used to identify this Speckle deployment in MixPanel                                 | `acd87c5a50b56df91a795e999812a3a4`  |
-| `analytics.mixpanel_api_host`               | The Mixpanel API host to which analytics data will be sent                                                 | `https://analytics.speckle.systems` |
+| Name                                        | Description                                                                                                                                 | Value                               |
+| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------- |
+| `featureFlags.automateModuleEnabled`        | High level flag fully toggles the integrated automate module                                                                                | `false`                             |
+| `featureFlags.gendoAIModuleEnabled`         | High level flag that toggles the Gendo AI render module                                                                                     | `false`                             |
+| `featureFlags.workspacesModuleEnabled`      | High level flag fully toggles the workspaces module                                                                                         | `false`                             |
+| `featureFlags.workspacesSSOEnabled`         | High level flag fully toggles the workspaces dynamic sso                                                                                    | `false`                             |
+| `featureFlags.multipleEmailsModuleEnabled`  | High level flag fully toggles multiple emails                                                                                               | `false`                             |
+| `featureFlags.gatekeeperModuleEnabled`      | High level flag that enables the gatekeeper module                                                                                          | `false`                             |
+| `featureFlags.billingIntegrationEnabled`    | High level flag that enables the billing integration                                                                                        | `false`                             |
+| `featureFlags.workspacesMultiRegionEnabled` | Toggles whether multi-region is available within workspaces. workspacesModuleEnabled must also be enabled.                                  | `false`                             |
+| `featureFlags.fileImportIFCDotNetEnabled`   | Toggles whether the experimental .Net IFC importer is used for importing IFC files.                                                         | `false`                             |
+| `featureFlags.forceEmailVerification`       | Forces email verification for all users                                                                                                     | `false`                             |
+| `featureFlags.forceOnboarding`              | Forces onboarding for all users                                                                                                             | `false`                             |
+| `featureFlags.noPersonalEmailsEnabled`      | Disables the ability sign up with personal email addresses                                                                                  | `false`                             |
+| `featureFlags.workspacesNewPlanEnabled`     | Toggles whether the new (Q1 2025) plans for workspaces are available. workspacesModuleEnabled must also be enabled for this to take effect. | `false`                             |
+| `analytics.enabled`                         | Enable or disable analytics                                                                                                                 | `true`                              |
+| `analytics.mixpanel_token_id`               | The Mixpanel token ID used to identify this Speckle deployment in MixPanel                                                                  | `acd87c5a50b56df91a795e999812a3a4`  |
+| `analytics.mixpanel_api_host`               | The Mixpanel API host to which analytics data will be sent                                                                                  | `https://analytics.speckle.systems` |
 
 ### Network Plugin configuration
 
