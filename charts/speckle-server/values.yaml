@@ -87,7 +87,7 @@ ingress:
 ##
 ## @param docker_image_tag Speckle is published as a Docker Image.  The version of the image which will be deployed is specified by this tag.
 ##
-docker_image_tag: '2.23.11-alpha.314431'
+docker_image_tag: '2.23.11-alpha.314527'
 ## @param imagePullPolicy Determines the conditions when the Docker Images for Speckle should be pulled from the Image registry.
 ## ref: https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy
 ##
@@ -1062,11 +1062,8 @@ preview_service:
   ## @param preview_service.image The Docker image to be used for the Speckle Preview Service component. If blank, defaults to speckle/speckle-preview-service:{{ .Values.docker_image_tag }}. If provided, this value should be the full path including tag. The docker_image_tag value will be ignored.
   ##
   image: ''
-  ## @param preview_service.port The port on which the Preview Service will run. This is not exposed, but used within its own local network within the pod.
+  ## @param preview_service.port The port on which the Preview Service will expose Prometheus metrics.
   port: '3001'
-  monitoring:
-    ## @param preview_service.monitoring.metricsPort The port on which the metrics server will be exposed.
-    metricsPort: '9094'
   ## @param preview_service.postgresMaxConnections The maximum number of connections that the Preview Service postgres client will make to the Postgres database.
   ##
   postgresMaxConnections: 2
