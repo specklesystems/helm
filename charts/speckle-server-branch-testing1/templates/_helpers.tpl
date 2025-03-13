@@ -547,9 +547,6 @@ Generate the environment variables for Speckle server and Speckle objects deploy
 - name: LOG_PRETTY
   value: {{ .Values.server.logPretty | quote }}
 
-- name: USE_FRONTEND_2
-  value: {{ .Values.frontend_2.enabled | quote }}
-
 - name: FRONTEND_ORIGIN
   {{- if .Values.ssl_canonical_url }}
   value: https://{{ .Values.domain }}
@@ -566,8 +563,14 @@ Generate the environment variables for Speckle server and Speckle objects deploy
 - name: FF_WORKSPACES_MODULE_ENABLED
   value: {{ .Values.featureFlags.workspacesModuleEnabled | quote }}
 
+- name: FF_NO_PERSONAL_EMAILS_ENABLED
+  value: {{ .Values.featureFlags.noPersonalEmailsEnabled | quote }}
+
 - name: FF_WORKSPACES_SSO_ENABLED
   value: {{ .Values.featureFlags.workspacesSSOEnabled | quote }}
+
+- name: FF_WORKSPACES_NEW_PLANS_ENABLED
+  value: {{ .Values.featureFlags.workspacesNewPlanEnabled | quote }}
 
 {{- if .Values.featureFlags.workspacesModuleEnabled }}
 - name: LICENSE_TOKEN
@@ -623,6 +626,60 @@ Generate the environment variables for Speckle server and Speckle objects deploy
       name: "{{ default .Values.secretName .Values.server.billing.secretName }}"
       key: {{ .Values.server.billing.workspaceYearlyGuestSeatStripePriceId.secretKey }}
 
+- name: WORKSPACE_STARTER_SEAT_STRIPE_PRODUCT_ID
+  valueFrom:
+    secretKeyRef:
+      name: "{{ default .Values.secretName .Values.server.billing.secretName }}"
+      key: {{ .Values.server.billing.workspaceStarterSeatStripeProductId.secretKey }}
+
+- name: WORKSPACE_MONTHLY_STARTER_SEAT_STRIPE_PRICE_ID
+  valueFrom:
+    secretKeyRef:
+      name: "{{ default .Values.secretName .Values.server.billing.secretName }}"
+      key: {{ .Values.server.billing.workspaceMonthlyStarterSeatStripePriceId.secretKey }}
+
+- name: WORKSPACE_YEARLY_STARTER_SEAT_STRIPE_PRICE_ID
+  valueFrom:
+    secretKeyRef:
+      name: "{{ default .Values.secretName .Values.server.billing.secretName }}"
+      key: {{ .Values.server.billing.workspaceYearlyStarterSeatStripePriceId.secretKey }}
+
+- name: WORKSPACE_PLUS_SEAT_STRIPE_PRODUCT_ID
+  valueFrom:
+    secretKeyRef:
+      name: "{{ default .Values.secretName .Values.server.billing.secretName }}"
+      key: {{ .Values.server.billing.workspacePlusSeatStripeProductId.secretKey }}
+
+- name: WORKSPACE_MONTHLY_PLUS_SEAT_STRIPE_PRICE_ID
+  valueFrom:
+    secretKeyRef:
+      name: "{{ default .Values.secretName .Values.server.billing.secretName }}"
+      key: {{ .Values.server.billing.workspaceMonthlyPlusSeatStripePriceId.secretKey }}
+
+- name: WORKSPACE_YEARLY_PLUS_SEAT_STRIPE_PRICE_ID
+  valueFrom:
+    secretKeyRef:
+      name: "{{ default .Values.secretName .Values.server.billing.secretName }}"
+      key: {{ .Values.server.billing.workspaceYearlyPlusSeatStripePriceId.secretKey }}
+
+- name: WORKSPACE_BUSINESS_SEAT_STRIPE_PRODUCT_ID
+  valueFrom:
+    secretKeyRef:
+      name: "{{ default .Values.secretName .Values.server.billing.secretName }}"
+      key: {{ .Values.server.billing.workspaceBusinessSeatStripeProductId.secretKey }}
+
+- name: WORKSPACE_MONTHLY_BUSINESS_SEAT_STRIPE_PRICE_ID
+  valueFrom:
+    secretKeyRef:
+      name: "{{ default .Values.secretName .Values.server.billing.secretName }}"
+      key: {{ .Values.server.billing.workspaceMonthlyBusinessSeatStripePriceId.secretKey }}
+
+- name: WORKSPACE_YEARLY_BUSINESS_SEAT_STRIPE_PRICE_ID
+  valueFrom:
+    secretKeyRef:
+      name: "{{ default .Values.secretName .Values.server.billing.secretName }}"
+      key: {{ .Values.server.billing.workspaceYearlyBusinessSeatStripePriceId.secretKey }}
+
 - name: WORKSPACE_TEAM_SEAT_STRIPE_PRODUCT_ID
   valueFrom:
     secretKeyRef:
@@ -659,23 +716,6 @@ Generate the environment variables for Speckle server and Speckle objects deploy
       name: "{{ default .Values.secretName .Values.server.billing.secretName }}"
       key: {{ .Values.server.billing.workspaceYearlyProSeatStripePriceId.secretKey }}
 
-- name: WORKSPACE_BUSINESS_SEAT_STRIPE_PRODUCT_ID
-  valueFrom:
-    secretKeyRef:
-      name: "{{ default .Values.secretName .Values.server.billing.secretName }}"
-      key: {{ .Values.server.billing.workspaceBusinessSeatStripeProductId.secretKey }}
-
-- name: WORKSPACE_MONTHLY_BUSINESS_SEAT_STRIPE_PRICE_ID
-  valueFrom:
-    secretKeyRef:
-      name: "{{ default .Values.secretName .Values.server.billing.secretName }}"
-      key: {{ .Values.server.billing.workspaceMonthlyBusinessSeatStripePriceId.secretKey }}
-
-- name: WORKSPACE_YEARLY_BUSINESS_SEAT_STRIPE_PRICE_ID
-  valueFrom:
-    secretKeyRef:
-      name: "{{ default .Values.secretName .Values.server.billing.secretName }}"
-      key: {{ .Values.server.billing.workspaceYearlyBusinessSeatStripePriceId.secretKey }}
 {{- end }}
 
 {{- if (or .Values.featureFlags.automateModuleEnabled .Values.featureFlags.workspacesSsoEnabled) }}
@@ -762,6 +802,15 @@ Generate the environment variables for Speckle server and Speckle objects deploy
     secretKeyRef:
       name: {{ default .Values.secretName .Values.redis.connectionString.secretName }}
       key: {{ default "redis_url" .Values.redis.connectionString.secretKey }}
+
+
+{{- if .Values.preview_service.dedicatedPreviewsQueue }}
+- name: PREVIEW_SERVICE_REDIS_URL
+  valueFrom:
+    secretKeyRef:
+      name: {{ default .Values.secretName .Values.redis.previewServiceConnectionString.secretName }}
+      key: {{ default "preview_service_redis_url" .Values.redis.previewServiceConnectionString.secretKey }}
+{{- end }}
 
 # *** PostgreSQL Database ***
 - name: POSTGRES_URL
