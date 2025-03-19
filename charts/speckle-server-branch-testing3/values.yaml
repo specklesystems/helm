@@ -53,6 +53,10 @@ featureFlags:
   forceOnboarding: false
   ## @param featureFlags.noPersonalEmailsEnabled Disables the ability sign up with personal email addresses
   noPersonalEmailsEnabled: false
+  ## @param featureFlags.workspacesNewPlanEnabled Toggles whether the new (Q1 2025) plans for workspaces are available. workspacesModuleEnabled must also be enabled for this to take effect.
+  workspacesNewPlanEnabled: false
+  ## @param featureFlags.moveProjectRegionEnabled Enables the ability to move a project region (manually or automatically)
+  moveProjectRegionEnabled: false
 analytics:
   ## @param analytics.enabled Enable or disable analytics
   enabled: true
@@ -85,7 +89,7 @@ ingress:
 ##
 ## @param docker_image_tag Speckle is published as a Docker Image.  The version of the image which will be deployed is specified by this tag.
 ##
-docker_image_tag: '2.23.11-branch.testing3.306854-47541ae'
+docker_image_tag: '2.23.11-branch.testing3.322454-e247a12'
 ## @param imagePullPolicy Determines the conditions when the Docker Images for Speckle should be pulled from the Image registry.
 ## ref: https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy
 ##
@@ -343,6 +347,13 @@ redis:
     ## @param redis.connectionString.secretKey Required. The key within the Kubernetes Secret holding the Redis connection string.
     ##
     secretKey: ''
+  previewServiceConnectionString:
+    ## @param redis.previewServiceConnectionString.secretName Required. A secret containing the full connection string to the Redis store (e.g. in format of `protocol://username:password@host:port/database`) stored within the Kubernetes cluster as an opaque Kubernetes Secret. Ref: https://kubernetes.io/docs/concepts/configuration/secret/#opaque-secrets
+    ##
+    secretName: ''
+    ## @param redis.previewServiceConnectionString.secretKey Required. The key within the Kubernetes Secret holding the Redis connection string.
+    ##
+    secretKey: ''
   ## @extra redis.networkPolicy If networkPolicy is enabled for Speckle server, this provides the NetworkPolicy with the necessary details to allow egress connections to the Redis store
   ##
   networkPolicy:
@@ -533,6 +544,24 @@ server:
     workspaceYearlyBusinessSeatStripePriceId:
       ## @param server.billing.workspaceYearlyBusinessSeatStripePriceId.secretKey The key within the Kubernetes Secret holding the workspaceYearlyBusinessSeatStripePriceId secret as its value.
       secretKey: 'workspaceYearlyBusinessSeatStripePriceId'
+    workspaceTeamSeatStripeProductId:
+      ## @param server.billing.workspaceTeamSeatStripeProductId.secretKey The key within the Kubernetes Secret holding the workspaceTeamSeatStripeProductId secret as its value.
+      secretKey: 'workspaceTeamSeatStripeProductId'
+    workspaceMonthlyTeamSeatStripePriceId:
+      ## @param server.billing.workspaceMonthlyTeamSeatStripePriceId.secretKey The key within the Kubernetes Secret holding the workspaceMonthlyTeamSeatStripePriceId secret as its value.
+      secretKey: 'workspaceMonthlyTeamSeatStripePriceId'
+    workspaceYearlyTeamSeatStripePriceId:
+      ## @param server.billing.workspaceYearlyTeamSeatStripePriceId.secretKey The key within the Kubernetes Secret holding the workspaceYearlyTeamSeatStripePriceId secret as its value.
+      secretKey: 'workspaceYearlyTeamSeatStripePriceId'
+    workspaceProSeatStripeProductId:
+      ## @param server.billing.workspaceProSeatStripeProductId.secretKey The key within the Kubernetes Secret holding the workspaceProSeatStripeProductId secret as its value.
+      secretKey: 'workspaceProSeatStripeProductId'
+    workspaceMonthlyProSeatStripePriceId:
+      ## @param server.billing.workspaceMonthlyProSeatStripePriceId.secretKey The key within the Kubernetes Secret holding the workspaceMonthlyProSeatStripePriceId secret as its value.
+      secretKey: 'workspaceMonthlyProSeatStripePriceId'
+    workspaceYearlyProSeatStripePriceId:
+      ## @param server.billing.workspaceYearlyProSeatStripePriceId.secretKey The key within the Kubernetes Secret holding the workspaceYearlyProSeatStripePriceId secret as its value.
+      secretKey: 'workspaceYearlyProSeatStripePriceId'
   sessionSecret:
     ## @param server.sessionSecret.secretName The name of the Kubernetes Secret containing the Session secret.  This is a unique value (can be generated randomly). This is expected to be provided within the Kubernetes cluster as an opaque Kubernetes Secret. Ref: https://kubernetes.io/docs/concepts/configuration/secret/#opaque-secrets
     ##
@@ -1020,6 +1049,11 @@ frontend_2:
 ## @descriptionEnd
 ##
 preview_service:
+  ## @param preview_service.deployInCluster If enabled, the Preview Service will be deployed within the cluster and speckle-server will be configured to send the kubernetes service url of the objects server to the Preview Service.
+  deployInCluster: true
+  ## @param preview_service.dedicatedPreviewsQueue Allows using a dedicated redis url for the preview service job queue
+  ##
+  dedicatedPreviewsQueue: false
   ## @param preview_service.replicas The number of instances of the Preview Service pod to be deployed within the cluster.
   ##
   replicas: 1
@@ -1032,11 +1066,8 @@ preview_service:
   ## @param preview_service.image The Docker image to be used for the Speckle Preview Service component. If blank, defaults to speckle/speckle-preview-service:{{ .Values.docker_image_tag }}. If provided, this value should be the full path including tag. The docker_image_tag value will be ignored.
   ##
   image: ''
-  ## @param preview_service.port The port on which the Preview Service will run. This is not exposed, but used within its own local network within the pod.
+  ## @param preview_service.port The port on which the Preview Service will expose Prometheus metrics.
   port: '3001'
-  monitoring:
-    ## @param preview_service.monitoring.metricsPort The port on which the metrics server will be exposed.
-    metricsPort: '9094'
   ## @param preview_service.postgresMaxConnections The maximum number of connections that the Preview Service postgres client will make to the Postgres database.
   ##
   postgresMaxConnections: 2
@@ -1187,6 +1218,11 @@ fileimport_service:
   ## @param fileimport_service.postgresMaxConnections The maximum number of connections that the File Import Service postgres client will make to the Postgres database.
   ##
   postgresMaxConnections: 1
+  inspect:
+    ## @param fileimport_service.inspect.enabled If enabled, indicates that the File Import service should be deployed with the nodejs inspect feature enabled
+    enabled: false
+    ## @param fileimport_service.inspect.port The port on which the nodejs inspect feature should be exposed
+    port: '7000'
   requests:
     ## @param fileimport_service.requests.cpu The CPU that should be available on a node when scheduling this pod.
     ## ref: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
