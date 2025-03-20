@@ -89,7 +89,7 @@ ingress:
 ##
 ## @param docker_image_tag Speckle is published as a Docker Image.  The version of the image which will be deployed is specified by this tag.
 ##
-docker_image_tag: '2.23.11-branch.testing1.320197-2f0744c'
+docker_image_tag: '2.23.11-branch.testing1.323759-0a26079'
 ## @param imagePullPolicy Determines the conditions when the Docker Images for Speckle should be pulled from the Image registry.
 ## ref: https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy
 ##
@@ -1049,6 +1049,8 @@ frontend_2:
 ## @descriptionEnd
 ##
 preview_service:
+  ## @param preview_service.deployInCluster If enabled, the Preview Service will be deployed within the cluster and speckle-server will be configured to send the kubernetes service url of the objects server to the Preview Service.
+  deployInCluster: true
   ## @param preview_service.dedicatedPreviewsQueue Allows using a dedicated redis url for the preview service job queue
   ##
   dedicatedPreviewsQueue: false
@@ -1216,6 +1218,11 @@ fileimport_service:
   ## @param fileimport_service.postgresMaxConnections The maximum number of connections that the File Import Service postgres client will make to the Postgres database.
   ##
   postgresMaxConnections: 1
+  inspect:
+    ## @param fileimport_service.inspect.enabled If enabled, indicates that the File Import service should be deployed with the nodejs inspect feature enabled
+    enabled: false
+    ## @param fileimport_service.inspect.port The port on which the nodejs inspect feature should be exposed
+    port: '7000'
   requests:
     ## @param fileimport_service.requests.cpu The CPU that should be available on a node when scheduling this pod.
     ## ref: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
