@@ -1,0 +1,125 @@
+{{- if .Values.preview_service.deployInCluster }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: speckle-preview-service
+  namespace: {{ .Values.namespace }}
+  labels:
+{{ include "preview_service.labels" . | indent 4 }}
+spec:
+  replicas: {{ .Values.preview_service.replicas }}
+  selector:
+    matchLabels:
+      app: speckle-preview-service
+      project: speckle-server
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+{{ include "preview_service.labels" . | indent 8 }}
+    spec:
+      containers:
+      - name: main
+        image: {{ default (printf "speckle/speckle-preview-service:%s" .Values.docker_image_tag) .Values.preview_service.image }}
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+
+        ports:
+          - name: metrics
+            containerPort: {{ .Values.preview_service.port }}
+            protocol: TCP
+
+        livenessProbe:
+          initialDelaySeconds: 60
+          periodSeconds: 60
+          exec:
+            command:
+              - node
+              - -e
+              # just a dummy output for now, not yet sure how to do liveliness with the new setup.
+              # if there is no job in the queue, the service does nothing, so the prev solution would not work
+              - {{ printf "console.log(%s)" .Values.preview_service.puppeteer.timeoutMilliseconds }}
+
+        resources:
+          requests:
+            cpu: {{ .Values.preview_service.requests.cpu }}
+            memory: {{ .Values.preview_service.requests.memory }}
+          limits:
+            cpu: {{ .Values.preview_service.limits.cpu }}
+            memory: {{ .Values.preview_service.limits.memory }}
+
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+          privileged: false
+          # readOnlyRootFilesystem: true #FIXME this currently breaks chromium. Need to identify which directories should be mounted.
+          runAsNonRoot: true
+          runAsUser: 800
+
+        env:
+          - name: HOST
+            value: '0.0.0.0' # Expose metrics outside of the container so it can be scraped by Prometheus
+          - name: PORT
+            value: {{ .Values.preview_service.port | quote }}
+
+          # *** Redis ***
+          {{- if .Values.preview_service.dedicatedPreviewsQueue }}
+          - name: REDIS_URL
+            valueFrom:
+              secretKeyRef:
+                name: {{ default .Values.secretName .Values.redis.previewServiceConnectionString.secretName }}
+                key: {{ default "preview_service_redis_url" .Values.redis.previewServiceConnectionString.secretKey }}
+          {{- else }}
+          - name: REDIS_URL
+            valueFrom:
+              secretKeyRef:
+                name: {{ default .Values.secretName .Values.redis.connectionString.secretName }}
+                key: {{ default "redis_url" .Values.redis.connectionString.secretKey }}
+          {{- end }}
+
+          - name: LOG_LEVEL
+            value: {{ .Values.preview_service.logLevel | quote }}
+          - name: LOG_PRETTY
+            value: {{ .Values.preview_service.logPretty | quote }}
+
+          {{- if .Values.preview_service.puppeteer.userDataDirectory }}
+          - name: USER_DATA_DIR
+            value: {{ .Values.preview_service.puppeteer.userDataDirectory | quote }}
+          {{- end }}
+
+          {{- if .Values.preview_service.puppeteer.timeoutMilliseconds }}
+          - name: PREVIEW_TIMEOUT
+            value: {{ .Values.preview_service.puppeteer.timeoutMilliseconds | quote }}
+          {{- end }}
+
+      {{- if .Values.preview_service.affinity }}
+      affinity: {{- include "speckle.renderTpl" (dict "value" .Values.preview_service.affinity "context" $) | nindent 8 }}
+      {{- end }}
+      {{- if .Values.preview_service.nodeSelector }}
+      nodeSelector: {{- include "speckle.renderTpl" (dict "value" .Values.preview_service.nodeSelector "context" $) | nindent 8 }}
+      {{- end }}
+      {{- if .Values.preview_service.tolerations }}
+      tolerations: {{- include "speckle.renderTpl" (dict "value" .Values.preview_service.tolerations "context" $) | nindent 8 }}
+      {{- end }}
+      {{- if .Values.preview_service.topologySpreadConstraints }}
+      topologySpreadConstraints: {{- include "speckle.renderTpl" (dict "value" .Values.preview_service.topologySpreadConstraints "context" $) | nindent 8 }}
+      {{- end }}
+      priorityClassName: low-priority
+      {{- if .Values.preview_service.serviceAccount.create }}
+      serviceAccountName: {{ include "preview_service.name" $ }}
+      {{- end }}
+
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 800
+        fsGroup: 25000
+        fsGroupChangePolicy: OnRootMismatch
+        runAsGroup: 30000
+        seccompProfile:
+          type: RuntimeDefault
+
+      # Should be > preview generation time ( 1 hour for good measure )
+      terminationGracePeriodSeconds: 3600
+{{- end }}
