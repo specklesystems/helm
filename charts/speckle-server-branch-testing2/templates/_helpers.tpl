@@ -528,7 +528,6 @@ Retrieve the s3 parameters from ConfigMap if enabled, or default to retrieving t
 {{- end }}
 {{- end }}
 
-
 {{/*
 Generate the environment variables for Speckle server and Speckle objects deployments
 */}}
@@ -542,13 +541,14 @@ Generate the environment variables for Speckle server and Speckle objects deploy
 
 - name: PORT
   value: {{ include "server.port" $ | quote }}
+
+- name: PRIVATE_OBJECTS_SERVER_URL
+  value: {{ printf "http://%s:%s" ( include "objects.service.fqdn" $ ) ( include "objects.port" $ ) }}
+
 - name: LOG_LEVEL
   value: {{ .Values.server.logLevel }}
 - name: LOG_PRETTY
   value: {{ .Values.server.logPretty | quote }}
-
-- name: USE_FRONTEND_2
-  value: {{ .Values.frontend_2.enabled | quote }}
 
 - name: FRONTEND_ORIGIN
   {{- if .Values.ssl_canonical_url }}
@@ -566,8 +566,17 @@ Generate the environment variables for Speckle server and Speckle objects deploy
 - name: FF_WORKSPACES_MODULE_ENABLED
   value: {{ .Values.featureFlags.workspacesModuleEnabled | quote }}
 
+- name: FF_NO_PERSONAL_EMAILS_ENABLED
+  value: {{ .Values.featureFlags.noPersonalEmailsEnabled | quote }}
+
 - name: FF_WORKSPACES_SSO_ENABLED
   value: {{ .Values.featureFlags.workspacesSSOEnabled | quote }}
+
+- name: FF_WORKSPACES_NEW_PLANS_ENABLED
+  value: {{ .Values.featureFlags.workspacesNewPlanEnabled | quote }}
+
+- name: FF_MOVE_PROJECT_REGION_ENABLED
+  value: {{ .Values.featureFlags.moveProjectRegionEnabled | quote }}
 
 {{- if .Values.featureFlags.workspacesModuleEnabled }}
 - name: LICENSE_TOKEN
@@ -588,9 +597,6 @@ Generate the environment variables for Speckle server and Speckle objects deploy
 
 - name: FF_WORKSPACES_MULTI_REGION_ENABLED
   value: {{ .Values.featureFlags.workspacesMultiRegionEnabled | quote }}
-
-- name: FF_FORCE_EMAIL_VERIFICATION
-  value: {{ .Values.featureFlags.forceEmailVerification | quote }}
 
 - name: FF_FORCE_ONBOARDING
   value: {{ .Values.featureFlags.forceOnboarding | quote }}
@@ -625,6 +631,60 @@ Generate the environment variables for Speckle server and Speckle objects deploy
     secretKeyRef:
       name: "{{ default .Values.secretName .Values.server.billing.secretName }}"
       key: {{ .Values.server.billing.workspaceYearlyGuestSeatStripePriceId.secretKey }}
+
+- name: WORKSPACE_STARTER_SEAT_STRIPE_PRODUCT_ID
+  valueFrom:
+    secretKeyRef:
+      name: "{{ default .Values.secretName .Values.server.billing.secretName }}"
+      key: {{ .Values.server.billing.workspaceStarterSeatStripeProductId.secretKey }}
+
+- name: WORKSPACE_MONTHLY_STARTER_SEAT_STRIPE_PRICE_ID
+  valueFrom:
+    secretKeyRef:
+      name: "{{ default .Values.secretName .Values.server.billing.secretName }}"
+      key: {{ .Values.server.billing.workspaceMonthlyStarterSeatStripePriceId.secretKey }}
+
+- name: WORKSPACE_YEARLY_STARTER_SEAT_STRIPE_PRICE_ID
+  valueFrom:
+    secretKeyRef:
+      name: "{{ default .Values.secretName .Values.server.billing.secretName }}"
+      key: {{ .Values.server.billing.workspaceYearlyStarterSeatStripePriceId.secretKey }}
+
+- name: WORKSPACE_PLUS_SEAT_STRIPE_PRODUCT_ID
+  valueFrom:
+    secretKeyRef:
+      name: "{{ default .Values.secretName .Values.server.billing.secretName }}"
+      key: {{ .Values.server.billing.workspacePlusSeatStripeProductId.secretKey }}
+
+- name: WORKSPACE_MONTHLY_PLUS_SEAT_STRIPE_PRICE_ID
+  valueFrom:
+    secretKeyRef:
+      name: "{{ default .Values.secretName .Values.server.billing.secretName }}"
+      key: {{ .Values.server.billing.workspaceMonthlyPlusSeatStripePriceId.secretKey }}
+
+- name: WORKSPACE_YEARLY_PLUS_SEAT_STRIPE_PRICE_ID
+  valueFrom:
+    secretKeyRef:
+      name: "{{ default .Values.secretName .Values.server.billing.secretName }}"
+      key: {{ .Values.server.billing.workspaceYearlyPlusSeatStripePriceId.secretKey }}
+
+- name: WORKSPACE_BUSINESS_SEAT_STRIPE_PRODUCT_ID
+  valueFrom:
+    secretKeyRef:
+      name: "{{ default .Values.secretName .Values.server.billing.secretName }}"
+      key: {{ .Values.server.billing.workspaceBusinessSeatStripeProductId.secretKey }}
+
+- name: WORKSPACE_MONTHLY_BUSINESS_SEAT_STRIPE_PRICE_ID
+  valueFrom:
+    secretKeyRef:
+      name: "{{ default .Values.secretName .Values.server.billing.secretName }}"
+      key: {{ .Values.server.billing.workspaceMonthlyBusinessSeatStripePriceId.secretKey }}
+
+- name: WORKSPACE_YEARLY_BUSINESS_SEAT_STRIPE_PRICE_ID
+  valueFrom:
+    secretKeyRef:
+      name: "{{ default .Values.secretName .Values.server.billing.secretName }}"
+      key: {{ .Values.server.billing.workspaceYearlyBusinessSeatStripePriceId.secretKey }}
 
 - name: WORKSPACE_TEAM_SEAT_STRIPE_PRODUCT_ID
   valueFrom:
@@ -662,23 +722,6 @@ Generate the environment variables for Speckle server and Speckle objects deploy
       name: "{{ default .Values.secretName .Values.server.billing.secretName }}"
       key: {{ .Values.server.billing.workspaceYearlyProSeatStripePriceId.secretKey }}
 
-- name: WORKSPACE_BUSINESS_SEAT_STRIPE_PRODUCT_ID
-  valueFrom:
-    secretKeyRef:
-      name: "{{ default .Values.secretName .Values.server.billing.secretName }}"
-      key: {{ .Values.server.billing.workspaceBusinessSeatStripeProductId.secretKey }}
-
-- name: WORKSPACE_MONTHLY_BUSINESS_SEAT_STRIPE_PRICE_ID
-  valueFrom:
-    secretKeyRef:
-      name: "{{ default .Values.secretName .Values.server.billing.secretName }}"
-      key: {{ .Values.server.billing.workspaceMonthlyBusinessSeatStripePriceId.secretKey }}
-
-- name: WORKSPACE_YEARLY_BUSINESS_SEAT_STRIPE_PRICE_ID
-  valueFrom:
-    secretKeyRef:
-      name: "{{ default .Values.secretName .Values.server.billing.secretName }}"
-      key: {{ .Values.server.billing.workspaceYearlyBusinessSeatStripePriceId.secretKey }}
 {{- end }}
 
 {{- if (or .Values.featureFlags.automateModuleEnabled .Values.featureFlags.workspacesSsoEnabled) }}
@@ -729,10 +772,6 @@ Generate the environment variables for Speckle server and Speckle objects deploy
   value: {{ .Values.server.asyncRequestContextEnabled | quote }}
 {{- end}}
 
-# *** No more closures flag - prevents writing to the closure table ***
-- name: FF_NO_CLOSURE_WRITES
-  value: {{ .Values.featureFlags.noClosureWrites | quote }}
-
 # *** Gendo render module ***
 - name: FF_GENDOAI_MODULE_ENABLED
   value: {{ .Values.featureFlags.gendoAIModuleEnabled | quote }}
@@ -763,12 +802,27 @@ Generate the environment variables for Speckle server and Speckle objects deploy
   value: {{ .Values.server.gendoAI.ratelimiting.burstRenderRequestPeriodSeconds | quote }}
 {{- end }}
 
+# *** Preview service ***
+{{- if .Values.preview_service.deployInCluster }}
+- name: PREVIEW_SERVICE_USE_PRIVATE_OBJECTS_SERVER_URL
+  value: "true"
+{{- end }}
+
 # *** Redis ***
 - name: REDIS_URL
   valueFrom:
     secretKeyRef:
       name: {{ default .Values.secretName .Values.redis.connectionString.secretName }}
       key: {{ default "redis_url" .Values.redis.connectionString.secretKey }}
+
+
+{{- if .Values.preview_service.dedicatedPreviewsQueue }}
+- name: PREVIEW_SERVICE_REDIS_URL
+  valueFrom:
+    secretKeyRef:
+      name: {{ default .Values.secretName .Values.redis.previewServiceConnectionString.secretName }}
+      key: {{ default "preview_service_redis_url" .Values.redis.previewServiceConnectionString.secretKey }}
+{{- end }}
 
 # *** PostgreSQL Database ***
 - name: POSTGRES_URL
