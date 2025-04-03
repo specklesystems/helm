@@ -1,4 +1,3 @@
-{{- if .Values.fileimport_service.enabled }}
 {{- if ( or .Values.s3.endpoint .Values.s3.configMap.enabled ) }}
 apiVersion: apps/v1
 kind: Deployment
@@ -167,5 +166,4 @@ spec:
             - key: {{ .Values.multiRegion.config.secretKey }}
               path: "multi-region-config.json"
       {{- end }}
-{{- end }}
 {{- end }}
