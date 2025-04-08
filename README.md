@@ -419,6 +419,7 @@ Defines parameters related to the backend server component of Speckle.
 | `server.nodeSelector`                                               | Node labels for Speckle server pods scheduling                                                                                                                                                                                                                                                    | `{}`                                                 |
 | `server.tolerations`                                                | Tolerations for Speckle server pods scheduling                                                                                                                                                                                                                                                    | `[]`                                                 |
 | `server.topologySpreadConstraints`                                  | Spread Constraints for Speckle server pod scheduling                                                                                                                                                                                                                                              | `[]`                                                 |
+| `server.additionalEnvVars`                                          | Additional environment variables to be passed to the server pod                                                                                                                                                                                                                                   | `[]`                                                 |
 
 ### Server
 
@@ -449,6 +450,7 @@ Defines parameters related to the backend server component of Speckle.
 | `objects.nodeSelector`                                            | Node labels for Speckle server pods scheduling                                                                                                                                                                                                         | `{}`    |
 | `objects.tolerations`                                             | Tolerations for Speckle server pods scheduling                                                                                                                                                                                                         | `[]`    |
 | `objects.topologySpreadConstraints`                               | Spread Constraints for Speckle server pod scheduling                                                                                                                                                                                                   | `[]`    |
+| `objects.additionalEnvVars`                                       | Additional environment variables to be passed to the objects pod                                                                                                                                                                                       | `[]`    |
 
 ### frontend_2
 
@@ -475,6 +477,7 @@ Defines parameters related to the new web application component of Speckle
 | `frontend_2.tolerations`               | Tolerations for Speckle frontend pods scheduling                                                                                                                                                                                                              | `[]`    |
 | `frontend_2.topologySpreadConstraints` | Spread Constraints for Speckle frontend pod scheduling                                                                                                                                                                                                        | `[]`    |
 | `frontend_2.serviceAccount.create`     | If enabled, a Kubernetes Service Account will be created for this pod.                                                                                                                                                                                        | `true`  |
+| `frontend_2.additionalEnvVars`         | Additional environment variables to be passed to the frontend_2 pod                                                                                                                                                                                           | `[]`    |
 
 ### Preview Service
 
@@ -512,6 +515,7 @@ Target CPU utilization percentage
 | `preview_service.tolerations`                                | Tolerations for Speckle Preview Service pods scheduling                                                                                                                                                                                                                 | `[]`       |
 | `preview_service.topologySpreadConstraints`                  | Spread Constraints for Speckle Preview Service pod scheduling                                                                                                                                                                                                           | `[]`       |
 | `preview_service.serviceAccount.create`                      | If enabled, a Kubernetes Service Account will be created for this pod.                                                                                                                                                                                                  | `true`     |
+| `preview_service.additionalEnvVars`                          | Additional environment variables to be passed to the Preview service pod                                                                                                                                                                                                | `[]`       |
 
 ### Webhook Service
 
@@ -536,6 +540,7 @@ Defines parameters related to the Webhook Service component of Speckle.
 | `webhook_service.tolerations`               | Tolerations for Speckle Webhook Service pods scheduling                                                                                                                                                                                                                 | `[]`       |
 | `webhook_service.topologySpreadConstraints` | Spread Constraints for Speckle Webhook Service pod scheduling                                                                                                                                                                                                           | `[]`       |
 | `webhook_service.serviceAccount.create`     | If enabled, a Kubernetes Service Account will be created for this pod.                                                                                                                                                                                                  | `true`     |
+| `webhook_service.additionalEnvVars`         | Additional environment variables to be passed to the Webhook service pod                                                                                                                                                                                                | `[]`       |
 
 ### File Import Service
 
@@ -562,6 +567,7 @@ Defines parameters related to the File Import Service component of Speckle.
 | `fileimport_service.tolerations`               | Tolerations for Speckle FileImport Service pods scheduling                                                                                                                                                                                                                    | `[]`       |
 | `fileimport_service.topologySpreadConstraints` | Spread Constraints for Speckle FileImport Service pod scheduling                                                                                                                                                                                                              | `[]`       |
 | `fileimport_service.serviceAccount.create`     | If enabled, a Kubernetes Service Account will be created for this pod.                                                                                                                                                                                                        | `true`     |
+| `fileimport_service.additionalEnvVars`         | Additional environment variables to be passed to the FileImport service pod                                                                                                                                                                                                   | `[]`       |
 | `fileimport_service.time_limit_min`            | DEPRECATED, use file_import_time_limit_min instead. The maximum time that a file can take to be processed by the FileImport Service.                                                                                                                                          | `10`       |
 
 ### Monitoring
@@ -588,6 +594,7 @@ Provides Speckle with metrics related to the Postgres database.
 | `monitoring.tolerations`                    | Tolerations for Speckle Monitoring pods scheduling                                                                                                                                                                                                                              | `[]`    |
 | `monitoring.topologySpreadConstraints`      | Spread Constraints for Speckle Monitoring pod scheduling                                                                                                                                                                                                                        | `[]`    |
 | `monitoring.serviceAccount.create`          | If enabled, a Kubernetes Service Account will be created for this pod.                                                                                                                                                                                                          | `true`  |
+| `monitoring.additionalEnvVars`              | Additional environment variables to be passed to the Monitoring pod                                                                                                                                                                                                             | `[]`    |
 
 ### Testing
 
@@ -605,6 +612,7 @@ Defines parameters related to testing that the deployment of Speckle has been su
 | `test.limits.memory`         | The maximum Memory that will be made available to the Test Pod.                                                                                                                                                                                              | `512Mi` |
 | `test.networkPolicy.enabled` | If enabled, will provide additional security be limiting network traffic into and out of the pod to only the required endpoints and ports.                                                                                                                   | `false` |
 | `test.serviceAccount.create` | If enabled, a Kubernetes Service Account will be created for this pod.                                                                                                                                                                                       | `true`  |
+| `test.additionalEnvVars`     | Additional environment variables to be passed to the Test pod                                                                                                                                                                                                | `[]`    |
 
 
 ## Resources
