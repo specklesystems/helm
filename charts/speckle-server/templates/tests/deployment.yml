@@ -31,19 +31,13 @@ spec:
               value: {{ .Values.test.logLevel }}
             - name: LOG_PRETTY
               value: {{ .Values.test.logPretty | quote }}
-
-            {{- with .Values.test.additionalEnvVars }}
-            {{- toYaml . | nindent 12 }}
-            {{- end }}
           resources:
-            {{- with .Values.test.requests }}
             requests:
-              {{- toYaml . | nindent 14 }}
-            {{- end }}
-            {{- with .Values.test.limits }}
+              cpu: {{ .Values.test.requests.cpu }}
+              memory: {{ .Values.test.requests.memory }}
             limits:
-              {{- toYaml . | nindent 14 }}
-            {{- end }}
+              cpu: {{ .Values.test.limits.cpu }}
+              memory: {{ .Values.test.limits.memory }}
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
