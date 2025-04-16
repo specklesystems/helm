@@ -1,4 +1,4 @@
-{{- if .Values.preview_service.enabled }}
+{{- if .Values.preview_service.deployInCluster }}
 apiVersion: v1
 kind: Service
 metadata:
