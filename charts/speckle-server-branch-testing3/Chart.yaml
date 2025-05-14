@@ -1,6 +1,6 @@
 apiVersion: v2
 # 'appVersion' is set by the build process to the correct value
-appVersion: '2.24.3-branch.testing3.386820-a203716'
+appVersion: '2.24.3-branch.testing3.387003-a203716'
 description: Speckle Server
 home: 'https://speckle.systems/'
 icon: 'https://app.speckle.systems/images/logo.png'
@@ -12,4 +12,4 @@ sources:
   - 'https://github.com/specklesystems/speckle-server'
 type: application
 # 'version' is set by the build process to the correct value
-version: 2.24.3-branch.testing3.386820-a203716
+version: 2.24.3-branch.testing3.387003-a203716
