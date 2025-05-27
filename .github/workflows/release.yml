@@ -7,7 +7,7 @@ on:
     paths-ignore:
     - 'README.md'
     - .gitignore
-    - .github
+    - .helm-readme-configuration.json
 
 # forcing each workflow run to a separate concurrency group so they are not
 # cancelled by jobs triggered by new commits
