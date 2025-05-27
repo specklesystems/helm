@@ -43,6 +43,7 @@ jobs:
           popd
       - name: Generate README
         run: |
+          cat "${{ github.workspace }}/speckle-helm-gh-pages/README.md"
           node "${{ github.workspace }}/readme-generator-for-helm/bin/index.js" \
             --config "${{ github.workspace }}/speckle-helm/.helm-readme-configuration.json" \
             --values "${{ github.workspace }}/speckle-helm/charts/speckle-server/values.yaml" \
