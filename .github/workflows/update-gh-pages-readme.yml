@@ -1,0 +1,58 @@
+name: Update README
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - .gitignore
+      - .github/dependabot.yml
+
+concurrency:
+  group: commit-${{github.sha}}
+  cancel-in-progress: true
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          path: speckle-helm
+      - name: Checkout helm repository gh-pages branch
+        # This is the branch where the README.md will be updated
+        uses: actions/checkout@v4
+        with:
+          path: speckle-helm-gh-pages
+          sparse-checkout: |
+            README.md
+      - name: Checkout bitnami-labs/readme-generator-for-helm
+        uses: actions/checkout@v4
+        with:
+          repository: bitnami-labs/readme-generator-for-helm
+          path: readme-generator-for-helm
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+      - name: Install Readme Generator
+        run: |
+          cd readme-generator-for-helm
+          npm install
+      - name: Generate README
+        run: |
+          node "readme-generator-for-helm/bin/index.js" \
+            --config "speckle-helm/.helm-readme-configuration.json" \
+            --values "speckle-helm/charts/speckle-server/values.yaml" \
+            --readme "speckle-helm-gh-pages/README.md"
+      - name: Commit and push changes to main branch
+        run: |
+          cd speckle-helm-gh-pages
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          if [[ $(git status --porcelain) ]]; then
+            git add README.md
+            git commit -am "Updating README with revised parameters from values.yaml of Helm Chart."
+            git push --set-upstream origin gh-pages
+          fi
