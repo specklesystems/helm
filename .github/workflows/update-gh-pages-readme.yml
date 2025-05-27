@@ -42,8 +42,7 @@ jobs:
           npm install
       - name: Generate README
         run: |
-          cd speckle-helm
-          node  "readme-generator-for-helm/bin/index.js" \
+          node "readme-generator-for-helm/bin/index.js" \
             --config "speckle-helm/.helm-readme-configuration.json" \
             --values "speckle-helm/charts/speckle-server/values.yaml" \
             --readme "speckle-helm-gh-pages/README.md"
