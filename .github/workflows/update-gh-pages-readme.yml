@@ -36,6 +36,7 @@ jobs:
         with:
           node-version: 22
           cache: 'npm'
+          cache-dependency-path: readme-generator-for-helm/package-lock.json
       - name: Install Readme Generator
         run: |
           cd readme-generator-for-helm
