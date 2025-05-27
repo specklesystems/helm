@@ -32,6 +32,10 @@ jobs:
         with:
           repository: bitnami-labs/readme-generator-for-helm
           path: readme-generator-for-helm
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
       - name: Install Readme Generator
         run: |
           cd readme-generator-for-helm
