@@ -25,12 +25,11 @@ jobs:
         uses: actions/checkout@v4
         with:
           path: speckle-helm-gh-pages
-          sparse-checkout: |
-            README.md
       - name: Checkout bitnami-labs/readme-generator-for-helm
         uses: actions/checkout@v4
         with:
           repository: bitnami-labs/readme-generator-for-helm
+          ref: b578e769018136d02d12f01c99cf1334c897d24a # Use a specific commit to ensure consistency
           path: readme-generator-for-helm
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -45,6 +44,7 @@ jobs:
           popd
       - name: Generate README
         run: |
+          cat "${{ github.workspace }}/speckle-helm-gh-pages/README.md"
           node "${{ github.workspace }}/readme-generator-for-helm/bin/index.js" \
             --config "${{ github.workspace }}/speckle-helm/.helm-readme-configuration.json" \
             --values "${{ github.workspace }}/speckle-helm/charts/speckle-server/values.yaml" \
