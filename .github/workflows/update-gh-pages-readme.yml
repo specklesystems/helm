@@ -9,7 +9,7 @@ on:
       - .github/dependabot.yml
 
 concurrency:
-  group: update-readme-commit-${{github.sha}}
+  group: update-readme-commit
   cancel-in-progress: true
 
 jobs:
