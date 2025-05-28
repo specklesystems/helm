@@ -12,7 +12,7 @@ on:
 # forcing each workflow run to a separate concurrency group so they are not
 # cancelled by jobs triggered by new commits
 concurrency:
-  group: commit-${{github.sha}}
+  group: commit-${{ github.workflow }}-${{ github.ref }}-${{github.sha}}
   cancel-in-progress: true
 
 jobs:
