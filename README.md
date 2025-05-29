@@ -141,17 +141,18 @@ This section is ignored unless networkPolicy is enabled for frontend or server.
 The NetworkPolicy uses this value to enable connections from the ingress controller pod in this namespace to reach Speckle.
 ref: https://kubernetes.io/docs/concepts/services-networking/network-policies/
 
-| Name                     | Description                                                                 | Value           |
-| ------------------------ | --------------------------------------------------------------------------- | --------------- |
-| `ingress.enabled`        | If enabled, the ingress resources will be deployed                          | `true`          |
-| `ingress.namespace`      | The namespace in which the ingress controller is deployed.                  | `ingress-nginx` |
-| `ingress.controllerName` | The name of the Kubernetes pod in which the ingress controller is deployed. | `ingress-nginx` |
+| Name                              | Description                                                                                                                                                                           | Value           |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
+| `ingress.enabled`                 | If enabled, the ingress resources will be deployed                                                                                                                                    | `true`          |
+| `ingress.namespace`               | The namespace in which the ingress controller is deployed.                                                                                                                            | `ingress-nginx` |
+| `ingress.controllerName`          | The name of the Kubernetes pod in which the ingress controller is deployed.                                                                                                           | `ingress-nginx` |
+| `ingress.client_max_body_size_mb` | This maximum size of the body of any request (except file uploads) that can be sent to Speckle. For file uploads, the maximum size is defined by the `.file_size_limit_mb` parameter. | `10`            |
 
 ### Common parameters
 
 | Name                         | Description                                                                                                                                                                                                                                                                             | Value                 |
 | ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
-| `docker_image_tag`           | DEPRECATED: Use `{service}.image` with full image name instead. Speckle is published as a Docker Image.  The version of the image which will be deployed is specified by this tag.                                                                                                      | `2.25.2-alpha.401230` |
+| `docker_image_tag`           | DEPRECATED: Use `{service}.image` with full image name instead. Speckle is published as a Docker Image.  The version of the image which will be deployed is specified by this tag.                                                                                                      | `2.25.2-alpha.401322` |
 | `imagePullPolicy`            | Determines the conditions when the Docker Images for Speckle should be pulled from the Image registry.                                                                                                                                                                                  | `IfNotPresent`        |
 | `secretName`                 | Deprecated, please use individual secret parameters.  This is the name of the Kubernetes Secret resource in which secrets for Speckle are stored. Secrets within this Secret resource may include Postgres and Redis connectin strings, S3 secret values, email server passwords, etc.. | `server-vars`         |
 | `file_size_limit_mb`         | This maximum size of any single file (unit is Megabytes) that can be uploaded to Speckle                                                                                                                                                                                                | `100`                 |
