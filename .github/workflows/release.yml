@@ -33,7 +33,3 @@ jobs:
         uses: helm/chart-releaser-action@v1.7.0
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-  update-readme:
-    uses: ./.github/workflows/update-gh-pages-readme.yml
-    with: {}
-    secrets: inherit
