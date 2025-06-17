@@ -5,15 +5,14 @@ on:
     branches:
       - main
     paths-ignore:
-    - 'README.md'
-    - .gitignore
-    - .helm-readme-configuration.json
+      - "README.md"
+      - .gitignore
+      - .helm-readme-configuration.json
 
-# forcing each workflow run to a separate concurrency group so they are not
-# cancelled by jobs triggered by new commits
+# forcing this workflow in to a concurrent group so that it does not run in parallel with itself
 concurrency:
-  group: commit-${{ github.workflow }}-${{ github.ref }}-${{github.sha}}
-  cancel-in-progress: true
+  group: commit-${{ github.workflow }}
+  cancel-in-progress: false
 
 jobs:
   release:
@@ -33,3 +32,8 @@ jobs:
         uses: helm/chart-releaser-action@v1.7.0
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+  update-readme:
+    uses: ./.github/workflows/update-gh-pages-readme.yml
+    needs: ["release"]
+    with: {}
+    secrets: inherit
