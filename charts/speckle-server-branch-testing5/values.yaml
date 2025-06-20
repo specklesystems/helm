@@ -57,6 +57,8 @@ featureFlags:
   moveProjectRegionEnabled: false
   ## @param featureFlags.nextGenFileImporterEnabled Enables the next generation file importer
   nextGenFileImporterEnabled: false
+  ## @param featureFlags.largeFileUploadsEnabled Enables the ability to upload large files to Speckle
+  largeFileUploadsEnabled: false
 analytics:
   ## @param analytics.enabled Enable or disable analytics
   enabled: true
@@ -97,7 +99,7 @@ ingress:
 ##
 ## @param docker_image_tag DEPRECATED: Use `{service}.image` with full image name instead. Speckle is published as a Docker Image.  The version of the image which will be deployed is specified by this tag.
 ##
-docker_image_tag: '2.25.5-branch.testing5.37-4112372'
+docker_image_tag: '2.25.8-branch.testing5.107-8d16b21'
 ## @param imagePullPolicy Determines the conditions when the Docker Images for Speckle should be pulled from the Image registry.
 ## ref: https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy
 ##
@@ -112,11 +114,14 @@ secretName: server-vars
 ## @param file_size_limit_mb This maximum size of any single file (unit is Megabytes) that can be uploaded to Speckle
 ##
 file_size_limit_mb: 100
-## @param file_import_time_limit_min The maximum time (unit is minutes) that a file import can take before it is considered to have failed
-## If you experience repeated issues with small files taking a long time, and increasing CPU and/or memory requests & limits does not help,
-##  please reach out to Speckle at https://speckle.community/
+## @param file_import_time_limit_min The maximum time (unit is minutes) that the file import service will attempt to process the file before it is considered to have failed
+## If you experience repeated issues with small files taking a long time, and increasing CPU and/or memory requests & limits.
+## If this does not help, please reach out to Speckle at https://speckle.community/
 ##
 file_import_time_limit_min: 10
+## @param file_upload_url_expiry_minutes The number of minutes for which the file upload URL is valid. After this time, the URL will no longer be valid and the file cannot be uploaded.
+##
+file_upload_url_expiry_minutes: 10
 ## @param objects_size_limit_mb This maximum size of the POST request body (unit is Megabytes) that can be sent to the Speckle Objects REST APIs.
 ##
 objects_size_limit_mb: 100
@@ -370,13 +375,29 @@ redis:
     ## @param redis.previewServiceConnectionString.secretKey Required. The key within the Kubernetes Secret holding the Redis connection string.
     ##
     secretKey: ''
-  fileimportServiceConnectionString:
-    ## @param redis.fileimportServiceConnectionString.secretName Required. A secret containing the full connection string to the Redis store (e.g. in format of `protocol://username:password@host:port/database`) stored within the Kubernetes cluster as an opaque Kubernetes Secret. Ref: https://kubernetes.io/docs/concepts/configuration/secret/#opaque-secrets
-    ##
-    secretName: ''
-    ## @param redis.fileimportServiceConnectionString.secretKey Required. The key within the Kubernetes Secret holding the Redis connection string.
-    ##
-    secretKey: ''
+  fileImportService:
+    rhino:
+      connectionString:
+        ## @param redis.fileImportService.rhino.connectionString.secretName Required. A secret containing the full connection string to the Redis store (e.g. in format of `protocol://username:password@host:port/database`) stored within the Kubernetes cluster as an opaque Kubernetes Secret. Ref: https://kubernetes.io/docs/concepts/configuration/secret/#opaque-secrets
+        ##
+        secretName: ''
+        ## @param redis.fileImportService.rhino.connectionString.secretKey Required. The key within the Kubernetes Secret holding the Redis connection string.
+        ##
+        secretKey: ''
+      ## @param redis.fileImportService.rhino.queueName Optional. The name of the queue created within the Redis cluster.
+      ##
+      queueName: 'fileimport-service-jobs'
+    ifc:
+      connectionString:
+        ## @param redis.fileImportService.ifc.connectionString.secretName Required. A secret containing the full connection string to the Redis store (e.g. in format of `protocol://username:password@host:port/database`) stored within the Kubernetes cluster as an opaque Kubernetes Secret. Ref: https://kubernetes.io/docs/concepts/configuration/secret/#opaque-secrets
+        ##
+        secretName: ''
+        ## @param redis.fileImportService.ifc.connectionString.secretKey Required. The key within the Kubernetes Secret holding the Redis connection string.
+        ##
+        secretKey: ''
+      ## @param redis.fileImportService.ifc.queueName Optional. The name of the queue created within the Redis cluster.
+      ##
+      queueName: 'fileimport-service-jobs'
   ## @extra redis.networkPolicy If networkPolicy is enabled for Speckle server, this provides the NetworkPolicy with the necessary details to allow egress connections to the Redis store
   ##
   networkPolicy:
