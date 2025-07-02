@@ -2,7 +2,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: speckle-server-minion
+  name: speckle-server-minion-api-objects
   namespace: {{ .Values.namespace }}
   labels:
 {{ include "speckle.labels" . | indent 4 }}
@@ -11,7 +11,7 @@ metadata:
     {{- if .Values.cert_manager_issuer }}
     cert-manager.io/cluster-issuer: {{ .Values.cert_manager_issuer }}
     {{- end }}
-    nginx.ingress.kubernetes.io/proxy-body-size: {{ (printf "%dm" (int .Values.ingress.client_max_body_size_mb)) | quote }}
+    nginx.ingress.kubernetes.io/proxy-body-size: {{ (printf "%dm" (int .Values.objects_size_limit_mb)) | quote }}
 spec:
   ingressClassName: nginx
   rules:
@@ -19,57 +19,28 @@ spec:
     http:
       paths:
       - pathType: Prefix
-        path: "/"
+        path: "/api/getobjects/"
         backend:
           service:
-            name: speckle-frontend-2
-            port:
-              name: web
-      - pathType: Exact
-        path: "/graphql"
-        backend:
-          service:
-            name: speckle-server
-            port:
-              name: web
-      - pathType: Exact
-        path: "/explorer"
-        backend:
-          service:
-            name: speckle-server
+            name: speckle-objects
             port:
               name: web
       - pathType: Prefix
-        path: "/auth/"
+        path: "/api/objects/"
         backend:
           service:
-            name: speckle-server
+            name: speckle-objects
             port:
               name: web
       - pathType: Prefix
-        path: "/static/"
+        path: "/api/diff/"
         backend:
           service:
-            name: speckle-server
+            name: speckle-objects
             port:
               name: web
       - pathType: Prefix
         path: "/objects/"
-        backend:
-          service:
-            name: speckle-objects
-            port:
-              name: web
-      - pathType: Prefix
-        # for /api/file/ see file.minion.ingress.yml
-        path: "/api/"
-        backend:
-          service:
-            name: speckle-objects
-            port:
-              name: web
-      - pathType: Prefix
-        path: "/preview/"
         backend:
           service:
             name: speckle-objects
