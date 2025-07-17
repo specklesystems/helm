@@ -107,7 +107,7 @@ ingress:
 ##
 ## @param docker_image_tag DEPRECATED: Use `{service}.image` with full image name instead. Speckle is published as a Docker Image.  The version of the image which will be deployed is specified by this tag.
 ##
-docker_image_tag: '2.25.8-alpha.291'
+docker_image_tag: '2.25.8-alpha.292'
 ## @param imagePullPolicy Determines the conditions when the Docker Images for Speckle should be pulled from the Image registry.
 ## ref: https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy
 ##
@@ -1161,6 +1161,12 @@ preview_service:
   ## @param preview_service.postgresMaxConnections The maximum number of connections that the Preview Service postgres client will make to the Postgres database.
   ##
   postgresMaxConnections: 2
+  ## @param preview_service.maxQueueBackpressure The maximum number of items that can be queued in the Preview Service job queue before we stop retrying previously errored preview jobs. This is used to prevent the Preview Service from being overwhelmed with too many jobs.
+  ## If the queue exceeds this number, the Preview Service will stop retrying previously errored jobs until the queue size is below this number.
+  maxQueueBackpressure: 1
+  ## @param preview_service.retryPeriodMinutes The period, in minutes, between retries of previously errored jobs. Must be an integer between 1 and 60.
+  ##
+  retryPeriodMinutes: 1
   puppeteer:
     ## @param preview_service.puppeteer.userDataDirectory The path to the user data directory. If not set, defaults to '/tmp/puppeteer'. This is mounted in the deployment as a volume with read-write access.
     userDataDirectory: ''
