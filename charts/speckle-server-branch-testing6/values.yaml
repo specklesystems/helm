@@ -107,7 +107,7 @@ ingress:
 ##
 ## @param docker_image_tag DEPRECATED: Use `{service}.image` with full image name instead. Speckle is published as a Docker Image.  The version of the image which will be deployed is specified by this tag.
 ##
-docker_image_tag: '2.25.8-branch.testing6.283-103a875'
+docker_image_tag: '2.25.8-branch.testing6.295-d2aa6b6'
 ## @param imagePullPolicy Determines the conditions when the Docker Images for Speckle should be pulled from the Image registry.
 ## ref: https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy
 ##
@@ -298,7 +298,7 @@ s3:
   ##
   endpoint: ''
   ## @param s3.publicEndpoint  The URL at which the s3 compatible storage is accessible from a user's browser.
-  ## This is only required if the `endpoint`` is not accessible from a user's browser (e.g. the endpoint is in a private network), as it will default to the `endpoint` value if not provided.
+  ## This is only required if the `endpoint` is not accessible from a user's browser (e.g. the endpoint is in a private network), as it will default to the `endpoint` value if not provided.
   ## If `s3.configMap.enabled` is true, this value is ignored.
   ## The url should be prefixed by the protocol (e.g. `https://`)
   ## The url may need to include the port if it is not the default (e.g. `https://example.org:9000`)
@@ -1161,6 +1161,12 @@ preview_service:
   ## @param preview_service.postgresMaxConnections The maximum number of connections that the Preview Service postgres client will make to the Postgres database.
   ##
   postgresMaxConnections: 2
+  ## @param preview_service.maxQueueBackpressure The maximum number of items that can be queued in the Preview Service job queue before we stop retrying previously errored preview jobs. This is used to prevent the Preview Service from being overwhelmed with too many jobs.
+  ## If the queue exceeds this number, the Preview Service will stop retrying previously errored jobs until the queue size is below this number.
+  maxQueueBackpressure: 1
+  ## @param preview_service.retryPeriodMinutes The period, in minutes, between retries of previously errored jobs. Must be an integer between 1 and 60.
+  ##
+  retryPeriodMinutes: 1
   puppeteer:
     ## @param preview_service.puppeteer.userDataDirectory The path to the user data directory. If not set, defaults to '/tmp/puppeteer'. This is mounted in the deployment as a volume with read-write access.
     userDataDirectory: ''
@@ -1411,12 +1417,12 @@ fileimport_service:
   time_limit_min: 30
 ## @section IFC Importer Service
 ## @descriptionStart
-## Defines parameters related to the File Import Service component of Speckle. This is intended to eventually replace the File Import Service.
+## Defines parameters related to the IFC Import Service component of Speckle. The IFC Import Service is intended to eventually replace the File Import Service.
 ## @descriptionEnd
 ##
 ifc_import_service:
   ## @param ifc_import_service.enabled If enabled, the File Import Service will be deployed within the cluster.
-  enabled: true
+  enabled: false
   ## @param ifc_import_service.replicas The number of instances of the FileImport Service pod to be deployed within the cluster.
   ##
   replicas: 1
