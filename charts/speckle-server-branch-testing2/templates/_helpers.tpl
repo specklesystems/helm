@@ -618,7 +618,7 @@ Generate the environment variables for Speckle server and Speckle objects deploy
   valueFrom:
     secretKeyRef:
       name: {{ default .Values.secretName .Values.server.accIntegration.clientSecret.secretName }}
-      key: {{ default "acc_integration_client_secret" .Values.server.accIntegration.clientSecret.secretKey }}
+      key: {{ default "clientSecret" .Values.server.accIntegration.clientSecret.secretKey }}
 {{- end }}
 
 {{- if .Values.featureFlags.billingIntegrationEnabled }}
