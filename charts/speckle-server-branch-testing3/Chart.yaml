@@ -1,6 +1,6 @@
 apiVersion: v2
 # When releasing, 'appVersion' is set by the Chart publishing process
-appVersion: '2.25.9-branch.testing3.539-8623c5b'
+appVersion: '2.25.9-branch.testing3.540-0887b0e'
 description: Speckle Server
 home: 'https://speckle.systems/'
 icon: 'https://app.speckle.systems/images/logo.png'
@@ -12,4 +12,4 @@ sources:
   - 'https://github.com/specklesystems/speckle-server'
 type: application
 # When releasing, 'version' is set by the Chart publishing process
-version: 2.25.9-branch.testing3.539-8623c5b
+version: 2.25.9-branch.testing3.540-0887b0e
