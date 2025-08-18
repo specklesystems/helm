@@ -12,18 +12,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           path: speckle-helm
       - name: Checkout this repository's gh-pages branch
         # This is the branch where the README.md will be updated
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           path: speckle-helm-gh-pages
           ref: gh-pages
           sparse-checkout: README.md
       - name: Checkout bitnami-labs/readme-generator-for-helm
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: bitnami-labs/readme-generator-for-helm
           ref: b578e769018136d02d12f01c99cf1334c897d24a # Use a specific commit to ensure consistency
