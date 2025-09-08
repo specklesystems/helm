@@ -116,7 +116,7 @@ ingress:
 ##
 ## @param docker_image_tag DEPRECATED: Use `{service}.image` with full image name instead. Speckle is published as a Docker Image.  The version of the image which will be deployed is specified by this tag.
 ##
-docker_image_tag: '2.25.10-branch.testing5.804-5723d8b'
+docker_image_tag: '2.25.10-branch.testing5.841-488e750'
 ## @param imagePullPolicy Determines the conditions when the Docker Images for Speckle should be pulled from the Image registry.
 ## ref: https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy
 ##
@@ -735,7 +735,7 @@ server:
     ## @param server.email.port The port on the server for the email service.
     ##
     port: ''
-    ## @param server.email.from The email address from which Speckle will send emails. Defaults to 'no-reply@speckle.systems' if left blank.
+    ## @param server.email.from The email address from which Speckle will send emails. If left blank will cause an error when email are sent.
     ##
     from: ''
     ## @param server.email.username The username with which Speckle will authenticate with the email service.
