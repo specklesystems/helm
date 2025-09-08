@@ -29,7 +29,7 @@ jobs:
           ref: b578e769018136d02d12f01c99cf1334c897d24a # Use a specific commit to ensure consistency
           path: readme-generator-for-helm
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: 'npm'
