@@ -71,6 +71,8 @@ featureFlags:
   savedViewsEnabled: false
   ## @param featureFlags.usersInviteScopeIsPublic Enables the ability to create Personal Access Tokens (PAT) with users:invite privileges. WARNING: This can be used by untrusted users to send spam; do not enable on servers which allow public registration or to which untrusted users have been, or will be, invited.
   usersInviteScopeIsPublic: false
+  ## @param featureFlags.noPersonalEmailsEnabled Disables personal emails for new accounts
+  noPersonalEmailsEnabled: false
 analytics:
   ## @param analytics.enabled Enable or disable analytics
   enabled: true
@@ -78,6 +80,9 @@ analytics:
   mixpanel_token_id: 'acd87c5a50b56df91a795e999812a3a4'
   ## @param analytics.mixpanel_api_host The Mixpanel API host to which analytics data will be sent
   mixpanel_api_host: 'https://analytics.speckle.systems'
+dashboards:
+  ## @param dashboards.origin The origin of the dashboards deployment
+  origin: ''
 ## @section Network Plugin configuration
 ## @descriptionStart
 ## This is used to define the type of network policy that is deployed.
@@ -111,7 +116,7 @@ ingress:
 ##
 ## @param docker_image_tag DEPRECATED: Use `{service}.image` with full image name instead. Speckle is published as a Docker Image.  The version of the image which will be deployed is specified by this tag.
 ##
-docker_image_tag: '2.25.10-branch.testing2.739-c7d75ca'
+docker_image_tag: '2.25.10-branch.testing2.857-06a7464'
 ## @param imagePullPolicy Determines the conditions when the Docker Images for Speckle should be pulled from the Image registry.
 ## ref: https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy
 ##
@@ -730,7 +735,7 @@ server:
     ## @param server.email.port The port on the server for the email service.
     ##
     port: ''
-    ## @param server.email.from The email address from which Speckle will send emails. Defaults to 'no-reply@speckle.systems' if left blank.
+    ## @param server.email.from The email address from which Speckle will send emails. If left blank will cause an error when email are sent.
     ##
     from: ''
     ## @param server.email.username The username with which Speckle will authenticate with the email service.
