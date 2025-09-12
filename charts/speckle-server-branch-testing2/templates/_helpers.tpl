@@ -970,6 +970,8 @@ Generate the environment variables for Speckle server and Speckle objects deploy
 # *** Email ***
 - name: EMAIL
   value: "true"
+- name: EMAIL_TRANSPORTER_TYPE
+  value: {{ .Values.server.email.transporterType | quote }}
 - name: EMAIL_HOST
   value: {{ .Values.server.email.host | quote }}
 - name: EMAIL_PORT
@@ -985,8 +987,11 @@ Generate the environment variables for Speckle server and Speckle objects deploy
   value: {{ .Values.server.email.from | quote }}
 - name: EMAIL_SECURE
   value: {{ .Values.server.email.secure | quote }}
+<<<<<<< HEAD
+=======
 - name: EMAIL_REQUIRE_TLS
   value: {{ .Values.server.email.requireTLS | quote }}
+>>>>>>> main
 - name: EMAIL_VERIFICATION_TIMEOUT_MINUTES
   value: {{ .Values.server.email.verificationTimeoutMinutes | quote }}
 {{- end }}
