@@ -65936,6 +65936,23 @@ entries:
     version: 2.20.6-branch.testing1.154030-9b09114
   speckle-server-branch-testing2:
   - apiVersion: v2
+    appVersion: 2.26.3-branch.testing2.1120-1328329
+    created: "2025-10-02T18:08:41.550841903Z"
+    description: Speckle Server
+    digest: 22baa9dadf36f014d7bd1b690bf61cb81b61549698c0e2ac57b1ea3bdd3adb84
+    home: https://speckle.systems/
+    icon: https://app.speckle.systems/images/logo.png
+    maintainers:
+    - name: Speckle Systems
+      url: https://speckle.systems/
+    name: speckle-server-branch-testing2
+    sources:
+    - https://github.com/specklesystems/speckle-server
+    type: application
+    urls:
+    - https://github.com/specklesystems/helm/releases/download/speckle-server-branch-testing2-2.26.3-branch.testing2.1120-1328329/speckle-server-branch-testing2-2.26.3-branch.testing2.1120-1328329.tgz
+    version: 2.26.3-branch.testing2.1120-1328329
+  - apiVersion: v2
     appVersion: 2.26.3-branch.testing2.1119-3e8b490
     created: "2025-10-02T17:39:39.210104507Z"
     description: Speckle Server
@@ -75935,4 +75952,4 @@ entries:
     urls:
     - https://github.com/specklesystems/helm/releases/download/speckle-server-branch-testing6-2.25.8-branch.testing6.109-62b10b1/speckle-server-branch-testing6-2.25.8-branch.testing6.109-62b10b1.tgz
     version: 2.25.8-branch.testing6.109-62b10b1
-generated: "2025-10-02T17:39:39.22065565Z"
+generated: "2025-10-02T18:08:41.562302464Z"
