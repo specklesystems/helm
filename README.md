@@ -1,4 +1,9 @@
 <h1 align="center">
+  ⚠️<br/>
+  This repository is deprecated and no further Helm Charts will be published here.<br/>
+  Please refer to the new location for the Helm charts on <a href="https://hub.docker.com/r/speckle/speckle-server-chart">Docker Hub</a>.
+</h1>
+<h1 align="center">
   <img src="https://user-images.githubusercontent.com/2679513/131189167-18ea5fe1-c578-47f6-9785-3748178e4312.png" width="150px"/><br/>
   Speckle | Helm Chart
 </h1>
@@ -7,31 +12,7 @@
 </h3>
 <p align="center"><b>Speckle</b> is data infrastructure for the AEC industry.</p><br/>
 
-<p align="center"><a href="https://twitter.com/SpeckleSystems"><img src="https://img.shields.io/twitter/follow/SpeckleSystems?style=social" alt="Twitter Follow"></a> <a href="https://speckle.community"><img src="https://img.shields.io/discourse/users?server=https%3A%2F%2Fspeckle.community&amp;style=flat-square&amp;logo=discourse&amp;logoColor=white" alt="Community forum users"></a> <a href="https://speckle.systems"><img src="https://img.shields.io/badge/https://-speckle.systems-royalblue?style=flat-square" alt="website"></a> <a href="https://speckle.guide/dev/"><img src="https://img.shields.io/badge/docs-speckle.guide-orange?style=flat-square&amp;logo=read-the-docs&amp;logoColor=white" alt="docs"></a></p>
-
-# About Speckle
-
-What is Speckle? Check our [![YouTube Video Views](https://img.shields.io/youtube/views/B9humiSpHzM?label=Speckle%20in%201%20minute%20video&style=social)](https://www.youtube.com/watch?v=B9humiSpHzM)
-
-## Features
-
-- **Object-based:** say goodbye to files! Speckle is the first object based platform for the AEC industry
-- **Version control:** Speckle is the Git & Hub for geometry and BIM data
-- **Collaboration:** share your designs collaborate with others
-- **3D Viewer:** see your CAD and BIM models online, share and embed them anywhere
-- **Interoperability:** get your CAD and BIM models into other software without exporting or importing
-- **Real time:** get real time updates and notifications and changes
-- **GraphQL API:** get what you need anywhere you want it
-- **Webhooks:** the base for a automation and next-gen pipelines
-- **Built for developers:** we are building Speckle with developers in mind and got tools for every stack
-- **Built for the AEC industry:** Speckle connectors are plugins for the most common software used in the industry such as Revit, Rhino, Grasshopper, AutoCAD, Civil 3D, Excel, Unreal Engine, Unity, QGIS, Blender, ArchiCAD and more!
-
-## Try Speckle now!
-
-Give Speckle a try in no time by:
-
-- [![speckle XYZ](https://img.shields.io/badge/https://-speckle.xyz-0069ff?style=flat-square&logo=hackthebox&logoColor=white)](https://speckle.xyz) ⇒ creating an account at
-- [![deploy to kubernetes](https://img.shields.io/badge/Deploy%20to%20Kubernetes-0069ff?style=flat-square&logo=Kubernetes&logoColor=white)](https://speckle.guide/dev/server-setup-k8s.html) ⇒ Guide to deploying this Helm chart to Kubernetes
+<p align="center"><a href="https://speckle.community"><img src="https://img.shields.io/discourse/users?server=https%3A%2F%2Fspeckle.community&amp;style=flat-square&amp;logo=discourse&amp;logoColor=white" alt="Community forum users"></a> <a href="https://speckle.systems"><img src="https://img.shields.io/badge/https://-speckle.systems-royalblue?style=flat-square" alt="website"></a> <a href="https://speckle.guide/dev/"><img src="https://img.shields.io/badge/docs-speckle.guide-orange?style=flat-square&amp;logo=read-the-docs&amp;logoColor=white" alt="docs"></a></p>
 
 ## Speckle Server Helm Charts
 
